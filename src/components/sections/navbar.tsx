@@ -33,31 +33,9 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
   }, [isMenuOpen]);
 
   const ITEMS = [
-    {
-      label: "Product",
-      href: "#",
-      dropdownItems: [
-        {
-          title: "VAR flexibility",
-          href: "/#code-security",
-          description: "We optimise for the fastest VAR transfers possible",
-        },
-        {
-          title: "Plan",
-          href: "/#why-charter",
-          description:
-            "Set the product direction with projects and initiatives",
-        },
-        {
-          title: "Build",
-          href: "/#ai-chatbot",
-          description: "Make progress with issue tracking and cycle planning",
-        },
-      ],
-    },
-    { label: "About Us", href: "/about" },
-    { label: "Pricing", href: "/pricing" },
+    { label: "Calculator", href: "/calculator" },
     { label: "Blog", href: "/blog" },
+    { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
   ];
 
@@ -127,21 +105,17 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* Auth Buttons */}
+          {/* CTA Buttons */}
           <div className="flex items-center gap-2.5">
-            <div className="text-muted-foreground hidden items-center gap-3 text-sm font-medium transition-opacity hover:opacity-80 lg:flex">
-              <a href="/contact">Contact</a>
-              <a href="/contact">Demo</a>
-            </div>
             <a
-              href="/login"
+              href="/calculator"
               className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
             >
               <Button
                 variant="outline"
                 className="dark:bg-foreground dark:text-background"
               >
-                Login
+                Try Calculator
               </Button>
             </a>
 

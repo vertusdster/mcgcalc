@@ -1,29 +1,26 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = "charter - Modern Astro Template";
+export const SITE_TITLE = "Peptide Calculator";
 export const SITE_DESCRIPTION =
-  "A modern, fully featured Astro template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.";
+  "Free online peptide dosage calculator. Instantly calculate the exact injection volume for your peptide dose based on vial quantity, bacteriostatic water, and desired dose.";
 
 export const SITE_METADATA = {
   title: {
     default: SITE_TITLE,
-    template: "%s | charter",
+    template: "%s | Peptide Calculator",
   },
   description: SITE_DESCRIPTION,
   keywords: [
-    "Astro",
-    "React",
-    "JavaScript",
-    "TypeScript",
-    "TailwindCSS",
-    "Template",
-    "Shadcn/UI",
-    "Web Development",
+    "peptide calculator",
+    "peptide dosage calculator",
+    "bacteriostatic water",
+    "peptide injection",
+    "syringe units",
+    "peptide reconstitution",
+    "BPC-157",
+    "TB-500",
   ],
-  authors: [{ name: "charter Team" }],
-  creator: "charter Team",
-  publisher: "charter",
+  authors: [{ name: "Peptide Calculator" }],
+  creator: "Peptide Calculator",
+  publisher: "Peptide Calculator",
   robots: {
     index: true,
     follow: true,
@@ -42,13 +39,13 @@ export const SITE_METADATA = {
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    siteName: "charter",
+    siteName: "Peptide Calculator",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "charter - Modern Astro Template",
+        alt: "Peptide Dosage Calculator",
       },
     ],
   },
@@ -57,6 +54,5 @@ export const SITE_METADATA = {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
     images: ["/og-image.jpg"],
-    creator: "@charter",
   },
 };
