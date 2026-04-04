@@ -1,0 +1,30 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { BlogPost } from '@/components/sections/blog-post';
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import NewsletterSignup from '@/components/sections/newsletter-signup';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await render(post);	
+
+---
+<DefaultLayout title={`${post.data.title} | ${SITE_TITLE}`} description={post.data.description}>
+	<div class="py-16 md:py-28 lg:py-32">
+		<BlogPost post={post} client:only='react'>
+			<Content />
+		</BlogPost>
+	</div>
+	
+	<NewsletterSignup client:load />
+</DefaultLayout>

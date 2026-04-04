@@ -1,0 +1,26 @@
+---
+import BaseHead from '@/components/BaseHead.astro';
+import { Font } from 'astro:assets';
+import Footer from '@/components/sections/footer';
+import Navbar from '@/components/sections/navbar';
+import Banner from '@/components/sections/banner';
+
+const { title, description } = Astro.props;
+---
+
+<html lang="en">
+    <head>
+        <BaseHead title={title} description={description}  />
+        <Font cssVariable="--font-inter" preload />
+        <Font cssVariable="--font-sans" preload />
+        <Font cssVariable="--font-mono" preload />
+        <Font cssVariable="--font-mona" preload />
+    </head>
+    <body class={`h-screen antialiased flex flex-col`}
+    >
+        <Banner client:only="react" url="https://www.shadcnblocks.com/template/charter?bundle=astro" />
+        <Navbar currentPage={Astro.url.pathname} client:only='react' />
+        <main class="flex-1"><slot /></main>
+        <Footer />
+    </body>
+</html>

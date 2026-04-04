@@ -1,0 +1,20 @@
+---
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+import Testimonials from '@/components/sections/testimonials';
+import CodeSecurity from '@/components/sections/code-security';
+import WhyCharter from '@/components/sections/why-charter';
+import AIChatbot from '@/components/sections/ai-chatbot';
+import LaunchPricing from '@/components/sections/launch-pricing';
+import Hero from '@/components/sections/hero';
+---
+
+<DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <Hero client:only='react' />
+  <CodeSecurity client:only='react' />
+  <Testimonials client:only='react' />
+  <WhyCharter />
+  <AIChatbot />
+  <LaunchPricing />
+</DefaultLayout>

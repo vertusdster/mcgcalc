@@ -1,0 +1,15 @@
+---
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+import { AboutSection } from '@/components/sections/about-section';
+import PricingCards from '@/components/sections/pricing-cards';
+import Logos from '@/components/sections/logos';
+import PricingTable from '@/components/sections/pricing-table';
+---
+
+<DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <PricingCards  />
+  <Logos />
+  <PricingTable />
+</DefaultLayout>
