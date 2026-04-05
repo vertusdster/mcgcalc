@@ -34,8 +34,8 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
 
   const ITEMS = [
     { label: "Calculator", href: "/calculator" },
+    { label: "Peptides", href: "/peptides" },
     { label: "Blog", href: "/blog" },
-    { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
   ];
 
@@ -161,21 +161,12 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
       >
         <div className="mt-8 space-y-2">
           <a
-            href="/signup"
+            href="/calculator"
             className="block"
             onClick={() => setIsMenuOpen(false)}
           >
             <Button size="sm" className="w-full">
-              Sign up
-            </Button>
-          </a>
-          <a
-            href="/login"
-            className="block"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <Button size="sm" className="w-full" variant="outline">
-              Login
+              Open Calculator
             </Button>
           </a>
         </div>
@@ -246,24 +237,14 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
             ),
           )}
           <a
-            href="/contact"
+            href="/about"
             className={cn(
               "text-lg tracking-[-0.36px]",
-              pathname === "/contact" && "text-muted-foreground",
+              pathname === "/about" && "text-muted-foreground",
             )}
             onClick={() => setIsMenuOpen(false)}
           >
-            Contact
-          </a>
-          <a
-            href="/pricing"
-            className={cn(
-              "text-lg tracking-[-0.36px]",
-              pathname === "/" && "text-muted-foreground",
-            )}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Demo
+            About
           </a>
         </nav>
       </div>

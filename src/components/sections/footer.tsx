@@ -1,29 +1,25 @@
-import { FaXTwitter, FaLinkedin, FaFacebook } from "react-icons/fa6";
+import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
 
 const navigation = [
   {
-    title: "Products",
+    title: "Tools",
     links: [
-      { name: "VAR", href: "/#code-security" },
-      { name: "Credit Transfers", href: "/#why-charter" },
-      { name: "Credit Accounts", href: "/#ai-chatbot" },
-      { name: "Loan Origination", href: "/#ai-chatbot" },
-      { name: "Loan Purchase", href: "/#ai-chatbot" },
+      { name: "Peptide Calculator", href: "/calculator" },
+      { name: "Peptides List", href: "/peptides" },
     ],
   },
   {
-    title: "Support",
+    title: "Resources",
     links: [
-      { name: "Pricing", href: "/pricing" },
+      { name: "Blog", href: "/blog" },
       { name: "FAQ", href: "/faq" },
-      { name: "Demo", href: "/contact" },
+      { name: "About", href: "/about" },
       { name: "Contact", href: "/contact" },
     ],
   },
   {
-    title: "Company",
+    title: "Legal",
     links: [
-      { name: "About", href: "/about" },
       { name: "Terms of Service", href: "/terms" },
       { name: "Privacy Policy", href: "/privacy" },
     ],
@@ -31,9 +27,8 @@ const navigation = [
 ];
 
 const socialLinks = [
-  { icon: FaXTwitter, href: "https://facebook.com" },
-  { icon: FaFacebook, href: "https://twitter.com" },
-  { icon: FaLinkedin, href: "https://linkedin.com" },
+  { icon: FaXTwitter, href: "https://twitter.com", label: "X / Twitter" },
+  { icon: FaLinkedin, href: "https://linkedin.com", label: "LinkedIn" },
 ];
 
 export default function Footer() {
@@ -66,29 +61,14 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="max-w-5xl py-8">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex items-center gap-4">
-              <img
-                src="/images/layout/logomark.svg"
-                alt="Charter"
-                width={26}
-                height={23}
-                className="dark:invert"
-              />
-              <p className="text-sm font-medium">
-                © {new Date().getFullYear()} Charter -{" "}
-                <a
-                  href="https://shadcnblocks.com"
-                  className="underline transition-opacity hover:opacity-80"
-                  target="_blank"
-                >
-                  Shadcnblocks.com
-                </a>
-              </p>
-            </div>
+            <p className="text-sm font-medium text-muted-foreground">
+              © {new Date().getFullYear()} PeptideCalculator.com — For research
+              purposes only.
+            </p>
             <div className="flex items-center gap-6">
               {socialLinks.map((link) => (
                 <a
-                  aria-label={link.href}
+                  aria-label={link.label}
                   key={link.href}
                   href={link.href}
                   className="hover:text-muted-foreground"
