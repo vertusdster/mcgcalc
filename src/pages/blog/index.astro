@@ -1,20 +1,18 @@
 ---
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
+import { SITE_TITLE } from '@/consts';
 import { getCollection } from 'astro:content';
 import { BlogPosts } from '@/components/sections/blog-posts';
-import NewsletterSignup from '@/components/sections/newsletter-signup';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const blogTitle = `Blog | ${SITE_TITLE}`;
-const blogDescription = "Explore our blog for insightful articles, personal reflections and updates from our team.";
+const blogTitle = `Peptide Research Blog — Dosage Guides & Reconstitution Tips | ${SITE_TITLE}`;
+const blogDescription = "Guides, dosage references, and research insights on peptide reconstitution, injection calculations, and compound-specific protocols.";
 ---
 
 <DefaultLayout title={blogTitle} description={blogDescription}>
 	<BlogPosts posts={posts} client:only='react' />
-	<NewsletterSignup client:load />
 </DefaultLayout>
 

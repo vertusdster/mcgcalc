@@ -2,8 +2,7 @@
 import { type CollectionEntry, getCollection } from 'astro:content';
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { BlogPost } from '@/components/sections/blog-post';
-import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts';
-import NewsletterSignup from '@/components/sections/newsletter-signup';
+import { SITE_TITLE } from '@/consts';
 import { render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -16,15 +15,43 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
-const { Content } = await render(post);	
+const { Content } = await render(post);
 
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.pubDate.toISOString(),
+  "dateModified": (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": post.data.authorName ?? "Peptide Calculator Editorial"
+  },
+  "publisher": { "@type": "Organization", "name": "Peptide Calculator" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": Astro.url.href }
+};
 ---
-<DefaultLayout title={`${post.data.title} | ${SITE_TITLE}`} description={post.data.description}>
+<DefaultLayout title={`${post.data.title} | ${SITE_TITLE}`} description={post.data.description} schema={schema}>
 	<div class="py-16 md:py-28 lg:py-32">
 		<BlogPost post={post} client:only='react'>
 			<Content />
 		</BlogPost>
+
+		<!-- Calculator CTA -->
+		<div class="container max-w-3xl mt-12">
+			<div class="rounded-2xl bg-[#11696f]/5 border border-[#2bb3ba]/20 px-8 py-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+				<div>
+					<p class="font-semibold text-slate-800 dark:text-white">Calculate your peptide dose</p>
+					<p class="text-sm text-slate-500 mt-0.5">Use our free calculator to get exact syringe units for any peptide.</p>
+				</div>
+				<a
+					href="/calculator"
+					class="shrink-0 rounded-xl bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-6 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+				>
+					Open Calculator →
+				</a>
+			</div>
+		</div>
 	</div>
-	
-	<NewsletterSignup client:load />
 </DefaultLayout>

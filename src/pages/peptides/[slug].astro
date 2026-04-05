@@ -17,9 +17,20 @@ const { Content } = await render(peptide);
 
 const title = `${peptide.data.name} Dosage Calculator — How Many Units to Draw`;
 const description = peptide.data.description;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "datePublished": peptide.data.pubDate.toISOString(),
+  "author": { "@type": "Organization", "name": "Peptide Calculator" },
+  "publisher": { "@type": "Organization", "name": "Peptide Calculator" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": Astro.url.href }
+};
 ---
 
-<DefaultLayout title={title} description={description}>
+<DefaultLayout title={title} description={description} schema={schema}>
   <div class="py-12 md:py-20">
     <div class="container max-w-5xl">
       <div class="mb-4">

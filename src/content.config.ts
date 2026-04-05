@@ -23,8 +23,8 @@ const peptides = defineCollection({
     name: z.string(),
     description: z.string(),
     category: z.string(),
-    defaultDose: z.number(),       // mcg
-    defaultVialSize: z.number(),   // mg
+    defaultDose: z.number(), // mcg
+    defaultVialSize: z.number(), // mg
     molecularWeight: z.string().optional(),
     pubDate: z.coerce.date(),
   }),

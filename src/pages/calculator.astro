@@ -2,14 +2,37 @@
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { PeptideCalculator } from '@/components/sections/peptide-calculator';
 
-const title = "Peptide Dosage Calculator";
-const description = "Calculate the exact injection volume for your peptide dose. Supports multiple peptides, different syringe sizes, and bacteriostatic water volumes.";
+const title = "Free Peptide Dosage Calculator — Exact Syringe Units Instantly";
+const description = "Calculate the exact injection volume for your peptide dose. Supports multiple peptides, different syringe sizes, and bacteriostatic water volumes in mL or IU.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Peptide Dosage Calculator",
+  "description": description,
+  "url": "https://peptidescalculator.com/calculator",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "All",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Multi-peptide calculation (up to 5 peptides)",
+    "Real-time syringe unit visualization",
+    "Supports mg, mcg, mL, IU units",
+    "Save and load calculations"
+  ]
+};
 ---
 
-<DefaultLayout title={title} description={description}>
+<DefaultLayout title={title} description={description} schema={schema}>
   <section class="py-16 px-4">
     <div class="max-w-2xl mx-auto text-center mb-10">
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-3">Peptide Dosage Calculator</h1>
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+        Peptide Dosage Calculator
+      </h1>
       <p class="text-slate-500 dark:text-slate-400">
         Enter your peptide quantity, bacteriostatic water volume, and desired dose to instantly calculate the exact syringe units to draw.
       </p>
