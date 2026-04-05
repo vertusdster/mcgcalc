@@ -264,7 +264,9 @@ export function PeptideCalculator() {
   const [waterUnit, setWaterUnit] = useState<"ml" | "IU">("ml");
 
   // Save/load state
-  const [savedCalculations, setSavedCalculations] = useState<SavedCalculation[]>([]);
+  const [savedCalculations, setSavedCalculations] = useState<
+    SavedCalculation[]
+  >([]);
   const [showSaved, setShowSaved] = useState(false);
   const [saveLabel, setSaveLabel] = useState("");
   const [showSaveInput, setShowSaveInput] = useState(false);
@@ -285,7 +287,8 @@ export function PeptideCalculator() {
   }, []);
 
   const handleSave = useCallback(() => {
-    const label = saveLabel.trim() || `Calculation ${new Date().toLocaleString()}`;
+    const label =
+      saveLabel.trim() || `Calculation ${new Date().toLocaleString()}`;
     const entry: SavedCalculation = {
       id: generateId(),
       label,
@@ -299,21 +302,34 @@ export function PeptideCalculator() {
     setSaveLabel("");
     setShowSaveInput(false);
     setShowSaved(true);
-  }, [saveLabel, syringeVolume, waterVolume, waterUnit, peptides, savedCalculations, persistSaved]);
+  }, [
+    saveLabel,
+    syringeVolume,
+    waterVolume,
+    waterUnit,
+    peptides,
+    savedCalculations,
+    persistSaved,
+  ]);
 
   const handleLoad = useCallback((saved: SavedCalculation) => {
-    const vol = SYRINGE_VOLUMES.find(v => v.value === saved.syringeValue) ?? SYRINGE_VOLUMES[0];
+    const vol =
+      SYRINGE_VOLUMES.find((v) => v.value === saved.syringeValue) ??
+      SYRINGE_VOLUMES[0];
     setSyringeVolume(vol);
     setWaterVolume(saved.waterVolume);
     setWaterUnit(saved.waterUnit);
-    setPeptides(saved.peptides.map(p => ({ ...p, id: generateId() })));
+    setPeptides(saved.peptides.map((p) => ({ ...p, id: generateId() })));
     setShowSaved(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  const handleDelete = useCallback((id: string) => {
-    persistSaved(savedCalculations.filter(s => s.id !== id));
-  }, [savedCalculations, persistSaved]);
+  const handleDelete = useCallback(
+    (id: string) => {
+      persistSaved(savedCalculations.filter((s) => s.id !== id));
+    },
+    [savedCalculations, persistSaved],
+  );
 
   const addPeptide = useCallback(() => {
     if (peptides.length < 5) {
@@ -726,14 +742,14 @@ export function PeptideCalculator() {
                 {isTotalValid && (
                   <div className="pt-1">
                     {showSaveInput ? (
-                      <div className="flex gap-2 animate-in fade-in duration-200">
+                      <div className="animate-in fade-in flex gap-2 duration-200">
                         <Input
                           type="text"
                           placeholder="Label (e.g. BPC-157 Morning)"
                           value={saveLabel}
                           onChange={(e) => setSaveLabel(e.target.value)}
                           onKeyDown={(e) => e.key === "Enter" && handleSave()}
-                          className="h-9 text-sm rounded-xl border-slate-200 focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
+                          className="h-9 rounded-xl border-slate-200 text-sm focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
                           autoFocus
                         />
                         <button
@@ -743,7 +759,10 @@ export function PeptideCalculator() {
                           Save
                         </button>
                         <button
-                          onClick={() => { setShowSaveInput(false); setSaveLabel(""); }}
+                          onClick={() => {
+                            setShowSaveInput(false);
+                            setSaveLabel("");
+                          }}
                           className="h-9 shrink-0 rounded-xl bg-slate-100 px-3 text-xs font-bold text-slate-500 hover:bg-slate-200"
                         >
                           Cancel
@@ -800,7 +819,7 @@ export function PeptideCalculator() {
           </button>
 
           {showSaved && (
-            <div className="mt-2 space-y-2 animate-in fade-in duration-200">
+            <div className="animate-in fade-in mt-2 space-y-2 duration-200">
               {savedCalculations.map((saved) => (
                 <div
                   key={saved.id}

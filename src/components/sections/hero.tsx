@@ -50,17 +50,17 @@ export default function Hero() {
         </div>
 
         {/* Feature cards */}
-        <div className="container max-w-5xl mt-16 md:mt-24">
+        <div className="container mt-16 max-w-5xl md:mt-24">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="bg-card border border-border/50 rounded-2xl p-6 text-left shadow-sm"
+                className="bg-card border-border/50 rounded-2xl border p-6 text-left shadow-sm"
               >
-                <div className="bg-primary/10 flex size-10 items-center justify-center rounded-lg mb-4">
-                  <feature.icon className="size-5 text-primary" />
+                <div className="bg-primary/10 mb-4 flex size-10 items-center justify-center rounded-lg">
+                  <feature.icon className="text-primary size-5" />
                 </div>
-                <h2 className="font-inter font-bold text-lg mb-2">
+                <h2 className="font-inter mb-2 text-lg font-bold">
                   {feature.title}
                 </h2>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -72,8 +72,8 @@ export default function Hero() {
         </div>
 
         {/* How it works */}
-        <div className="container max-w-5xl mt-20 pb-20 md:mt-28 md:pb-28 lg:pb-32">
-          <h2 className="text-center text-2xl font-semibold tracking-tight mb-12 md:text-3xl">
+        <div className="container mt-20 max-w-5xl pb-20 md:mt-28 md:pb-28 lg:pb-32">
+          <h2 className="mb-12 text-center text-2xl font-semibold tracking-tight md:text-3xl">
             How It Works
           </h2>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -99,7 +99,7 @@ export default function Hero() {
                   {item.step}
                 </div>
                 <div>
-                  <h3 className="font-semibold mb-1">{item.title}</h3>
+                  <h3 className="mb-1 font-semibold">{item.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     {item.desc}
                   </p>

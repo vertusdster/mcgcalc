@@ -61,7 +61,7 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="max-w-5xl py-8">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="text-sm font-medium text-muted-foreground">
+            <p className="text-muted-foreground text-sm font-medium">
               © {new Date().getFullYear()} PeptideCalculator.com — For research
               purposes only.
             </p>
