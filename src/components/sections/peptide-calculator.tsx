@@ -90,7 +90,7 @@ function AnimatedSyringe({
                 ...(!isValid
                   ? {
                       backgroundImage:
-                        "repeating-linear-gradient(45deg, #fb923c 0, #fb923c 10px, #cbd5e1 10px, #cbd5e1 20px)",
+                        "repeating-linear-gradient(45deg, #f59e0b 0, #f59e0b 10px, #fde68a 10px, #fde68a 20px)",
                     }
                   : {}),
               }}
@@ -108,7 +108,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "text-white"
-                          : "text-orange-700"
+                          : "text-amber-800"
                         : "text-slate-500",
                     )}
                     style={{
@@ -134,7 +134,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-orange-700"
+                          : "bg-amber-800"
                         : "bg-slate-400",
                     )}
                     style={{
@@ -160,7 +160,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-orange-600"
+                          : "bg-amber-700"
                         : "bg-slate-300",
                     )}
                     style={{
@@ -184,7 +184,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-orange-700"
+                          : "bg-amber-800"
                         : "bg-slate-400",
                     )}
                     style={{
@@ -210,7 +210,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-orange-600"
+                          : "bg-amber-700"
                         : "bg-slate-300",
                     )}
                     style={{
