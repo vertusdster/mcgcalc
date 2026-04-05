@@ -299,13 +299,12 @@ function NumberInput({
   suffix?: string;
   className?: string;
 }) {
-  // Local display state — updates instantly without triggering parent re-render
   const [display, setDisplay] = useState(String(value));
-  const commitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [, startTransition] = useTransition();
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
-  // Sync when parent value changes externally (e.g. load saved calc)
+  // Sync when parent sets value externally (load saved calc)
   useEffect(() => {
     setDisplay(String(value));
   }, [value]);
@@ -313,18 +312,12 @@ function NumberInput({
   const clamp = (n: number) => Math.max(min, parseFloat(n.toFixed(10)));
   const format = (n: number) => parseFloat(n.toFixed(4)).toString();
 
-  const scheduleCommit = (val: string) => {
-    if (commitTimer.current) clearTimeout(commitTimer.current);
-    commitTimer.current = setTimeout(() => {
-      onChangeRef.current(val);
-    }, 300);
-  };
-
   const step = (dir: 1 | -1) => {
     setDisplay((prev) => {
       const cur = Number(prev) || 0;
       const next = format(clamp(cur + dir * smartStep(cur, stepMode)));
-      scheduleCommit(next);
+      // Commit to parent as low-priority — display updates first
+      startTransition(() => onChangeRef.current(next));
       return next;
     });
   };
@@ -351,14 +344,13 @@ function NumberInput({
             const v = e.target.value;
             if (v === "" || /^[0-9]*\.?[0-9]*$/.test(v)) {
               setDisplay(v);
-              scheduleCommit(v);
+              startTransition(() => onChangeRef.current(v));
             }
           }}
           onBlur={(e) => {
             const n = parseFloat(e.target.value);
             const val = String(isNaN(n) ? min : clamp(n));
             setDisplay(val);
-            if (commitTimer.current) clearTimeout(commitTimer.current);
             onChangeRef.current(val);
           }}
           className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#2bb3ba]/30 focus:border-[#2bb3ba] focus:bg-white dark:text-white"
@@ -481,26 +473,18 @@ export function PeptideCalculator() {
     [],
   );
 
-  // Defer expensive calculation so button clicks feel instant
-  const deferredPeptides = useDeferredValue(peptides);
-  const deferredWaterVolume = useDeferredValue(waterVolume);
-  const deferredWaterUnit = useDeferredValue(waterUnit);
-  const deferredSyringe = useDeferredValue(syringeVolume);
-
   const results = useMemo((): CalculationResult[] | null => {
-    const waterVolNum = Number(deferredWaterVolume) || 0;
-    // IU mode: user enters units on a U-100 syringe (100 IU = 1 mL)
-    const waterMl =
-      deferredWaterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
+    const waterVolNum = Number(waterVolume) || 0;
+    const waterMl = waterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
 
-    const hasValidPeptide = deferredPeptides.some(
+    const hasValidPeptide = peptides.some(
       (p) => (Number(p.quantity) || 0) > 0 && (Number(p.dose) || 0) > 0,
     );
     if (!hasValidPeptide || waterMl <= 0) {
       return null;
     }
 
-    return deferredPeptides.map((peptide) => {
+    return peptides.map((peptide) => {
       const doseNum = Number(peptide.dose) || 0;
       const quantNum = Number(peptide.quantity) || 0;
 
@@ -508,24 +492,18 @@ export function PeptideCalculator() {
       const concentrationMgPerMl = quantNum / waterMl;
       const volumeNeededMl =
         concentrationMgPerMl > 0 ? doseMg / concentrationMgPerMl : 0;
-      const units =
-        (volumeNeededMl / deferredSyringe.ml) * deferredSyringe.value;
-      const fillPercentage = (units / deferredSyringe.value) * 100;
+      const units = (volumeNeededMl / syringeVolume.ml) * syringeVolume.value;
+      const fillPercentage = (units / syringeVolume.value) * 100;
 
       return {
         id: peptide.id,
         volumeMl: volumeNeededMl,
         units: Math.round(units * 10) / 10,
-        isValid: units > 0 && units <= deferredSyringe.value,
+        isValid: units > 0 && units <= syringeVolume.value,
         fillPercentage,
       };
     });
-  }, [
-    deferredPeptides,
-    deferredWaterVolume,
-    deferredWaterUnit,
-    deferredSyringe,
-  ]);
+  }, [peptides, waterVolume, waterUnit, syringeVolume]);
 
   const totalUnits = useMemo(() => {
     if (!results) return 0;
