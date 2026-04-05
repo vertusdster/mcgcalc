@@ -318,11 +318,16 @@ function NumberInput({
   const stopRepeat = useCallback(() => {
     if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
     if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+    // Update syringe only when user releases
+    isPressingRef.current = false;
+    setDebouncedFill(pendingFillRef.current);
+    setDebouncedValid(pendingValidRef.current);
   }, []);
 
   const startRepeat = useCallback(
     (dir: 1 | -1) => {
-      stopRepeat(); // clear any existing repeat before starting
+      stopRepeat();
+      isPressingRef.current = true;
       step(dir);
       timeoutRef.current = setTimeout(() => {
         intervalRef.current = setInterval(() => step(dir), 60);
@@ -528,16 +533,14 @@ export function PeptideCalculator() {
 
   const isTotalValid = totalUnits > 0 && totalUnits <= syringeVolume.value;
 
-  // Debounce syringe fill so it only renders after user stops pressing
+  // Freeze syringe while user is holding the stepper — update only after release
   const [debouncedFill, setDebouncedFill] = useState(totalFillPercentage);
   const [debouncedValid, setDebouncedValid] = useState(isTotalValid);
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setDebouncedFill(totalFillPercentage);
-      setDebouncedValid(isTotalValid);
-    }, 120);
-    return () => clearTimeout(t);
-  }, [totalFillPercentage, isTotalValid]);
+  const isPressingRef = useRef(false);
+  const pendingFillRef = useRef(totalFillPercentage);
+  const pendingValidRef = useRef(isTotalValid);
+  pendingFillRef.current = totalFillPercentage;
+  pendingValidRef.current = isTotalValid;
 
   return (
     <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
