@@ -525,6 +525,17 @@ export function PeptideCalculator() {
 
   const isTotalValid = totalUnits > 0 && totalUnits <= syringeVolume.value;
 
+  // Debounce syringe fill so it only renders after user stops pressing
+  const [debouncedFill, setDebouncedFill] = useState(totalFillPercentage);
+  const [debouncedValid, setDebouncedValid] = useState(isTotalValid);
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setDebouncedFill(totalFillPercentage);
+      setDebouncedValid(isTotalValid);
+    }, 120);
+    return () => clearTimeout(t);
+  }, [totalFillPercentage, isTotalValid]);
+
   return (
     <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50">
@@ -756,9 +767,9 @@ export function PeptideCalculator() {
                     </div>
 
                     <AnimatedSyringe
-                      fillPercentage={totalFillPercentage}
+                      fillPercentage={debouncedFill}
                       units={totalUnits}
-                      isValid={isTotalValid}
+                      isValid={debouncedValid}
                       maxUnits={syringeVolume.value}
                     />
 
