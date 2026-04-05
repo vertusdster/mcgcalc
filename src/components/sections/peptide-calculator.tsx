@@ -42,7 +42,7 @@ interface SavedCalculation {
   savedAt: string;
   syringeValue: number;
   waterVolume: number | string;
-  waterUnit: "ml" | "cc";
+  waterUnit: "ml" | "IU";
   peptides: Peptide[];
 }
 
@@ -69,7 +69,11 @@ function AnimatedSyringe({
         : [0, 10, 20, 30];
 
   return (
-    <div className="relative w-full py-2" role="img" aria-label={`Syringe fill: ${Math.round(clampedFill)}% — ${isValid ? "valid dose" : "exceeds capacity"}`}>
+    <div
+      className="relative w-full py-2"
+      role="img"
+      aria-label={`Syringe fill: ${Math.round(clampedFill)}% — ${isValid ? "valid dose" : "exceeds capacity"}`}
+    >
       <div className="px-2">
         <div className="relative mx-auto w-full max-w-md">
           <div className="relative h-12 overflow-hidden rounded-none border border-slate-300 bg-slate-100">
@@ -230,18 +234,18 @@ const SYRINGE_VOLUMES = [
   { value: 100, label: "100 units", ml: 1.0 },
 ];
 
-const WATER_UNITS = ["ml", "cc"] as const;
+const WATER_UNITS = ["ml", "IU"] as const;
 
 // Common peptide presets for quick filling
 const PEPTIDE_PRESETS = [
-  { name: "BPC-157",     vial: 5,   dose: 250,  doseUnit: "mcg" as const },
-  { name: "TB-500",      vial: 5,   dose: 2500, doseUnit: "mcg" as const },
-  { name: "Semaglutide", vial: 5,   dose: 250,  doseUnit: "mcg" as const },
-  { name: "Ipamorelin",  vial: 2,   dose: 200,  doseUnit: "mcg" as const },
-  { name: "CJC-1295",    vial: 2,   dose: 100,  doseUnit: "mcg" as const },
-  { name: "Epithalon",   vial: 10,  dose: 5,    doseUnit: "mg"  as const },
-  { name: "PT-141",      vial: 10,  dose: 1,    doseUnit: "mg"  as const },
-  { name: "AOD-9604",    vial: 5,   dose: 300,  doseUnit: "mcg" as const },
+  { name: "BPC-157", vial: 5, dose: 250, doseUnit: "mcg" as const },
+  { name: "TB-500", vial: 5, dose: 2500, doseUnit: "mcg" as const },
+  { name: "Semaglutide", vial: 5, dose: 250, doseUnit: "mcg" as const },
+  { name: "Ipamorelin", vial: 2, dose: 200, doseUnit: "mcg" as const },
+  { name: "CJC-1295", vial: 2, dose: 100, doseUnit: "mcg" as const },
+  { name: "Epithalon", vial: 10, dose: 5, doseUnit: "mg" as const },
+  { name: "PT-141", vial: 10, dose: 1, doseUnit: "mg" as const },
+  { name: "AOD-9604", vial: 5, dose: 300, doseUnit: "mcg" as const },
 ];
 
 function HelpTooltip({ content }: { content: string }) {
@@ -393,7 +397,7 @@ export function PeptideCalculator() {
     { id: generateId(), quantity: 5, dose: 250, doseUnit: "mcg" },
   ]);
   const [waterVolume, setWaterVolume] = useState<number | string>(5);
-  const [waterUnit, setWaterUnit] = useState<"ml" | "cc">("ml");
+  const [waterUnit, setWaterUnit] = useState<"ml" | "IU">("ml");
 
   // Save/load state
   const [savedCalculations, setSavedCalculations] = useState<
@@ -463,13 +467,15 @@ export function PeptideCalculator() {
     [savedCalculations, persistSaved],
   );
 
-  const applyPreset = useCallback((preset: typeof PEPTIDE_PRESETS[0]) => {
-    setPeptides([{
-      id: generateId(),
-      quantity: preset.vial,
-      dose: preset.dose,
-      doseUnit: preset.doseUnit,
-    }]);
+  const applyPreset = useCallback((preset: (typeof PEPTIDE_PRESETS)[0]) => {
+    setPeptides([
+      {
+        id: generateId(),
+        quantity: preset.vial,
+        dose: preset.dose,
+        doseUnit: preset.doseUnit,
+      },
+    ]);
   }, []);
 
   const addPeptide = useCallback(() => {
@@ -496,7 +502,8 @@ export function PeptideCalculator() {
 
   const results = useMemo((): CalculationResult[] | null => {
     const waterVolNum = Number(waterVolume) || 0;
-    const waterMl = waterVolNum; // ml and cc are equivalent (1cc = 1mL)
+    // IU mode: user enters units on a U-100 syringe (100 IU = 1 mL)
+    const waterMl = waterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
 
     const hasValidPeptide = peptides.some(
       (p) => (Number(p.quantity) || 0) > 0 && (Number(p.dose) || 0) > 0,
@@ -552,7 +559,11 @@ export function PeptideCalculator() {
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-xl font-bold text-slate-800">Volume</Label>
-              <div className="flex w-3/5 gap-2" role="group" aria-label="Syringe volume">
+              <div
+                className="flex w-3/5 gap-2"
+                role="group"
+                aria-label="Syringe volume"
+              >
                 {SYRINGE_VOLUMES.map((vol) => (
                   <button
                     key={vol.value}
@@ -651,7 +662,7 @@ export function PeptideCalculator() {
               <span className="text-sm font-bold">
                 Enter the Quantity of Bacteriostatic Water
               </span>
-              <HelpTooltip content="Enter the volume of Bacteriostatic Water (BAC water) added to the vial. ml and cc are equivalent — 1cc = 1mL." />
+              <HelpTooltip content="Enter the volume of Bacteriostatic Water added. Use ml for direct volume, or IU if measuring with a U-100 insulin syringe (100 IU = 1 mL)." />
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-xl font-bold text-slate-800">Water</Label>
@@ -663,7 +674,11 @@ export function PeptideCalculator() {
                   onChange={(val) => setWaterVolume(val)}
                   className="flex-1"
                 />
-                <div className="flex shrink-0" role="group" aria-label="Water volume unit">
+                <div
+                  className="flex shrink-0"
+                  role="group"
+                  aria-label="Water volume unit"
+                >
                   {WATER_UNITS.map((unit) => (
                     <button
                       key={unit}
@@ -711,7 +726,11 @@ export function PeptideCalculator() {
                       onChange={(val) => updatePeptide(peptide.id, "dose", val)}
                       className="flex-1"
                     />
-                    <div className="flex shrink-0" role="group" aria-label="Dose unit">
+                    <div
+                      className="flex shrink-0"
+                      role="group"
+                      aria-label="Dose unit"
+                    >
                       {(["mcg", "mg"] as const).map((unit) => (
                         <button
                           key={unit}
@@ -739,178 +758,181 @@ export function PeptideCalculator() {
           {/* Results */}
           <div className="border-border/50 border-t pt-4">
             <div aria-live="polite" aria-atomic="true">
-            {results ? (
-              <div className="space-y-4">
-                <div
-                  className={cn(
-                    "rounded-2xl p-6 transition-all duration-500",
-                    isTotalValid
-                      ? "border border-[#2bb3ba]/20 bg-[#11696f]/[0.03]"
-                      : "border border-slate-200 bg-slate-50",
-                  )}
-                >
-                  <div className="mb-2 flex items-end justify-between">
-                    <span className="text-lg font-bold tracking-tight text-slate-800">
-                      {peptides.length > 1 ? "Total Volume" : "Formulate"}
-                    </span>
-                    <div className="flex items-baseline gap-1">
-                      <span
-                        className={cn(
-                          "text-2xl font-black tabular-nums",
-                          isTotalValid ? "text-[#11696f]" : "text-slate-500",
-                        )}
-                      >
-                        {totalUnits.toFixed(1)}
+              {results ? (
+                <div className="space-y-4">
+                  <div
+                    className={cn(
+                      "rounded-2xl p-6 transition-all duration-500",
+                      isTotalValid
+                        ? "border border-[#2bb3ba]/20 bg-[#11696f]/[0.03]"
+                        : "border border-slate-200 bg-slate-50",
+                    )}
+                  >
+                    <div className="mb-2 flex items-end justify-between">
+                      <span className="text-lg font-bold tracking-tight text-slate-800">
+                        {peptides.length > 1 ? "Total Volume" : "Formulate"}
                       </span>
-                      <span className="text-base font-bold text-slate-700">
-                        units
-                      </span>
-                    </div>
-                  </div>
-
-                  <AnimatedSyringe
-                    fillPercentage={totalFillPercentage}
-                    units={totalUnits}
-                    isValid={isTotalValid}
-                    maxUnits={syringeVolume.value}
-                  />
-
-                  <div className="mt-2 border-t border-slate-200/60 pt-3">
-                    <ul className="space-y-3">
-                      {results.map((result, index) => (
-                        <li
-                          key={result.id}
-                          className="flex items-start gap-3 text-sm leading-relaxed"
+                      <div className="flex items-baseline gap-1">
+                        <span
+                          className={cn(
+                            "text-2xl font-black tabular-nums",
+                            isTotalValid ? "text-[#11696f]" : "text-slate-500",
+                          )}
                         >
-                          <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#11696f]" />
-                          <span className="text-slate-700">
-                            Draw <strong>{result.units} units</strong> for{" "}
-                            <strong>
-                              {peptides[index].dose}
-                              {peptides[index].doseUnit}
-                            </strong>{" "}
-                            doses
-                            {peptides.length > 1
-                              ? ` of Peptide ${index + 1}`
-                              : ""}
-                          </span>
-                        </li>
-                      ))}
-                      {peptides.map((peptide, index) => {
-                        const doseNum = Number(peptide.dose) || 0;
-                        const quantNum = Number(peptide.quantity) || 0;
-                        const waterVolNum = Number(waterVolume) || 0;
+                          {totalUnits.toFixed(1)}
+                        </span>
+                        <span className="text-base font-bold text-slate-700">
+                          units
+                        </span>
+                      </div>
+                    </div>
 
-                        const doseMg =
-                          peptide.doseUnit === "mcg" ? doseNum / 1000 : doseNum;
-                        const waterMl = waterVolNum; // 1cc = 1mL
-                        const concentrationMgPerMl =
-                          waterMl > 0 ? quantNum / waterMl : 0;
-                        const totalDosesNum =
-                          doseMg > 0 ? quantNum / doseMg : 0;
+                    <AnimatedSyringe
+                      fillPercentage={totalFillPercentage}
+                      units={totalUnits}
+                      isValid={isTotalValid}
+                      maxUnits={syringeVolume.value}
+                    />
 
-                        const formatDoses = (num: number) =>
-                          Number.isInteger(num)
-                            ? num.toString()
-                            : num.toFixed(2);
-
-                        return (
+                    <div className="mt-2 border-t border-slate-200/60 pt-3">
+                      <ul className="space-y-3">
+                        {results.map((result, index) => (
                           <li
-                            key={`conc-${peptide.id}`}
-                            className="animate-in fade-in flex items-start gap-3 text-sm leading-relaxed duration-500"
+                            key={result.id}
+                            className="flex items-start gap-3 text-sm leading-relaxed"
                           >
-                            <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400/80" />
-                            <span className="font-bold text-slate-600">
-                              With a concentration of{" "}
+                            <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#11696f]" />
+                            <span className="text-slate-700">
+                              Draw <strong>{result.units} units</strong> for{" "}
                               <strong>
-                                {concentrationMgPerMl.toFixed(2)}mg/mL
-                              </strong>
-                              ,{" "}
-                              {peptides.length > 1
-                                ? `Peptide ${index + 1} `
-                                : ""}
-                              vial contains ~
-                              <strong>
-                                {formatDoses(totalDosesNum)} doses
+                                {peptides[index].dose}
+                                {peptides[index].doseUnit}
                               </strong>{" "}
-                              in {waterMl}mL.
+                              doses
+                              {peptides.length > 1
+                                ? ` of Peptide ${index + 1}`
+                                : ""}
                             </span>
                           </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                </div>
+                        ))}
+                        {peptides.map((peptide, index) => {
+                          const doseNum = Number(peptide.dose) || 0;
+                          const quantNum = Number(peptide.quantity) || 0;
+                          const waterVolNum = Number(waterVolume) || 0;
 
-                {!isTotalValid && (
-                  <div className="animate-in fade-in slide-in-from-bottom-2 flex items-center gap-2 rounded-lg border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 p-3">
-                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-200">
-                      <span className="text-xs font-bold text-slate-600">
-                        !
-                      </span>
+                          const doseMg =
+                            peptide.doseUnit === "mcg"
+                              ? doseNum / 1000
+                              : doseNum;
+                          const waterMl =
+                          waterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
+                          const concentrationMgPerMl =
+                            waterMl > 0 ? quantNum / waterMl : 0;
+                          const totalDosesNum =
+                            doseMg > 0 ? quantNum / doseMg : 0;
+
+                          const formatDoses = (num: number) =>
+                            Number.isInteger(num)
+                              ? num.toString()
+                              : num.toFixed(2);
+
+                          return (
+                            <li
+                              key={`conc-${peptide.id}`}
+                              className="animate-in fade-in flex items-start gap-3 text-sm leading-relaxed duration-500"
+                            >
+                              <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400/80" />
+                              <span className="font-bold text-slate-600">
+                                With a concentration of{" "}
+                                <strong>
+                                  {concentrationMgPerMl.toFixed(2)}mg/mL
+                                </strong>
+                                ,{" "}
+                                {peptides.length > 1
+                                  ? `Peptide ${index + 1} `
+                                  : ""}
+                                vial contains ~
+                                <strong>
+                                  {formatDoses(totalDosesNum)} doses
+                                </strong>{" "}
+                                in {waterMl}mL.
+                              </span>
+                            </li>
+                          );
+                        })}
+                      </ul>
                     </div>
-                    <p className="text-sm text-slate-700">
-                      Total injection volume exceeds syringe capacity, please
-                      adjust doses or use a larger syringe.
-                    </p>
                   </div>
-                )}
 
-                {/* Save button */}
-                {isTotalValid && (
-                  <div className="pt-1">
-                    {showSaveInput ? (
-                      <div className="animate-in fade-in flex gap-2 duration-200">
-                        <Input
-                          type="text"
-                          placeholder="Label (e.g. BPC-157 Morning)"
-                          value={saveLabel}
-                          onChange={(e) => setSaveLabel(e.target.value)}
-                          onKeyDown={(e) => e.key === "Enter" && handleSave()}
-                          className="h-9 rounded-xl border-slate-200 text-sm focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
-                          autoFocus
-                        />
-                        <button
-                          onClick={handleSave}
-                          className="h-9 shrink-0 rounded-xl bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-4 text-xs font-bold text-white transition-opacity hover:opacity-90"
-                        >
-                          Save
-                        </button>
-                        <button
-                          onClick={() => {
-                            setShowSaveInput(false);
-                            setSaveLabel("");
-                          }}
-                          className="h-9 shrink-0 rounded-xl bg-slate-100 px-3 text-xs font-bold text-slate-500 hover:bg-slate-200"
-                        >
-                          Cancel
-                        </button>
+                  {!isTotalValid && (
+                    <div className="animate-in fade-in slide-in-from-bottom-2 flex items-center gap-2 rounded-lg border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 p-3">
+                      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-200">
+                        <span className="text-xs font-bold text-slate-600">
+                          !
+                        </span>
                       </div>
-                    ) : (
-                      <button
-                        onClick={() => setShowSaveInput(true)}
-                        className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:border-[#2bb3ba] hover:text-[#11696f]"
-                      >
-                        <BookmarkPlus className="h-4 w-4" />
-                        Save this calculation
-                      </button>
-                    )}
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200/50">
-                  <Syringe className="h-8 w-8 text-slate-400" />
+                      <p className="text-sm text-slate-700">
+                        Total injection volume exceeds syringe capacity, please
+                        adjust doses or use a larger syringe.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Save button */}
+                  {isTotalValid && (
+                    <div className="pt-1">
+                      {showSaveInput ? (
+                        <div className="animate-in fade-in flex gap-2 duration-200">
+                          <Input
+                            type="text"
+                            placeholder="Label (e.g. BPC-157 Morning)"
+                            value={saveLabel}
+                            onChange={(e) => setSaveLabel(e.target.value)}
+                            onKeyDown={(e) => e.key === "Enter" && handleSave()}
+                            className="h-9 rounded-xl border-slate-200 text-sm focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
+                            autoFocus
+                          />
+                          <button
+                            onClick={handleSave}
+                            className="h-9 shrink-0 rounded-xl bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-4 text-xs font-bold text-white transition-opacity hover:opacity-90"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => {
+                              setShowSaveInput(false);
+                              setSaveLabel("");
+                            }}
+                            className="h-9 shrink-0 rounded-xl bg-slate-100 px-3 text-xs font-bold text-slate-500 hover:bg-slate-200"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => setShowSaveInput(true)}
+                          className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:border-[#2bb3ba] hover:text-[#11696f]"
+                        >
+                          <BookmarkPlus className="h-4 w-4" />
+                          Save this calculation
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </div>
-                <p className="text-muted-foreground text-sm">
-                  Enter valid values to see results
-                </p>
-                <p className="text-muted-foreground/70 mt-1 text-xs">
-                  Results will update in real time as you type
-                </p>
-              </div>
-            )}
+              ) : (
+                <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-center">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200/50">
+                    <Syringe className="h-8 w-8 text-slate-400" />
+                  </div>
+                  <p className="text-muted-foreground text-sm">
+                    Enter valid values to see results
+                  </p>
+                  <p className="text-muted-foreground/70 mt-1 text-xs">
+                    Results will update in real time as you type
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
