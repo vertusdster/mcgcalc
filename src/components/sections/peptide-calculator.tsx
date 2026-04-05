@@ -315,20 +315,21 @@ function NumberInput({
     [stepMode, clamp],
   );
 
+  const stopRepeat = useCallback(() => {
+    if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
+    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+  }, []);
+
   const startRepeat = useCallback(
     (dir: 1 | -1) => {
+      stopRepeat(); // clear any existing repeat before starting
       step(dir);
       timeoutRef.current = setTimeout(() => {
         intervalRef.current = setInterval(() => step(dir), 60);
       }, 350);
     },
-    [step],
+    [step, stopRepeat],
   );
-
-  const stopRepeat = useCallback(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  }, []);
 
   return (
     <div className={cn("flex items-center", className)}>
@@ -339,6 +340,7 @@ function NumberInput({
         onPointerDown={() => startRepeat(-1)}
         onPointerUp={stopRepeat}
         onPointerLeave={stopRepeat}
+        onPointerCancel={stopRepeat}
         className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
       >
         −
@@ -375,6 +377,7 @@ function NumberInput({
         onPointerDown={() => startRepeat(1)}
         onPointerUp={stopRepeat}
         onPointerLeave={stopRepeat}
+        onPointerCancel={stopRepeat}
         className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
       >
         +
