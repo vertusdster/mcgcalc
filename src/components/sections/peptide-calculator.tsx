@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import {
   Plus,
   Trash2,
@@ -255,6 +255,100 @@ function generateId() {
   return Math.random().toString(36).substring(2, 9);
 }
 
+// Number input with large +/− stepper buttons
+function NumberInput({
+  value,
+  onChange,
+  step = 1,
+  min = 0,
+  suffix,
+  className,
+}: {
+  value: number | string;
+  onChange: (val: string) => void;
+  step?: number;
+  min?: number;
+  suffix?: string;
+  className?: string;
+}) {
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clamp = (n: number) => Math.max(min, parseFloat(n.toFixed(10)));
+
+  const increment = useCallback(() => {
+    onChange(String(clamp((Number(value) || 0) + step)));
+  }, [value, step, min]);
+
+  const decrement = useCallback(() => {
+    onChange(String(clamp((Number(value) || 0) - step)));
+  }, [value, step, min]);
+
+  // Hold-to-repeat: start slow, then fast
+  const startRepeat = (fn: () => void) => {
+    fn();
+    timeoutRef.current = setTimeout(() => {
+      intervalRef.current = setInterval(fn, 80);
+    }, 400);
+  };
+
+  const stopRepeat = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+  };
+
+  return (
+    <div className={cn("flex items-center", className)}>
+      {/* Decrement */}
+      <button
+        type="button"
+        aria-label="Decrease"
+        onPointerDown={() => startRepeat(decrement)}
+        onPointerUp={stopRepeat}
+        onPointerLeave={stopRepeat}
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors select-none hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+      >
+        −
+      </button>
+
+      {/* Text input */}
+      <div className="relative flex-1">
+        <input
+          type="text"
+          inputMode="decimal"
+          value={value}
+          onChange={(e) => {
+            let v = e.target.value;
+            if (v === "" || v === "-" || /^[0-9]*\.?[0-9]*$/.test(v)) onChange(v);
+          }}
+          onBlur={(e) => {
+            const n = parseFloat(e.target.value);
+            onChange(String(isNaN(n) ? min : clamp(n)));
+          }}
+          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#2bb3ba]/30 focus:border-[#2bb3ba] focus:bg-white dark:text-white"
+        />
+        {suffix && (
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">
+            {suffix}
+          </span>
+        )}
+      </div>
+
+      {/* Increment */}
+      <button
+        type="button"
+        aria-label="Increase"
+        onPointerDown={() => startRepeat(increment)}
+        onPointerUp={stopRepeat}
+        onPointerLeave={stopRepeat}
+        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors select-none hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+      >
+        +
+      </button>
+    </div>
+  );
+}
+
 export function PeptideCalculator() {
   const [syringeVolume, setSyringeVolume] = useState(SYRINGE_VOLUMES[0]);
   const [peptides, setPeptides] = useState<Peptide[]>([
@@ -473,29 +567,14 @@ export function PeptideCalculator() {
                     )}
                   </div>
                   <div className="flex w-3/5 items-center">
-                    <div className="relative w-full">
-                      <Input
-                        type="number"
-                        min={0}
-                        step={0.1}
-                        value={peptide.quantity}
-                        onChange={(e) => {
-                          let val = e.target.value;
-                          if (
-                            val.length > 1 &&
-                            val.startsWith("0") &&
-                            !val.startsWith("0.")
-                          ) {
-                            val = val.replace(/^0+(?=\d)/, "");
-                          }
-                          updatePeptide(peptide.id, "quantity", val);
-                        }}
-                        className="h-12 w-full rounded-xl border-transparent bg-[#1e3a5f]/5 pr-12 text-center text-lg font-bold selection:bg-[#2bb3ba] selection:text-white focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
-                      />
-                      <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500">
-                        mg
-                      </span>
-                    </div>
+                    <NumberInput
+                      value={peptide.quantity}
+                      step={0.5}
+                      min={0}
+                      suffix="mg"
+                      onChange={(val) => updatePeptide(peptide.id, "quantity", val)}
+                      className="w-full"
+                    />
                   </div>
                 </div>
               ))}
@@ -513,27 +592,14 @@ export function PeptideCalculator() {
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-xl font-bold text-slate-800">Water</Label>
-              <div className="flex w-3/5 gap-3">
-                <div className="relative flex-1">
-                  <Input
-                    type="number"
-                    min={0}
-                    step={0.1}
-                    value={waterVolume}
-                    onChange={(e) => {
-                      let val = e.target.value;
-                      if (
-                        val.length > 1 &&
-                        val.startsWith("0") &&
-                        !val.startsWith("0.")
-                      ) {
-                        val = val.replace(/^0+(?=\d)/, "");
-                      }
-                      setWaterVolume(val);
-                    }}
-                    className="h-12 rounded-xl border-transparent bg-[#1e3a5f]/5 text-center text-lg font-bold selection:bg-[#2bb3ba] selection:text-white focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
-                  />
-                </div>
+              <div className="flex w-3/5 gap-2">
+                <NumberInput
+                  value={waterVolume}
+                  step={0.5}
+                  min={0}
+                  onChange={(val) => setWaterVolume(val)}
+                  className="flex-1"
+                />
                 <div className="flex shrink-0">
                   {WATER_UNITS.map((unit) => (
                     <button
@@ -573,27 +639,14 @@ export function PeptideCalculator() {
                   <Label className="text-xl font-bold text-slate-800">
                     Peptide {index + 1}
                   </Label>
-                  <div className="flex w-3/5 gap-3">
-                    <div className="relative flex-1">
-                      <Input
-                        type="number"
-                        min={0}
-                        step={1}
-                        value={peptide.dose}
-                        onChange={(e) => {
-                          let val = e.target.value;
-                          if (
-                            val.length > 1 &&
-                            val.startsWith("0") &&
-                            !val.startsWith("0.")
-                          ) {
-                            val = val.replace(/^0+(?=\d)/, "");
-                          }
-                          updatePeptide(peptide.id, "dose", val);
-                        }}
-                        className="h-12 rounded-xl border-transparent bg-[#1e3a5f]/5 text-center text-lg font-bold selection:bg-[#2bb3ba] selection:text-white focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
-                      />
-                    </div>
+                  <div className="flex w-3/5 gap-2">
+                    <NumberInput
+                      value={peptide.dose}
+                      step={peptide.doseUnit === "mcg" ? 50 : 0.05}
+                      min={0}
+                      onChange={(val) => updatePeptide(peptide.id, "dose", val)}
+                      className="flex-1"
+                    />
                     <div className="flex shrink-0">
                       {(["mcg", "mg"] as const).map((unit) => (
                         <button
