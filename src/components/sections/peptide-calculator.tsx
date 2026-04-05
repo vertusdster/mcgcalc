@@ -293,38 +293,42 @@ function NumberInput({
 }) {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Always hold latest value/onChange so interval callbacks never go stale
+  const valueRef = useRef(value);
+  const onChangeRef = useRef(onChange);
+  valueRef.current = value;
+  onChangeRef.current = onChange;
 
-  const clamp = (n: number) => Math.max(min, parseFloat(n.toFixed(10)));
+  const clamp = useCallback(
+    (n: number) => Math.max(min, parseFloat(n.toFixed(10))),
+    [min],
+  );
 
-  const format = (n: number) => {
-    // Trim unnecessary trailing zeros but keep up to 2 decimal places
-    return parseFloat(n.toFixed(4)).toString();
-  };
+  const format = (n: number) => parseFloat(n.toFixed(4)).toString();
 
-  const increment = useCallback(() => {
-    const cur = Number(value) || 0;
-    const step = smartStep(cur, stepMode);
-    onChange(format(clamp(cur + step)));
-  }, [value, stepMode, min]);
+  const step = useCallback(
+    (dir: 1 | -1) => {
+      const cur = Number(valueRef.current) || 0;
+      const s = smartStep(cur, stepMode);
+      onChangeRef.current(format(clamp(cur + dir * s)));
+    },
+    [stepMode, clamp],
+  );
 
-  const decrement = useCallback(() => {
-    const cur = Number(value) || 0;
-    const step = smartStep(cur, stepMode);
-    onChange(format(clamp(cur - step)));
-  }, [value, stepMode, min]);
+  const startRepeat = useCallback(
+    (dir: 1 | -1) => {
+      step(dir);
+      timeoutRef.current = setTimeout(() => {
+        intervalRef.current = setInterval(() => step(dir), 60);
+      }, 350);
+    },
+    [step],
+  );
 
-  // Hold-to-repeat: start slow, then fast
-  const startRepeat = (fn: () => void) => {
-    fn();
-    timeoutRef.current = setTimeout(() => {
-      intervalRef.current = setInterval(fn, 80);
-    }, 400);
-  };
-
-  const stopRepeat = () => {
+  const stopRepeat = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     if (intervalRef.current) clearInterval(intervalRef.current);
-  };
+  }, []);
 
   return (
     <div className={cn("flex items-center", className)}>
@@ -332,7 +336,7 @@ function NumberInput({
       <button
         type="button"
         aria-label="Decrease"
-        onPointerDown={() => startRepeat(decrement)}
+        onPointerDown={() => startRepeat(-1)}
         onPointerUp={stopRepeat}
         onPointerLeave={stopRepeat}
         className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
@@ -368,7 +372,7 @@ function NumberInput({
       <button
         type="button"
         aria-label="Increase"
-        onPointerDown={() => startRepeat(increment)}
+        onPointerDown={() => startRepeat(1)}
         onPointerUp={stopRepeat}
         onPointerLeave={stopRepeat}
         className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
