@@ -1,4 +1,12 @@
-import { useState, useCallback, useMemo, useEffect, useRef, useTransition, useDeferredValue } from "react";
+import {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  useTransition,
+  useDeferredValue,
+} from "react";
 import {
   Plus,
   Trash2,
@@ -291,15 +299,34 @@ function NumberInput({
   suffix?: string;
   className?: string;
 }) {
-  const valueRef = useRef(value);
-  valueRef.current = value;
+  // Local display state — updates instantly without triggering parent re-render
+  const [display, setDisplay] = useState(String(value));
+  const commitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
+  // Sync when parent value changes externally (e.g. load saved calc)
+  useEffect(() => {
+    setDisplay(String(value));
+  }, [value]);
 
   const clamp = (n: number) => Math.max(min, parseFloat(n.toFixed(10)));
   const format = (n: number) => parseFloat(n.toFixed(4)).toString();
 
+  const scheduleCommit = (val: string) => {
+    if (commitTimer.current) clearTimeout(commitTimer.current);
+    commitTimer.current = setTimeout(() => {
+      onChangeRef.current(val);
+    }, 300);
+  };
+
   const step = (dir: 1 | -1) => {
-    const cur = Number(valueRef.current) || 0;
-    onChange(format(clamp(cur + dir * smartStep(cur, stepMode))));
+    setDisplay((prev) => {
+      const cur = Number(prev) || 0;
+      const next = format(clamp(cur + dir * smartStep(cur, stepMode)));
+      scheduleCommit(next);
+      return next;
+    });
   };
 
   return (
@@ -319,15 +346,20 @@ function NumberInput({
         <input
           type="text"
           inputMode="decimal"
-          value={value}
+          value={display}
           onChange={(e) => {
-            let v = e.target.value;
-            if (v === "" || v === "-" || /^[0-9]*\.?[0-9]*$/.test(v))
-              onChange(v);
+            const v = e.target.value;
+            if (v === "" || /^[0-9]*\.?[0-9]*$/.test(v)) {
+              setDisplay(v);
+              scheduleCommit(v);
+            }
           }}
           onBlur={(e) => {
             const n = parseFloat(e.target.value);
-            onChange(String(isNaN(n) ? min : clamp(n)));
+            const val = String(isNaN(n) ? min : clamp(n));
+            setDisplay(val);
+            if (commitTimer.current) clearTimeout(commitTimer.current);
+            onChangeRef.current(val);
           }}
           className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#2bb3ba]/30 focus:border-[#2bb3ba] focus:bg-white dark:text-white"
         />
@@ -458,7 +490,8 @@ export function PeptideCalculator() {
   const results = useMemo((): CalculationResult[] | null => {
     const waterVolNum = Number(deferredWaterVolume) || 0;
     // IU mode: user enters units on a U-100 syringe (100 IU = 1 mL)
-    const waterMl = deferredWaterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
+    const waterMl =
+      deferredWaterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
 
     const hasValidPeptide = deferredPeptides.some(
       (p) => (Number(p.quantity) || 0) > 0 && (Number(p.dose) || 0) > 0,
@@ -475,7 +508,8 @@ export function PeptideCalculator() {
       const concentrationMgPerMl = quantNum / waterMl;
       const volumeNeededMl =
         concentrationMgPerMl > 0 ? doseMg / concentrationMgPerMl : 0;
-      const units = (volumeNeededMl / deferredSyringe.ml) * deferredSyringe.value;
+      const units =
+        (volumeNeededMl / deferredSyringe.ml) * deferredSyringe.value;
       const fillPercentage = (units / deferredSyringe.value) * 100;
 
       return {
@@ -486,7 +520,12 @@ export function PeptideCalculator() {
         fillPercentage,
       };
     });
-  }, [deferredPeptides, deferredWaterVolume, deferredWaterUnit, deferredSyringe]);
+  }, [
+    deferredPeptides,
+    deferredWaterVolume,
+    deferredWaterUnit,
+    deferredSyringe,
+  ]);
 
   const totalUnits = useMemo(() => {
     if (!results) return 0;
