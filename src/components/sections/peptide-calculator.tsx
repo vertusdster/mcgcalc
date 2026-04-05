@@ -1,183 +1,220 @@
-import { useState, useCallback, useMemo } from "react"
-import { Plus, Trash2, HelpCircle, Beaker, Droplets, Syringe } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
-import { cn } from "@/lib/utils"
+import { useState, useCallback, useMemo } from "react";
+import {
+  Plus,
+  Trash2,
+  HelpCircle,
+  Beaker,
+  Droplets,
+  Syringe,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface Peptide {
-  id: string
-  quantity: number | string
-  dose: number | string
-  doseUnit: "mcg" | "mg"
+  id: string;
+  quantity: number | string;
+  dose: number | string;
+  doseUnit: "mcg" | "mg";
 }
 
 interface CalculationResult {
-  id: string
-  volumeMl: number
-  units: number
-  isValid: boolean
-  fillPercentage: number
+  id: string;
+  volumeMl: number;
+  units: number;
+  isValid: boolean;
+  fillPercentage: number;
 }
 
 function AnimatedSyringe({
   fillPercentage,
   units,
   isValid,
-  maxUnits
+  maxUnits,
 }: {
-  fillPercentage: number
-  units: number
-  isValid: boolean
-  maxUnits: number
+  fillPercentage: number;
+  units: number;
+  isValid: boolean;
+  maxUnits: number;
 }) {
-  const clampedFill = Math.min(Math.max(fillPercentage, 0), 100)
+  const clampedFill = Math.min(Math.max(fillPercentage, 0), 100);
 
-  const majorMarks = maxUnits === 100 ? [0, 20, 40, 60, 80, 100]
-    : maxUnits === 50 ? [0, 10, 20, 30, 40, 50]
-      : [0, 10, 20, 30]
+  const majorMarks =
+    maxUnits === 100
+      ? [0, 20, 40, 60, 80, 100]
+      : maxUnits === 50
+        ? [0, 10, 20, 30, 40, 50]
+        : [0, 10, 20, 30];
 
   return (
     <div className="relative w-full py-2">
       <div className="px-2">
-        <div className="relative w-full max-w-md mx-auto">
-          <div className="relative h-12 bg-slate-100 rounded-none border border-slate-300 overflow-hidden">
+        <div className="relative mx-auto w-full max-w-md">
+          <div className="relative h-12 overflow-hidden rounded-none border border-slate-300 bg-slate-100">
             <div
               className={cn(
-                "absolute left-0 top-0 bottom-0 transition-all duration-700 ease-out z-10",
+                "absolute bottom-0 left-0 top-0 z-10 transition-all duration-700 ease-out",
                 clampedFill > 0 ? "rounded-none" : "",
                 isValid
                   ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba]"
-                  : "bg-slate-300"
+                  : "bg-slate-300",
               )}
               style={{
                 width: `${clampedFill}%`,
-                ...(!isValid ? {
-                  backgroundImage: 'repeating-linear-gradient(45deg, #94a3b8 0, #94a3b8 10px, #cbd5e1 10px, #cbd5e1 20px)'
-                } : {})
+                ...(!isValid
+                  ? {
+                      backgroundImage:
+                        "repeating-linear-gradient(45deg, #94a3b8 0, #94a3b8 10px, #cbd5e1 10px, #cbd5e1 20px)",
+                    }
+                  : {}),
               }}
             />
 
-            <div className="absolute inset-y-0 left-1 right-1 z-30 pointer-events-none">
+            <div className="pointer-events-none absolute inset-y-0 left-1 right-1 z-30">
               {majorMarks.map((mark, i) => {
-                const markPosition = (i / (majorMarks.length - 1)) * 100
-                const isInLiquid = markPosition <= clampedFill
+                const markPosition = (i / (majorMarks.length - 1)) * 100;
+                const isInLiquid = markPosition <= clampedFill;
                 return (
                   <span
                     key={mark}
                     className={cn(
                       "absolute top-1/2 text-[10px] font-bold tabular-nums transition-colors duration-300",
-                      isInLiquid ? (isValid ? "text-white" : "text-slate-600") : "text-slate-500"
+                      isInLiquid
+                        ? isValid
+                          ? "text-white"
+                          : "text-slate-600"
+                        : "text-slate-500",
                     )}
                     style={{
                       left: `${markPosition}%`,
-                      transform: 'translate(-50%, -50%)'
+                      transform: "translate(-50%, -50%)",
                     }}
                   >
                     {mark}
                   </span>
-                )
+                );
               })}
             </div>
 
-            <div className="absolute top-0 left-1 right-1 z-20">
+            <div className="absolute left-1 right-1 top-0 z-20">
               {majorMarks.map((mark, i) => {
-                const markPosition = (i / (majorMarks.length - 1)) * 100
-                const isInLiquid = markPosition <= clampedFill
+                const markPosition = (i / (majorMarks.length - 1)) * 100;
+                const isInLiquid = markPosition <= clampedFill;
                 return (
                   <div
                     key={mark}
                     className={cn(
                       "absolute top-0 w-0.5 transition-colors duration-300",
-                      isInLiquid ? (isValid ? "bg-white" : "bg-slate-600") : "bg-slate-400"
+                      isInLiquid
+                        ? isValid
+                          ? "bg-white"
+                          : "bg-slate-600"
+                        : "bg-slate-400",
                     )}
                     style={{
                       left: `${markPosition}%`,
-                      height: '14px',
-                      transform: 'translateX(-50%)'
+                      height: "14px",
+                      transform: "translateX(-50%)",
                     }}
                   />
-                )
+                );
               })}
             </div>
 
-            <div className="absolute top-0 left-1 right-1 z-20">
+            <div className="absolute left-1 right-1 top-0 z-20">
               {[...Array((majorMarks.length - 1) * 5 + 1)].map((_, i) => {
-                const markPosition = (i / ((majorMarks.length - 1) * 5)) * 100
-                const isInLiquid = markPosition <= clampedFill
+                const markPosition = (i / ((majorMarks.length - 1) * 5)) * 100;
+                const isInLiquid = markPosition <= clampedFill;
                 return (
                   <div
                     key={i}
                     className={cn(
                       "absolute top-0 transition-colors duration-300",
-                      i % 5 === 0 ? "w-0.5 h-3.5" : "w-px h-2",
-                      isInLiquid ? (isValid ? "bg-white" : "bg-slate-600") : "bg-slate-300"
+                      i % 5 === 0 ? "h-3.5 w-0.5" : "h-2 w-px",
+                      isInLiquid
+                        ? isValid
+                          ? "bg-white"
+                          : "bg-slate-600"
+                        : "bg-slate-300",
                     )}
                     style={{
                       left: `${markPosition}%`,
-                      transform: 'translateX(-50%)'
+                      transform: "translateX(-50%)",
                     }}
                   />
-                )
+                );
               })}
             </div>
 
             <div className="absolute bottom-0 left-1 right-1 z-20">
               {majorMarks.map((mark, i) => {
-                const markPosition = (i / (majorMarks.length - 1)) * 100
-                const isInLiquid = markPosition <= clampedFill
+                const markPosition = (i / (majorMarks.length - 1)) * 100;
+                const isInLiquid = markPosition <= clampedFill;
                 return (
                   <div
                     key={mark}
                     className={cn(
                       "absolute bottom-0 w-0.5 transition-colors duration-300",
-                      isInLiquid ? (isValid ? "bg-white" : "bg-slate-600") : "bg-slate-400"
+                      isInLiquid
+                        ? isValid
+                          ? "bg-white"
+                          : "bg-slate-600"
+                        : "bg-slate-400",
                     )}
                     style={{
                       left: `${markPosition}%`,
-                      height: '14px',
-                      transform: 'translateX(-50%)'
+                      height: "14px",
+                      transform: "translateX(-50%)",
                     }}
                   />
-                )
+                );
               })}
             </div>
 
             <div className="absolute bottom-0 left-1 right-1 z-20">
               {[...Array((majorMarks.length - 1) * 5 + 1)].map((_, i) => {
-                const markPosition = (i / ((majorMarks.length - 1) * 5)) * 100
-                const isInLiquid = markPosition <= clampedFill
+                const markPosition = (i / ((majorMarks.length - 1) * 5)) * 100;
+                const isInLiquid = markPosition <= clampedFill;
                 return (
                   <div
                     key={i}
                     className={cn(
                       "absolute bottom-0 transition-colors duration-300",
-                      i % 5 === 0 ? "w-0.5 h-3.5" : "w-px h-2",
-                      isInLiquid ? (isValid ? "bg-white" : "bg-slate-600") : "bg-slate-300"
+                      i % 5 === 0 ? "h-3.5 w-0.5" : "h-2 w-px",
+                      isInLiquid
+                        ? isValid
+                          ? "bg-white"
+                          : "bg-slate-600"
+                        : "bg-slate-300",
                     )}
                     style={{
                       left: `${markPosition}%`,
-                      transform: 'translateX(-50%)'
+                      transform: "translateX(-50%)",
                     }}
                   />
-                )
+                );
               })}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 const SYRINGE_VOLUMES = [
   { value: 30, label: "30 units", ml: 0.3 },
   { value: 50, label: "50 units", ml: 0.5 },
   { value: 100, label: "100 units", ml: 1.0 },
-]
+];
 
-const WATER_UNITS = ["ml", "IU"] as const
+const WATER_UNITS = ["ml", "IU"] as const;
 
 function HelpTooltip({ content }: { content: string }) {
   return (
@@ -185,7 +222,7 @@ function HelpTooltip({ content }: { content: string }) {
       <TooltipTrigger asChild>
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground transition-colors"
+          className="text-muted-foreground hover:text-foreground inline-flex items-center justify-center rounded-full transition-colors"
         >
           <HelpCircle className="h-4 w-4" />
           <span className="sr-only">Help</span>
@@ -195,61 +232,64 @@ function HelpTooltip({ content }: { content: string }) {
         {content}
       </TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
 function generateId() {
-  return Math.random().toString(36).substring(2, 9)
+  return Math.random().toString(36).substring(2, 9);
 }
 
 export function PeptideCalculator() {
-  const [syringeVolume, setSyringeVolume] = useState(SYRINGE_VOLUMES[0])
+  const [syringeVolume, setSyringeVolume] = useState(SYRINGE_VOLUMES[0]);
   const [peptides, setPeptides] = useState<Peptide[]>([
     { id: generateId(), quantity: 5, dose: 250, doseUnit: "mcg" },
-  ])
-  const [waterVolume, setWaterVolume] = useState<number | string>(5)
-  const [waterUnit, setWaterUnit] = useState<"ml" | "IU">("ml")
+  ]);
+  const [waterVolume, setWaterVolume] = useState<number | string>(5);
+  const [waterUnit, setWaterUnit] = useState<"ml" | "IU">("ml");
 
   const addPeptide = useCallback(() => {
     if (peptides.length < 5) {
       setPeptides((prev) => [
         ...prev,
         { id: generateId(), quantity: 10, dose: 500, doseUnit: "mcg" },
-      ])
+      ]);
     }
-  }, [peptides.length])
+  }, [peptides.length]);
 
   const removePeptide = useCallback((id: string) => {
-    setPeptides((prev) => prev.filter((p) => p.id !== id))
-  }, [])
+    setPeptides((prev) => prev.filter((p) => p.id !== id));
+  }, []);
 
   const updatePeptide = useCallback(
     (id: string, field: keyof Peptide, value: number | string) => {
       setPeptides((prev) =>
-        prev.map((p) => (p.id === id ? { ...p, [field]: value } : p))
-      )
+        prev.map((p) => (p.id === id ? { ...p, [field]: value } : p)),
+      );
     },
-    []
-  )
+    [],
+  );
 
   const results = useMemo((): CalculationResult[] | null => {
-    const waterVolNum = Number(waterVolume) || 0
-    const waterMl = waterUnit === "IU" ? waterVolNum / 100 : waterVolNum
+    const waterVolNum = Number(waterVolume) || 0;
+    const waterMl = waterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
 
-    const hasValidPeptide = peptides.some(p => (Number(p.quantity) || 0) > 0 && (Number(p.dose) || 0) > 0)
+    const hasValidPeptide = peptides.some(
+      (p) => (Number(p.quantity) || 0) > 0 && (Number(p.dose) || 0) > 0,
+    );
     if (!hasValidPeptide || waterMl <= 0) {
-      return null
+      return null;
     }
 
     return peptides.map((peptide) => {
-      const doseNum = Number(peptide.dose) || 0
-      const quantNum = Number(peptide.quantity) || 0
+      const doseNum = Number(peptide.dose) || 0;
+      const quantNum = Number(peptide.quantity) || 0;
 
-      const doseMg = peptide.doseUnit === "mcg" ? doseNum / 1000 : doseNum
-      const concentrationMgPerMl = quantNum / waterMl
-      const volumeNeededMl = concentrationMgPerMl > 0 ? doseMg / concentrationMgPerMl : 0
-      const units = (volumeNeededMl / syringeVolume.ml) * syringeVolume.value
-      const fillPercentage = (units / syringeVolume.value) * 100
+      const doseMg = peptide.doseUnit === "mcg" ? doseNum / 1000 : doseNum;
+      const concentrationMgPerMl = quantNum / waterMl;
+      const volumeNeededMl =
+        concentrationMgPerMl > 0 ? doseMg / concentrationMgPerMl : 0;
+      const units = (volumeNeededMl / syringeVolume.ml) * syringeVolume.value;
+      const fillPercentage = (units / syringeVolume.value) * 100;
 
       return {
         id: peptide.id,
@@ -257,44 +297,46 @@ export function PeptideCalculator() {
         units: Math.round(units * 10) / 10,
         isValid: units > 0 && units <= syringeVolume.value,
         fillPercentage,
-      }
-    })
-  }, [peptides, waterVolume, waterUnit, syringeVolume])
+      };
+    });
+  }, [peptides, waterVolume, waterUnit, syringeVolume]);
 
   const totalUnits = useMemo(() => {
-    if (!results) return 0
-    return results.reduce((sum, r) => sum + r.units, 0)
-  }, [results])
+    if (!results) return 0;
+    return results.reduce((sum, r) => sum + r.units, 0);
+  }, [results]);
 
   const totalFillPercentage = useMemo(() => {
-    return (totalUnits / syringeVolume.value) * 100
-  }, [totalUnits, syringeVolume.value])
+    return (totalUnits / syringeVolume.value) * 100;
+  }, [totalUnits, syringeVolume.value]);
 
-  const isTotalValid = totalUnits > 0 && totalUnits <= syringeVolume.value
+  const isTotalValid = totalUnits > 0 && totalUnits <= syringeVolume.value;
 
   return (
-    <div className="w-full max-w-xl mx-auto selection:bg-[#2bb3ba]/30">
-      <div className="bg-card rounded-2xl shadow-lg shadow-slate-200/50 border border-border/50 overflow-hidden">
-        <div className="p-6 space-y-6">
+    <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
+      <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50">
+        <div className="space-y-6 p-6">
           {/* Syringe Volume */}
           <div className="mb-6 space-y-4">
             <div className="flex items-center gap-2 text-slate-500">
               <Syringe className="h-5 w-5" />
-              <span className="font-bold text-sm">Select the Total Syringe Volume</span>
+              <span className="text-sm font-bold">
+                Select the Total Syringe Volume
+              </span>
               <HelpTooltip content="Select the total volume of the syringe you are using. Common sizes are 0.3mL (30 units), 0.5mL (50 units), and 1mL (100 units)." />
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-xl font-bold text-slate-800">Volume</Label>
-              <div className="flex gap-2 w-3/5">
+              <div className="flex w-3/5 gap-2">
                 {SYRINGE_VOLUMES.map((vol) => (
                   <button
                     key={vol.value}
                     onClick={() => setSyringeVolume(vol)}
                     className={cn(
-                      "flex-1 px-4 h-12 rounded-xl text-sm font-bold transition-all duration-200",
+                      "h-12 flex-1 rounded-xl px-4 text-sm font-bold transition-all duration-200",
                       syringeVolume.value === vol.value
-                        ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba] text-white shadow-md border-transparent"
-                        : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                        ? "border-transparent bg-gradient-to-r from-[#11696f] to-[#2bb3ba] text-white shadow-md"
+                        : "bg-slate-100 text-slate-500 hover:bg-slate-200",
                     )}
                   >
                     {vol.label}
@@ -309,7 +351,9 @@ export function PeptideCalculator() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-slate-500">
                 <Beaker className="h-5 w-5" />
-                <span className="font-bold text-sm">Enter the Quantity of Peptide</span>
+                <span className="text-sm font-bold">
+                  Enter the Quantity of Peptide
+                </span>
                 <HelpTooltip content="Enter total milligrams (mg) per vial. You can add up to 5 peptides." />
               </div>
               <Button
@@ -317,7 +361,7 @@ export function PeptideCalculator() {
                 size="sm"
                 onClick={addPeptide}
                 disabled={peptides.length >= 5}
-                className="h-8 text-xs gap-1.5 font-bold shadow-sm hover:border-transparent hover:bg-gradient-to-r hover:from-[#11696f] hover:to-[#2bb3ba] hover:text-white transition-all duration-300"
+                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-[#11696f] hover:to-[#2bb3ba] hover:text-white"
               >
                 <Plus className="h-3.5 w-3.5" />
                 ADD PEPTIDE
@@ -328,7 +372,7 @@ export function PeptideCalculator() {
               {peptides.map((peptide, index) => (
                 <div
                   key={peptide.id}
-                  className="flex items-center justify-between animate-in fade-in duration-300"
+                  className="animate-in fade-in flex items-center justify-between duration-300"
                 >
                   <div className="flex items-center gap-3">
                     <span className="text-xl font-bold text-slate-800">
@@ -337,14 +381,14 @@ export function PeptideCalculator() {
                     {peptides.length > 1 && (
                       <button
                         onClick={() => removePeptide(peptide.id)}
-                        className="p-2 bg-slate-100 hover:bg-red-50 text-slate-400 hover:text-red-500 rounded-full transition-colors"
+                        className="rounded-full bg-slate-100 p-2 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
                       >
                         <Trash2 className="h-4 w-4" />
                         <span className="sr-only">Delete</span>
                       </button>
                     )}
                   </div>
-                  <div className="flex items-center w-3/5">
+                  <div className="flex w-3/5 items-center">
                     <div className="relative w-full">
                       <Input
                         type="number"
@@ -352,13 +396,17 @@ export function PeptideCalculator() {
                         step={0.1}
                         value={peptide.quantity}
                         onChange={(e) => {
-                          let val = e.target.value
-                          if (val.length > 1 && val.startsWith('0') && !val.startsWith('0.')) {
-                            val = val.replace(/^0+(?=\d)/, '')
+                          let val = e.target.value;
+                          if (
+                            val.length > 1 &&
+                            val.startsWith("0") &&
+                            !val.startsWith("0.")
+                          ) {
+                            val = val.replace(/^0+(?=\d)/, "");
                           }
-                          updatePeptide(peptide.id, "quantity", val)
+                          updatePeptide(peptide.id, "quantity", val);
                         }}
-                        className="h-12 w-full text-center pr-12 text-lg font-bold bg-[#1e3a5f]/5 border-transparent focus-visible:ring-1 focus-visible:ring-[#2bb3ba] rounded-xl selection:bg-[#2bb3ba] selection:text-white"
+                        className="h-12 w-full rounded-xl border-transparent bg-[#1e3a5f]/5 pr-12 text-center text-lg font-bold selection:bg-[#2bb3ba] selection:text-white focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
                       />
                       <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500">
                         mg
@@ -374,26 +422,32 @@ export function PeptideCalculator() {
           <div className="mb-6 space-y-4">
             <div className="flex items-center gap-2 text-slate-500">
               <Droplets className="h-5 w-5" />
-              <span className="font-bold text-sm">Enter the Quantity of Bacteriostatic Water</span>
+              <span className="text-sm font-bold">
+                Enter the Quantity of Bacteriostatic Water
+              </span>
               <HelpTooltip content="Enter the volume of Bacteriostatic Water added. Choose ml or IU." />
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-xl font-bold text-slate-800">Water</Label>
-              <div className="flex gap-3 w-3/5">
-                <div className="flex-1 relative">
+              <div className="flex w-3/5 gap-3">
+                <div className="relative flex-1">
                   <Input
                     type="number"
                     min={0}
                     step={0.1}
                     value={waterVolume}
                     onChange={(e) => {
-                      let val = e.target.value
-                      if (val.length > 1 && val.startsWith('0') && !val.startsWith('0.')) {
-                        val = val.replace(/^0+(?=\d)/, '')
+                      let val = e.target.value;
+                      if (
+                        val.length > 1 &&
+                        val.startsWith("0") &&
+                        !val.startsWith("0.")
+                      ) {
+                        val = val.replace(/^0+(?=\d)/, "");
                       }
-                      setWaterVolume(val)
+                      setWaterVolume(val);
                     }}
-                    className="h-12 text-center text-lg font-bold bg-[#1e3a5f]/5 border-transparent focus-visible:ring-1 focus-visible:ring-[#2bb3ba] rounded-xl selection:bg-[#2bb3ba] selection:text-white"
+                    className="h-12 rounded-xl border-transparent bg-[#1e3a5f]/5 text-center text-lg font-bold selection:bg-[#2bb3ba] selection:text-white focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
                   />
                 </div>
                 <div className="flex shrink-0">
@@ -402,10 +456,10 @@ export function PeptideCalculator() {
                       key={unit}
                       onClick={() => setWaterUnit(unit)}
                       className={cn(
-                        "px-4 h-12 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
+                        "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                         waterUnit === unit
                           ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba] text-white shadow-sm"
-                          : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                          : "bg-slate-100 text-slate-500 hover:bg-slate-200",
                       )}
                     >
                       {unit}
@@ -420,7 +474,9 @@ export function PeptideCalculator() {
           <div className="mb-6 space-y-4">
             <div className="flex items-center gap-2 text-slate-500">
               <Syringe className="h-5 w-5" />
-              <span className="font-bold text-sm">Enter the Quantity of Peptide in each dose</span>
+              <span className="text-sm font-bold">
+                Enter the Quantity of Peptide in each dose
+              </span>
               <HelpTooltip content="Enter the required dose for each peptide. Choose mcg or mg as unit." />
             </div>
 
@@ -428,38 +484,44 @@ export function PeptideCalculator() {
               {peptides.map((peptide, index) => (
                 <div
                   key={peptide.id}
-                  className="flex items-center justify-between animate-in fade-in duration-300"
+                  className="animate-in fade-in flex items-center justify-between duration-300"
                 >
                   <Label className="text-xl font-bold text-slate-800">
                     Peptide {index + 1}
                   </Label>
-                  <div className="flex gap-3 w-3/5">
-                    <div className="flex-1 relative">
+                  <div className="flex w-3/5 gap-3">
+                    <div className="relative flex-1">
                       <Input
                         type="number"
                         min={0}
                         step={1}
                         value={peptide.dose}
                         onChange={(e) => {
-                          let val = e.target.value
-                          if (val.length > 1 && val.startsWith('0') && !val.startsWith('0.')) {
-                            val = val.replace(/^0+(?=\d)/, '')
+                          let val = e.target.value;
+                          if (
+                            val.length > 1 &&
+                            val.startsWith("0") &&
+                            !val.startsWith("0.")
+                          ) {
+                            val = val.replace(/^0+(?=\d)/, "");
                           }
-                          updatePeptide(peptide.id, "dose", val)
+                          updatePeptide(peptide.id, "dose", val);
                         }}
-                        className="h-12 text-center text-lg font-bold bg-[#1e3a5f]/5 border-transparent focus-visible:ring-1 focus-visible:ring-[#2bb3ba] rounded-xl selection:bg-[#2bb3ba] selection:text-white"
+                        className="h-12 rounded-xl border-transparent bg-[#1e3a5f]/5 text-center text-lg font-bold selection:bg-[#2bb3ba] selection:text-white focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
                       />
                     </div>
                     <div className="flex shrink-0">
                       {(["mcg", "mg"] as const).map((unit) => (
                         <button
                           key={unit}
-                          onClick={() => updatePeptide(peptide.id, "doseUnit", unit)}
+                          onClick={() =>
+                            updatePeptide(peptide.id, "doseUnit", unit)
+                          }
                           className={cn(
-                            "px-4 h-12 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
+                            "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                             peptide.doseUnit === unit
                               ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba] text-white shadow-sm"
-                              : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                              : "bg-slate-100 text-slate-500 hover:bg-slate-200",
                           )}
                         >
                           {unit}
@@ -473,27 +535,33 @@ export function PeptideCalculator() {
           </div>
 
           {/* Results */}
-          <div className="pt-4 border-t border-border/50">
+          <div className="border-border/50 border-t pt-4">
             {results ? (
               <div className="space-y-4">
-                <div className={cn(
-                  "rounded-2xl p-6 transition-all duration-500",
-                  isTotalValid
-                    ? "bg-[#11696f]/[0.03] border border-[#2bb3ba]/20"
-                    : "bg-slate-50 border border-slate-200"
-                )}>
-                  <div className="flex items-end justify-between mb-2">
-                    <span className="text-lg font-bold text-slate-800 tracking-tight">
+                <div
+                  className={cn(
+                    "rounded-2xl p-6 transition-all duration-500",
+                    isTotalValid
+                      ? "border border-[#2bb3ba]/20 bg-[#11696f]/[0.03]"
+                      : "border border-slate-200 bg-slate-50",
+                  )}
+                >
+                  <div className="mb-2 flex items-end justify-between">
+                    <span className="text-lg font-bold tracking-tight text-slate-800">
                       {peptides.length > 1 ? "Total Volume" : "Formulate"}
                     </span>
                     <div className="flex items-baseline gap-1">
-                      <span className={cn(
-                        "text-2xl font-black tabular-nums",
-                        isTotalValid ? "text-[#11696f]" : "text-slate-500"
-                      )}>
+                      <span
+                        className={cn(
+                          "text-2xl font-black tabular-nums",
+                          isTotalValid ? "text-[#11696f]" : "text-slate-500",
+                        )}
+                      >
                         {totalUnits.toFixed(1)}
                       </span>
-                      <span className="text-base font-bold text-slate-700">units</span>
+                      <span className="text-base font-bold text-slate-700">
+                        units
+                      </span>
                     </div>
                   </div>
 
@@ -504,61 +572,97 @@ export function PeptideCalculator() {
                     maxUnits={syringeVolume.value}
                   />
 
-                  <div className="mt-2 pt-3 border-t border-slate-200/60">
+                  <div className="mt-2 border-t border-slate-200/60 pt-3">
                     <ul className="space-y-3">
                       {results.map((result, index) => (
-                        <li key={result.id} className="flex items-start gap-3 text-sm leading-relaxed">
-                          <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#11696f] shrink-0" />
+                        <li
+                          key={result.id}
+                          className="flex items-start gap-3 text-sm leading-relaxed"
+                        >
+                          <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#11696f]" />
                           <span className="text-slate-700">
-                            Draw <strong>{result.units} units</strong> for <strong>{peptides[index].dose}{peptides[index].doseUnit}</strong> doses{peptides.length > 1 ? ` of Peptide ${index + 1}` : ""}
+                            Draw <strong>{result.units} units</strong> for{" "}
+                            <strong>
+                              {peptides[index].dose}
+                              {peptides[index].doseUnit}
+                            </strong>{" "}
+                            doses
+                            {peptides.length > 1
+                              ? ` of Peptide ${index + 1}`
+                              : ""}
                           </span>
                         </li>
                       ))}
                       {peptides.map((peptide, index) => {
-                        const doseNum = Number(peptide.dose) || 0
-                        const quantNum = Number(peptide.quantity) || 0
-                        const waterVolNum = Number(waterVolume) || 0
+                        const doseNum = Number(peptide.dose) || 0;
+                        const quantNum = Number(peptide.quantity) || 0;
+                        const waterVolNum = Number(waterVolume) || 0;
 
-                        const doseMg = peptide.doseUnit === "mcg" ? doseNum / 1000 : doseNum
-                        const waterMl = waterUnit === "IU" ? waterVolNum / 100 : waterVolNum
-                        const concentrationMgPerMl = waterMl > 0 ? quantNum / waterMl : 0
-                        const totalDosesNum = doseMg > 0 ? (quantNum / doseMg) : 0
+                        const doseMg =
+                          peptide.doseUnit === "mcg" ? doseNum / 1000 : doseNum;
+                        const waterMl =
+                          waterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
+                        const concentrationMgPerMl =
+                          waterMl > 0 ? quantNum / waterMl : 0;
+                        const totalDosesNum =
+                          doseMg > 0 ? quantNum / doseMg : 0;
 
-                        const formatDoses = (num: number) => Number.isInteger(num) ? num.toString() : num.toFixed(2)
+                        const formatDoses = (num: number) =>
+                          Number.isInteger(num)
+                            ? num.toString()
+                            : num.toFixed(2);
 
                         return (
-                          <li key={`conc-${peptide.id}`} className="flex items-start gap-3 text-sm leading-relaxed animate-in fade-in duration-500">
-                            <div className="mt-2 w-1.5 h-1.5 rounded-full bg-slate-400/80 shrink-0" />
-                            <span className="text-slate-600 font-bold">
-                              With a concentration of <strong>{concentrationMgPerMl.toFixed(2)}mg/mL</strong>, {peptides.length > 1 ? `Peptide ${index + 1} ` : ""}vial contains ~<strong>{formatDoses(totalDosesNum)} doses</strong> in {waterMl}mL.
+                          <li
+                            key={`conc-${peptide.id}`}
+                            className="animate-in fade-in flex items-start gap-3 text-sm leading-relaxed duration-500"
+                          >
+                            <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400/80" />
+                            <span className="font-bold text-slate-600">
+                              With a concentration of{" "}
+                              <strong>
+                                {concentrationMgPerMl.toFixed(2)}mg/mL
+                              </strong>
+                              ,{" "}
+                              {peptides.length > 1
+                                ? `Peptide ${index + 1} `
+                                : ""}
+                              vial contains ~
+                              <strong>
+                                {formatDoses(totalDosesNum)} doses
+                              </strong>{" "}
+                              in {waterMl}mL.
                             </span>
                           </li>
-                        )
+                        );
                       })}
                     </ul>
                   </div>
                 </div>
 
                 {!isTotalValid && (
-                  <div className="flex items-center gap-2 p-3 rounded-lg bg-gradient-to-r from-slate-50 to-slate-100 border border-slate-200 animate-in fade-in slide-in-from-bottom-2">
-                    <div className="w-5 h-5 rounded-full bg-slate-200 flex items-center justify-center shrink-0">
-                      <span className="text-slate-600 text-xs font-bold">!</span>
+                  <div className="animate-in fade-in slide-in-from-bottom-2 flex items-center gap-2 rounded-lg border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 p-3">
+                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-200">
+                      <span className="text-xs font-bold text-slate-600">
+                        !
+                      </span>
                     </div>
                     <p className="text-sm text-slate-700">
-                      Total injection volume exceeds syringe capacity, please adjust doses or use a larger syringe.
+                      Total injection volume exceeds syringe capacity, please
+                      adjust doses or use a larger syringe.
                     </p>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 border border-slate-200/50 text-center">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-200/50 flex items-center justify-center">
-                  <Syringe className="w-8 h-8 text-slate-400" />
+              <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200/50">
+                  <Syringe className="h-8 w-8 text-slate-400" />
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Enter valid values to see results
                 </p>
-                <p className="text-xs text-muted-foreground/70 mt-1">
+                <p className="text-muted-foreground/70 mt-1 text-xs">
                   Results will update in real time as you type
                 </p>
               </div>
@@ -567,5 +671,5 @@ export function PeptideCalculator() {
         </div>
       </div>
     </div>
-  )
+  );
 }
