@@ -255,18 +255,34 @@ function generateId() {
   return Math.random().toString(36).substring(2, 9);
 }
 
+// Smart step: adjusts increment size based on current value magnitude
+function smartStep(current: number, mode: "small" | "large" = "small"): number {
+  const v = Math.abs(current);
+  if (mode === "large") {
+    // For dose fields (mcg scale: 0–10000)
+    if (v < 10)   return 1;
+    if (v < 100)  return 10;
+    if (v < 1000) return 50;
+    return 100;
+  }
+  // For quantity/water fields (mg/mL scale: 0–100)
+  if (v < 1)  return 0.1;
+  if (v < 10) return 0.5;
+  return 1;
+}
+
 // Number input with large +/− stepper buttons
 function NumberInput({
   value,
   onChange,
-  step = 1,
+  stepMode = "small",
   min = 0,
   suffix,
   className,
 }: {
   value: number | string;
   onChange: (val: string) => void;
-  step?: number;
+  stepMode?: "small" | "large";
   min?: number;
   suffix?: string;
   className?: string;
@@ -276,13 +292,22 @@ function NumberInput({
 
   const clamp = (n: number) => Math.max(min, parseFloat(n.toFixed(10)));
 
+  const format = (n: number) => {
+    // Trim unnecessary trailing zeros but keep up to 2 decimal places
+    return parseFloat(n.toFixed(4)).toString();
+  };
+
   const increment = useCallback(() => {
-    onChange(String(clamp((Number(value) || 0) + step)));
-  }, [value, step, min]);
+    const cur = Number(value) || 0;
+    const step = smartStep(cur, stepMode);
+    onChange(format(clamp(cur + step)));
+  }, [value, stepMode, min]);
 
   const decrement = useCallback(() => {
-    onChange(String(clamp((Number(value) || 0) - step)));
-  }, [value, step, min]);
+    const cur = Number(value) || 0;
+    const step = smartStep(cur, stepMode);
+    onChange(format(clamp(cur - step)));
+  }, [value, stepMode, min]);
 
   // Hold-to-repeat: start slow, then fast
   const startRepeat = (fn: () => void) => {
@@ -306,7 +331,7 @@ function NumberInput({
         onPointerDown={() => startRepeat(decrement)}
         onPointerUp={stopRepeat}
         onPointerLeave={stopRepeat}
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors select-none hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
       >
         −
       </button>
@@ -319,7 +344,8 @@ function NumberInput({
           value={value}
           onChange={(e) => {
             let v = e.target.value;
-            if (v === "" || v === "-" || /^[0-9]*\.?[0-9]*$/.test(v)) onChange(v);
+            if (v === "" || v === "-" || /^[0-9]*\.?[0-9]*$/.test(v))
+              onChange(v);
           }}
           onBlur={(e) => {
             const n = parseFloat(e.target.value);
@@ -341,7 +367,7 @@ function NumberInput({
         onPointerDown={() => startRepeat(increment)}
         onPointerUp={stopRepeat}
         onPointerLeave={stopRepeat}
-        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors select-none hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
       >
         +
       </button>
@@ -569,10 +595,12 @@ export function PeptideCalculator() {
                   <div className="flex w-3/5 items-center">
                     <NumberInput
                       value={peptide.quantity}
-                      step={0.5}
+                      stepMode="small"
                       min={0}
                       suffix="mg"
-                      onChange={(val) => updatePeptide(peptide.id, "quantity", val)}
+                      onChange={(val) =>
+                        updatePeptide(peptide.id, "quantity", val)
+                      }
                       className="w-full"
                     />
                   </div>
@@ -595,7 +623,7 @@ export function PeptideCalculator() {
               <div className="flex w-3/5 gap-2">
                 <NumberInput
                   value={waterVolume}
-                  step={0.5}
+                  stepMode="small"
                   min={0}
                   onChange={(val) => setWaterVolume(val)}
                   className="flex-1"
@@ -642,7 +670,7 @@ export function PeptideCalculator() {
                   <div className="flex w-3/5 gap-2">
                     <NumberInput
                       value={peptide.dose}
-                      step={peptide.doseUnit === "mcg" ? 50 : 0.05}
+                      stepMode="large"
                       min={0}
                       onChange={(val) => updatePeptide(peptide.id, "dose", val)}
                       className="flex-1"
