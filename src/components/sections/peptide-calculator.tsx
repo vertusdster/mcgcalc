@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import {
   Plus,
   Trash2,
@@ -6,6 +6,10 @@ import {
   Beaker,
   Droplets,
   Syringe,
+  BookmarkPlus,
+  ChevronDown,
+  ChevronUp,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -31,6 +35,18 @@ interface CalculationResult {
   isValid: boolean;
   fillPercentage: number;
 }
+
+interface SavedCalculation {
+  id: string;
+  label: string;
+  savedAt: string;
+  syringeValue: number;
+  waterVolume: number | string;
+  waterUnit: "ml" | "IU";
+  peptides: Peptide[];
+}
+
+const STORAGE_KEY = "peptide-saved-calculations";
 
 function AnimatedSyringe({
   fillPercentage,
@@ -246,6 +262,58 @@ export function PeptideCalculator() {
   ]);
   const [waterVolume, setWaterVolume] = useState<number | string>(5);
   const [waterUnit, setWaterUnit] = useState<"ml" | "IU">("ml");
+
+  // Save/load state
+  const [savedCalculations, setSavedCalculations] = useState<SavedCalculation[]>([]);
+  const [showSaved, setShowSaved] = useState(false);
+  const [saveLabel, setSaveLabel] = useState("");
+  const [showSaveInput, setShowSaveInput] = useState(false);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) setSavedCalculations(JSON.parse(raw));
+    } catch {}
+  }, []);
+
+  const persistSaved = useCallback((list: SavedCalculation[]) => {
+    setSavedCalculations(list);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    } catch {}
+  }, []);
+
+  const handleSave = useCallback(() => {
+    const label = saveLabel.trim() || `Calculation ${new Date().toLocaleString()}`;
+    const entry: SavedCalculation = {
+      id: generateId(),
+      label,
+      savedAt: new Date().toISOString(),
+      syringeValue: syringeVolume.value,
+      waterVolume,
+      waterUnit,
+      peptides,
+    };
+    persistSaved([entry, ...savedCalculations]);
+    setSaveLabel("");
+    setShowSaveInput(false);
+    setShowSaved(true);
+  }, [saveLabel, syringeVolume, waterVolume, waterUnit, peptides, savedCalculations, persistSaved]);
+
+  const handleLoad = useCallback((saved: SavedCalculation) => {
+    const vol = SYRINGE_VOLUMES.find(v => v.value === saved.syringeValue) ?? SYRINGE_VOLUMES[0];
+    setSyringeVolume(vol);
+    setWaterVolume(saved.waterVolume);
+    setWaterUnit(saved.waterUnit);
+    setPeptides(saved.peptides.map(p => ({ ...p, id: generateId() })));
+    setShowSaved(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
+  const handleDelete = useCallback((id: string) => {
+    persistSaved(savedCalculations.filter(s => s.id !== id));
+  }, [savedCalculations, persistSaved]);
 
   const addPeptide = useCallback(() => {
     if (peptides.length < 5) {
@@ -653,6 +721,45 @@ export function PeptideCalculator() {
                     </p>
                   </div>
                 )}
+
+                {/* Save button */}
+                {isTotalValid && (
+                  <div className="pt-1">
+                    {showSaveInput ? (
+                      <div className="flex gap-2 animate-in fade-in duration-200">
+                        <Input
+                          type="text"
+                          placeholder="Label (e.g. BPC-157 Morning)"
+                          value={saveLabel}
+                          onChange={(e) => setSaveLabel(e.target.value)}
+                          onKeyDown={(e) => e.key === "Enter" && handleSave()}
+                          className="h-9 text-sm rounded-xl border-slate-200 focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
+                          autoFocus
+                        />
+                        <button
+                          onClick={handleSave}
+                          className="h-9 shrink-0 rounded-xl bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-4 text-xs font-bold text-white transition-opacity hover:opacity-90"
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => { setShowSaveInput(false); setSaveLabel(""); }}
+                          className="h-9 shrink-0 rounded-xl bg-slate-100 px-3 text-xs font-bold text-slate-500 hover:bg-slate-200"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => setShowSaveInput(true)}
+                        className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:border-[#2bb3ba] hover:text-[#11696f]"
+                      >
+                        <BookmarkPlus className="h-4 w-4" />
+                        Save this calculation
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             ) : (
               <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-center">
@@ -670,6 +777,66 @@ export function PeptideCalculator() {
           </div>
         </div>
       </div>
+
+      {/* Saved Calculations Panel */}
+      {savedCalculations.length > 0 && (
+        <div className="mt-4">
+          <button
+            onClick={() => setShowSaved(!showSaved)}
+            className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+          >
+            <span className="flex items-center gap-2">
+              <RotateCcw className="h-4 w-4 text-[#11696f]" />
+              Saved Calculations
+              <span className="rounded-full bg-[#11696f]/10 px-2 py-0.5 text-xs font-bold text-[#11696f]">
+                {savedCalculations.length}
+              </span>
+            </span>
+            {showSaved ? (
+              <ChevronUp className="h-4 w-4 text-slate-400" />
+            ) : (
+              <ChevronDown className="h-4 w-4 text-slate-400" />
+            )}
+          </button>
+
+          {showSaved && (
+            <div className="mt-2 space-y-2 animate-in fade-in duration-200">
+              {savedCalculations.map((saved) => (
+                <div
+                  key={saved.id}
+                  className="flex items-center justify-between rounded-xl border border-slate-100 bg-white px-4 py-3 shadow-sm"
+                >
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-slate-800">
+                      {saved.label}
+                    </p>
+                    <p className="text-xs text-slate-400">
+                      {new Date(saved.savedAt).toLocaleDateString()} ·{" "}
+                      {saved.peptides.length} peptide
+                      {saved.peptides.length > 1 ? "s" : ""} ·{" "}
+                      {saved.syringeValue}U syringe
+                    </p>
+                  </div>
+                  <div className="ml-3 flex shrink-0 gap-2">
+                    <button
+                      onClick={() => handleLoad(saved)}
+                      className="rounded-lg bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-3 py-1.5 text-xs font-bold text-white transition-opacity hover:opacity-90"
+                    >
+                      Load
+                    </button>
+                    <button
+                      onClick={() => handleDelete(saved.id)}
+                      className="rounded-lg bg-slate-100 px-2 py-1.5 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
