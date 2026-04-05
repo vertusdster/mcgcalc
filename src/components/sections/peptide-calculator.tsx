@@ -79,7 +79,7 @@ function AnimatedSyringe({
           <div className="relative h-12 overflow-hidden rounded-none border border-slate-300 bg-slate-100">
             <div
               className={cn(
-                "absolute bottom-0 left-0 top-0 z-10 transition-all duration-700 ease-out",
+                "absolute bottom-0 left-0 top-0 z-10 transition-all duration-300 ease-out",
                 clampedFill > 0 ? "rounded-none" : "",
                 isValid
                   ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba]"
@@ -500,7 +500,7 @@ export function PeptideCalculator() {
     const t = setTimeout(() => {
       setDebouncedFill(totalFillPercentage);
       setDebouncedValid(isTotalValid);
-    }, 150);
+    }, 400);
     return () => clearTimeout(t);
   }, [totalFillPercentage, isTotalValid]);
 
