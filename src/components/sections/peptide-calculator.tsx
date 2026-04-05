@@ -236,17 +236,6 @@ const SYRINGE_VOLUMES = [
 
 const WATER_UNITS = ["ml", "IU"] as const;
 
-// Common peptide presets for quick filling
-const PEPTIDE_PRESETS = [
-  { name: "BPC-157", vial: 5, dose: 250, doseUnit: "mcg" as const },
-  { name: "TB-500", vial: 5, dose: 2500, doseUnit: "mcg" as const },
-  { name: "Semaglutide", vial: 5, dose: 250, doseUnit: "mcg" as const },
-  { name: "Ipamorelin", vial: 2, dose: 200, doseUnit: "mcg" as const },
-  { name: "CJC-1295", vial: 2, dose: 100, doseUnit: "mcg" as const },
-  { name: "Epithalon", vial: 10, dose: 5, doseUnit: "mg" as const },
-  { name: "PT-141", vial: 10, dose: 1, doseUnit: "mg" as const },
-  { name: "AOD-9604", vial: 5, dose: 300, doseUnit: "mcg" as const },
-];
 
 function HelpTooltip({ content }: { content: string }) {
   return (
@@ -467,17 +456,6 @@ export function PeptideCalculator() {
     [savedCalculations, persistSaved],
   );
 
-  const applyPreset = useCallback((preset: (typeof PEPTIDE_PRESETS)[0]) => {
-    setPeptides([
-      {
-        id: generateId(),
-        quantity: preset.vial,
-        dose: preset.dose,
-        doseUnit: preset.doseUnit,
-      },
-    ]);
-  }, []);
-
   const addPeptide = useCallback(() => {
     if (peptides.length < 5) {
       setPeptides((prev) => [
@@ -603,19 +581,6 @@ export function PeptideCalculator() {
                 <Plus className="h-3.5 w-3.5" />
                 ADD PEPTIDE
               </Button>
-            </div>
-
-            {/* Quick presets */}
-            <div className="flex flex-wrap gap-1.5">
-              {PEPTIDE_PRESETS.map((preset) => (
-                <button
-                  key={preset.name}
-                  onClick={() => applyPreset(preset)}
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-500 transition-all hover:border-[#2bb3ba] hover:bg-[#11696f]/5 hover:text-[#11696f]"
-                >
-                  {preset.name}
-                </button>
-              ))}
             </div>
 
             <div className="space-y-4">
@@ -825,7 +790,9 @@ export function PeptideCalculator() {
                               ? doseNum / 1000
                               : doseNum;
                           const waterMl =
-                          waterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
+                            waterUnit === "IU"
+                              ? waterVolNum / 100
+                              : waterVolNum;
                           const concentrationMgPerMl =
                             waterMl > 0 ? quantNum / waterMl : 0;
                           const totalDosesNum =
