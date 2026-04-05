@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect, useRef } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef, useTransition, useDeferredValue } from "react";
 import {
   Plus,
   Trash2,
@@ -79,7 +79,7 @@ function AnimatedSyringe({
           <div className="relative h-12 overflow-hidden rounded-none border border-slate-300 bg-slate-100">
             <div
               className={cn(
-                "absolute bottom-0 left-0 top-0 z-10 transition-all duration-300 ease-out",
+                "absolute bottom-0 left-0 top-0 z-10 transition-all duration-200 ease-out",
                 clampedFill > 0 ? "rounded-none" : "",
                 isValid
                   ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba]"
@@ -449,19 +449,25 @@ export function PeptideCalculator() {
     [],
   );
 
-  const results = useMemo((): CalculationResult[] | null => {
-    const waterVolNum = Number(waterVolume) || 0;
-    // IU mode: user enters units on a U-100 syringe (100 IU = 1 mL)
-    const waterMl = waterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
+  // Defer expensive calculation so button clicks feel instant
+  const deferredPeptides = useDeferredValue(peptides);
+  const deferredWaterVolume = useDeferredValue(waterVolume);
+  const deferredWaterUnit = useDeferredValue(waterUnit);
+  const deferredSyringe = useDeferredValue(syringeVolume);
 
-    const hasValidPeptide = peptides.some(
+  const results = useMemo((): CalculationResult[] | null => {
+    const waterVolNum = Number(deferredWaterVolume) || 0;
+    // IU mode: user enters units on a U-100 syringe (100 IU = 1 mL)
+    const waterMl = deferredWaterUnit === "IU" ? waterVolNum / 100 : waterVolNum;
+
+    const hasValidPeptide = deferredPeptides.some(
       (p) => (Number(p.quantity) || 0) > 0 && (Number(p.dose) || 0) > 0,
     );
     if (!hasValidPeptide || waterMl <= 0) {
       return null;
     }
 
-    return peptides.map((peptide) => {
+    return deferredPeptides.map((peptide) => {
       const doseNum = Number(peptide.dose) || 0;
       const quantNum = Number(peptide.quantity) || 0;
 
@@ -469,18 +475,18 @@ export function PeptideCalculator() {
       const concentrationMgPerMl = quantNum / waterMl;
       const volumeNeededMl =
         concentrationMgPerMl > 0 ? doseMg / concentrationMgPerMl : 0;
-      const units = (volumeNeededMl / syringeVolume.ml) * syringeVolume.value;
-      const fillPercentage = (units / syringeVolume.value) * 100;
+      const units = (volumeNeededMl / deferredSyringe.ml) * deferredSyringe.value;
+      const fillPercentage = (units / deferredSyringe.value) * 100;
 
       return {
         id: peptide.id,
         volumeMl: volumeNeededMl,
         units: Math.round(units * 10) / 10,
-        isValid: units > 0 && units <= syringeVolume.value,
+        isValid: units > 0 && units <= deferredSyringe.value,
         fillPercentage,
       };
     });
-  }, [peptides, waterVolume, waterUnit, syringeVolume]);
+  }, [deferredPeptides, deferredWaterVolume, deferredWaterUnit, deferredSyringe]);
 
   const totalUnits = useMemo(() => {
     if (!results) return 0;
@@ -493,16 +499,9 @@ export function PeptideCalculator() {
 
   const isTotalValid = totalUnits > 0 && totalUnits <= syringeVolume.value;
 
-  // Debounce syringe so rapid clicks don't re-render on every step
-  const [debouncedFill, setDebouncedFill] = useState(totalFillPercentage);
-  const [debouncedValid, setDebouncedValid] = useState(isTotalValid);
-  useEffect(() => {
-    const t = setTimeout(() => {
-      setDebouncedFill(totalFillPercentage);
-      setDebouncedValid(isTotalValid);
-    }, 400);
-    return () => clearTimeout(t);
-  }, [totalFillPercentage, isTotalValid]);
+  // Remove debounce — syringe updates in real time
+  const debouncedFill = totalFillPercentage;
+  const debouncedValid = isTotalValid;
 
   return (
     <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
