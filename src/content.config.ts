@@ -18,7 +18,7 @@ const blog = defineCollection({
 });
 
 const peptides = defineCollection({
-  loader: glob({ base: "./src/content/peptides", pattern: "**/*.md" }),
+  loader: glob({ base: "./src/content/peptides", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
     name: z.string(),
     description: z.string(),
@@ -26,7 +26,15 @@ const peptides = defineCollection({
     defaultDose: z.number(), // mcg
     defaultVialSize: z.number(), // mg
     molecularWeight: z.string().optional(),
+    molecularFormula: z.string().optional(),
+    casNumber: z.string().optional(),
+    pubchemCid: z.string().optional(),
+    sequence: z.string().optional(),
+    synonyms: z.array(z.string()).optional(),
+    reviewedBy: z.string().optional(), // reviewer name / credential for E-E-A-T
     pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    keywords: z.array(z.string()).optional(),
   }),
 });
 

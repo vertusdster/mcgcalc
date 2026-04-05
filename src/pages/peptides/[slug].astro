@@ -15,16 +15,32 @@ type Props = CollectionEntry<'peptides'>;
 const peptide = Astro.props;
 const { Content } = await render(peptide);
 
-const title = `${peptide.data.name} Dosage Calculator — How Many Units to Draw`;
-const description = peptide.data.description;
+const { data } = peptide;
+
+const title = `${data.name} Reconstitution Calculator — Dosage & Units Guide`;
+const description = data.description;
+
+// Build chemical identification block for structured data
+const keywords = [
+  data.name,
+  ...(data.synonyms ?? []),
+  ...(data.keywords ?? []),
+  'peptide calculator',
+  'reconstitution',
+  'dosage',
+].join(', ');
 
 const schema = {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": title,
   "description": description,
-  "datePublished": peptide.data.pubDate.toISOString(),
-  "author": { "@type": "Organization", "name": "Peptide Calculator" },
+  "keywords": keywords,
+  "datePublished": data.pubDate.toISOString(),
+  "dateModified": (data.updatedDate ?? data.pubDate).toISOString(),
+  "author": data.reviewedBy
+    ? { "@type": "Person", "name": data.reviewedBy }
+    : { "@type": "Organization", "name": "Peptide Calculator" },
   "publisher": { "@type": "Organization", "name": "Peptide Calculator" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": Astro.url.href }
 };
@@ -42,15 +58,85 @@ const schema = {
       <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
         {/* Article content */}
         <div class="order-2 lg:order-1">
-          <div class="mb-2">
+          <div class="mb-2 flex items-center gap-2">
             <span class="rounded-full bg-[#11696f]/10 px-3 py-1 text-xs font-semibold text-[#11696f]">
-              {peptide.data.category}
+              {data.category}
             </span>
+            {data.casNumber && (
+              <span class="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-mono text-slate-500 dark:text-slate-400">
+                CAS {data.casNumber}
+              </span>
+            )}
           </div>
           <h1 class="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
-            {peptide.data.name} Dosage Calculator
+            {data.name} — Reconstitution & Dosage Calculator
           </h1>
-          <article class="prose prose-slate dark:prose-invert mt-8 max-w-none">
+          {data.reviewedBy && (
+            <p class="mt-2 text-sm text-muted-foreground">
+              Researched & reviewed by <strong>{data.reviewedBy}</strong>
+            </p>
+          )}
+
+          {/* Chemical Identification Table — boosts E-E-A-T & science-crawler signals */}
+          {(data.molecularFormula || data.molecularWeight || data.casNumber || data.pubchemCid || data.sequence) && (
+            <div class="mt-6 overflow-hidden rounded-xl border bg-card">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b bg-muted/40">
+                    <th colspan="2" class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      Chemical Identification
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.sequence && (
+                    <tr class="border-b">
+                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400 w-40">Sequence</td>
+                      <td class="px-4 py-2 font-mono text-xs break-all">{data.sequence}</td>
+                    </tr>
+                  )}
+                  {data.molecularFormula && (
+                    <tr class="border-b">
+                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">Mol. Formula</td>
+                      <td class="px-4 py-2 font-mono">{data.molecularFormula}</td>
+                    </tr>
+                  )}
+                  {data.molecularWeight && (
+                    <tr class="border-b">
+                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">Mol. Weight</td>
+                      <td class="px-4 py-2">{data.molecularWeight}</td>
+                    </tr>
+                  )}
+                  {data.casNumber && (
+                    <tr class="border-b">
+                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">CAS Number</td>
+                      <td class="px-4 py-2 font-mono">{data.casNumber}</td>
+                    </tr>
+                  )}
+                  {data.pubchemCid && (
+                    <tr>
+                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">PubChem CID</td>
+                      <td class="px-4 py-2">
+                        <a
+                          href={`https://pubchem.ncbi.nlm.nih.gov/compound/${data.pubchemCid}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-[#11696f] hover:underline font-mono"
+                        >
+                          {data.pubchemCid}
+                        </a>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          <article class="prose prose-slate dark:prose-invert mt-8 max-w-none
+            prose-headings:font-semibold
+            prose-a:text-[#11696f] prose-a:no-underline hover:prose-a:underline
+            prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:rounded prose-code:px-1">
             <Content />
           </article>
         </div>
@@ -59,7 +145,7 @@ const schema = {
         <div class="order-1 lg:order-2">
           <div class="sticky top-8">
             <p class="mb-3 text-sm font-semibold text-slate-500 uppercase tracking-wide">
-              {peptide.data.name} Calculator
+              {data.name} Reconstitution Calculator
             </p>
             <PeptideCalculator client:load />
           </div>
