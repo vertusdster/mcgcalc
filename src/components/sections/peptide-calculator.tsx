@@ -90,7 +90,7 @@ function AnimatedSyringe({
                 ...(!isValid
                   ? {
                       backgroundImage:
-                        "repeating-linear-gradient(45deg, #fb923c 0, #fb923c 10px, #fed7aa 10px, #fed7aa 20px)",
+                        "repeating-linear-gradient(45deg, #fb923c 0, #fb923c 10px, #cbd5e1 10px, #cbd5e1 20px)",
                     }
                   : {}),
               }}
