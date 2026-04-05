@@ -313,7 +313,6 @@ function NumberInput({
       >
         −
       </button>
-      </button>
 
       {/* Text input */}
       <div className="relative flex-1">
