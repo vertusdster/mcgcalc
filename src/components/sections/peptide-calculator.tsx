@@ -90,7 +90,7 @@ function AnimatedSyringe({
                 ...(!isValid
                   ? {
                       backgroundImage:
-                        "repeating-linear-gradient(45deg, #94a3b8 0, #94a3b8 10px, #cbd5e1 10px, #cbd5e1 20px)",
+                        "repeating-linear-gradient(45deg, #fb923c 0, #fb923c 10px, #fed7aa 10px, #fed7aa 20px)",
                     }
                   : {}),
               }}
@@ -108,7 +108,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "text-white"
-                          : "text-slate-600"
+                          : "text-orange-700"
                         : "text-slate-500",
                     )}
                     style={{
@@ -134,7 +134,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-slate-600"
+                          : "bg-orange-700"
                         : "bg-slate-400",
                     )}
                     style={{
@@ -160,7 +160,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-slate-600"
+                          : "bg-orange-600"
                         : "bg-slate-300",
                     )}
                     style={{
@@ -184,7 +184,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-slate-600"
+                          : "bg-orange-700"
                         : "bg-slate-400",
                     )}
                     style={{
@@ -210,7 +210,7 @@ function AnimatedSyringe({
                       isInLiquid
                         ? isValid
                           ? "bg-white"
-                          : "bg-slate-600"
+                          : "bg-orange-600"
                         : "bg-slate-300",
                     )}
                     style={{
@@ -235,7 +235,6 @@ const SYRINGE_VOLUMES = [
 ];
 
 const WATER_UNITS = ["ml", "IU"] as const;
-
 
 function HelpTooltip({ content }: { content: string }) {
   return (
