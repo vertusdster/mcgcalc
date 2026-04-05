@@ -291,50 +291,16 @@ function NumberInput({
   suffix?: string;
   className?: string;
 }) {
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // Always hold latest value/onChange so interval callbacks never go stale
   const valueRef = useRef(value);
-  const onChangeRef = useRef(onChange);
   valueRef.current = value;
-  onChangeRef.current = onChange;
 
-  const clamp = useCallback(
-    (n: number) => Math.max(min, parseFloat(n.toFixed(10))),
-    [min],
-  );
-
+  const clamp = (n: number) => Math.max(min, parseFloat(n.toFixed(10)));
   const format = (n: number) => parseFloat(n.toFixed(4)).toString();
 
-  const step = useCallback(
-    (dir: 1 | -1) => {
-      const cur = Number(valueRef.current) || 0;
-      const s = smartStep(cur, stepMode);
-      onChangeRef.current(format(clamp(cur + dir * s)));
-    },
-    [stepMode, clamp],
-  );
-
-  const stopRepeat = useCallback(() => {
-    if (timeoutRef.current) { clearTimeout(timeoutRef.current); timeoutRef.current = null; }
-    if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
-    // Update syringe only when user releases
-    isPressingRef.current = false;
-    setDebouncedFill(pendingFillRef.current);
-    setDebouncedValid(pendingValidRef.current);
-  }, []);
-
-  const startRepeat = useCallback(
-    (dir: 1 | -1) => {
-      stopRepeat();
-      isPressingRef.current = true;
-      step(dir);
-      timeoutRef.current = setTimeout(() => {
-        intervalRef.current = setInterval(() => step(dir), 60);
-      }, 350);
-    },
-    [step, stopRepeat],
-  );
+  const step = (dir: 1 | -1) => {
+    const cur = Number(valueRef.current) || 0;
+    onChange(format(clamp(cur + dir * smartStep(cur, stepMode))));
+  };
 
   return (
     <div className={cn("flex items-center", className)}>
@@ -342,13 +308,11 @@ function NumberInput({
       <button
         type="button"
         aria-label="Decrease"
-        onPointerDown={() => startRepeat(-1)}
-        onPointerUp={stopRepeat}
-        onPointerLeave={stopRepeat}
-        onPointerCancel={stopRepeat}
+        onClick={() => step(-1)}
         className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
       >
         −
+      </button>
       </button>
 
       {/* Text input */}
@@ -379,10 +343,7 @@ function NumberInput({
       <button
         type="button"
         aria-label="Increase"
-        onPointerDown={() => startRepeat(1)}
-        onPointerUp={stopRepeat}
-        onPointerLeave={stopRepeat}
-        onPointerCancel={stopRepeat}
+        onClick={() => step(1)}
         className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
       >
         +
@@ -533,14 +494,16 @@ export function PeptideCalculator() {
 
   const isTotalValid = totalUnits > 0 && totalUnits <= syringeVolume.value;
 
-  // Freeze syringe while user is holding the stepper — update only after release
+  // Debounce syringe so rapid clicks don't re-render on every step
   const [debouncedFill, setDebouncedFill] = useState(totalFillPercentage);
   const [debouncedValid, setDebouncedValid] = useState(isTotalValid);
-  const isPressingRef = useRef(false);
-  const pendingFillRef = useRef(totalFillPercentage);
-  const pendingValidRef = useRef(isTotalValid);
-  pendingFillRef.current = totalFillPercentage;
-  pendingValidRef.current = isTotalValid;
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setDebouncedFill(totalFillPercentage);
+      setDebouncedValid(isTotalValid);
+    }, 150);
+    return () => clearTimeout(t);
+  }, [totalFillPercentage, isTotalValid]);
 
   return (
     <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
