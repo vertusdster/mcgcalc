@@ -8,7 +8,7 @@ interface DisclaimerProps {
 export function Disclaimer({ type = "strict" }: DisclaimerProps) {
   if (type === "brief") {
     return (
-      <p className="text-xs text-muted-foreground border-t pt-3 mt-8">
+      <p className="text-muted-foreground mt-8 border-t pt-3 text-xs">
         FOR RESEARCH PURPOSES ONLY. Not for human consumption. Not for
         veterinary use. Not a drug, food, or cosmetic.
       </p>
@@ -16,7 +16,7 @@ export function Disclaimer({ type = "strict" }: DisclaimerProps) {
   }
 
   return (
-    <div className="my-6 rounded-xl border-2 border-amber-400/60 bg-amber-50/80 dark:bg-amber-950/20 px-5 py-4 dark:border-amber-500/40">
+    <div className="my-6 rounded-xl border-2 border-amber-400/60 bg-amber-50/80 px-5 py-4 dark:border-amber-500/40 dark:bg-amber-950/20">
       <div className="flex items-start gap-3">
         <ShieldAlert className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-400" />
         <div className="text-sm leading-relaxed text-amber-900 dark:text-amber-200">

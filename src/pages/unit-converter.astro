@@ -1,0 +1,21 @@
+---
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { UnitConverter } from '@/components/sections/unit-converter';
+
+const title = "Unit Converter — ml, mg, uL, mcg Conversion Tool";
+const description = "Easily convert between Milliliters (ml), Milligrams (mg), Microliters (uL), and Micrograms (mcg). Enter a value in any unit to instantly see the equivalent values.";
+---
+
+<DefaultLayout title={title} description={description}>
+  <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto text-center mb-10">
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+        Unit Converter
+      </h1>
+      <p class="text-slate-500 dark:text-slate-400">
+        Easily convert between Milliliters (ml), Milligrams (mg), Microliters (uL), and Micrograms (mcg). Enter a value in any unit to instantly see the equivalent values in the other three units. Ideal for precise scientific and laboratory measurements.
+      </p>
+    </div>
+    <UnitConverter client:load />
+  </section>
+</DefaultLayout>

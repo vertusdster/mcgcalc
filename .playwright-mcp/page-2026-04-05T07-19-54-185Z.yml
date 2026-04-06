@@ -1,0 +1,192 @@
+- generic [ref=e1]:
+  - banner [ref=e212]:
+    - generic [ref=e214]:
+      - link "logo" [ref=e215] [cursor=pointer]:
+        - /url: /
+        - img "logo" [ref=e216]
+      - navigation "Main" [ref=e217]:
+        - list [ref=e219]:
+          - listitem [ref=e220]:
+            - link "Calculator" [ref=e221] [cursor=pointer]:
+              - /url: /calculator
+          - listitem [ref=e222]:
+            - link "Peptides" [ref=e223] [cursor=pointer]:
+              - /url: /peptides
+          - listitem [ref=e224]:
+            - link "Blog" [ref=e225] [cursor=pointer]:
+              - /url: /blog
+          - listitem [ref=e226]:
+            - link "FAQ" [ref=e227] [cursor=pointer]:
+              - /url: /faq
+      - generic [ref=e228]:
+        - link "Try Calculator" [ref=e229] [cursor=pointer]:
+          - /url: /calculator
+          - button "Try Calculator" [ref=e230]
+        - button "Toggle theme" [ref=e232] [cursor=pointer]:
+          - img
+          - img
+          - generic [ref=e233]: Toggle theme
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - heading "Peptide Dosage Calculator" [level=1] [ref=e5]
+        - paragraph [ref=e6]: Enter your peptide quantity, bacteriostatic water volume, and desired dose to instantly calculate the exact syringe units to draw.
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e12]:
+            - img [ref=e13]
+            - generic [ref=e20]: Select the Total Syringe Volume
+            - button "Help" [ref=e21] [cursor=pointer]:
+              - img [ref=e22]
+              - generic [ref=e25]: Help
+          - generic [ref=e26]:
+            - generic [ref=e27]: Volume
+            - group "Syringe volume" [ref=e28]:
+              - button "30 units" [pressed] [ref=e29] [cursor=pointer]
+              - button "50 units" [ref=e30] [cursor=pointer]
+              - button "100 units" [ref=e31] [cursor=pointer]
+        - generic [ref=e32]:
+          - generic [ref=e33]:
+            - generic [ref=e34]:
+              - img [ref=e35]
+              - generic [ref=e37]: Enter the Quantity of Peptide
+              - button "Help" [ref=e38] [cursor=pointer]:
+                - img [ref=e39]
+                - generic [ref=e42]: Help
+            - button "ADD PEPTIDE" [ref=e43] [cursor=pointer]:
+              - img
+              - text: ADD PEPTIDE
+          - generic [ref=e45]:
+            - generic [ref=e47]: Peptide 1
+            - generic [ref=e49]:
+              - button "Decrease" [ref=e50] [cursor=pointer]: −
+              - generic [ref=e51]:
+                - textbox [ref=e52]: "5.5"
+                - generic: mg
+              - button "Increase" [active] [ref=e53] [cursor=pointer]: +
+        - generic [ref=e54]:
+          - generic [ref=e55]:
+            - img [ref=e56]
+            - generic [ref=e59]: Enter the Quantity of Bacteriostatic Water
+            - button "Help" [ref=e60] [cursor=pointer]:
+              - img [ref=e61]
+              - generic [ref=e64]: Help
+          - generic [ref=e65]:
+            - generic [ref=e66]: Water
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - button "Decrease" [ref=e69] [cursor=pointer]: −
+                - textbox [ref=e71]: "5"
+                - button "Increase" [ref=e72] [cursor=pointer]: +
+              - group "Water volume unit" [ref=e73]:
+                - button "ml" [pressed] [ref=e74] [cursor=pointer]
+                - button "IU" [ref=e75] [cursor=pointer]
+        - generic [ref=e76]:
+          - generic [ref=e77]:
+            - img [ref=e78]
+            - generic [ref=e85]: Enter the Quantity of Peptide in each dose
+            - button "Help" [ref=e86] [cursor=pointer]:
+              - img [ref=e87]
+              - generic [ref=e90]: Help
+          - generic [ref=e92]:
+            - generic [ref=e93]: Peptide 1
+            - generic [ref=e94]:
+              - generic [ref=e95]:
+                - button "Decrease" [ref=e96] [cursor=pointer]: −
+                - textbox [ref=e98]: "250"
+                - button "Increase" [ref=e99] [cursor=pointer]: +
+              - group "Dose unit" [ref=e100]:
+                - button "mcg" [pressed] [ref=e101] [cursor=pointer]
+                - button "mg" [ref=e102] [cursor=pointer]
+        - generic [ref=e105]:
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: Formulate
+              - generic [ref=e109]:
+                - generic [ref=e110]: "22.7"
+                - generic [ref=e111]: units
+            - 'img "Syringe fill: 76% — valid dose" [ref=e262]':
+              - generic [ref=e115]:
+                - generic:
+                  - generic: "0"
+                  - generic: "10"
+                  - generic: "20"
+                  - generic: "30"
+            - list [ref=e158]:
+              - listitem [ref=e159]:
+                - generic [ref=e161]:
+                  - text: Draw
+                  - strong [ref=e162]: 22.7 units
+                  - text: for
+                  - strong [ref=e163]: 250mcg
+                  - text: doses
+              - listitem [ref=e164]:
+                - generic [ref=e166]:
+                  - text: With a concentration of
+                  - strong [ref=e167]: 1.10mg/mL
+                  - text: ", vial contains ~"
+                  - strong [ref=e168]: 22 doses
+                  - text: in 5mL.
+          - button "Save this calculation" [ref=e170] [cursor=pointer]:
+            - img [ref=e171]
+            - text: Save this calculation
+  - contentinfo [ref=e173]:
+    - generic [ref=e174]:
+      - navigation [ref=e175]:
+        - generic [ref=e176]:
+          - heading "Tools" [level=2] [ref=e177]
+          - list [ref=e178]:
+            - listitem [ref=e179]:
+              - link "Peptide Calculator" [ref=e180] [cursor=pointer]:
+                - /url: /calculator
+            - listitem [ref=e181]:
+              - link "Peptides List" [ref=e182] [cursor=pointer]:
+                - /url: /peptides
+        - generic [ref=e183]:
+          - heading "Resources" [level=2] [ref=e184]
+          - list [ref=e185]:
+            - listitem [ref=e186]:
+              - link "Blog" [ref=e187] [cursor=pointer]:
+                - /url: /blog
+            - listitem [ref=e188]:
+              - link "FAQ" [ref=e189] [cursor=pointer]:
+                - /url: /faq
+            - listitem [ref=e190]:
+              - link "About" [ref=e191] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e192]:
+              - link "Contact" [ref=e193] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e194]:
+          - heading "Legal" [level=2] [ref=e195]
+          - list [ref=e196]:
+            - listitem [ref=e197]:
+              - link "Terms of Service" [ref=e198] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e199]:
+              - link "Privacy Policy" [ref=e200] [cursor=pointer]:
+                - /url: /privacy
+      - generic [ref=e202]:
+        - paragraph [ref=e203]: © 2026 PeptideCalculator.com — For research purposes only.
+        - generic [ref=e204]:
+          - link "X / Twitter" [ref=e205] [cursor=pointer]:
+            - /url: https://twitter.com
+            - img [ref=e206]
+          - link "LinkedIn" [ref=e208] [cursor=pointer]:
+            - /url: https://linkedin.com
+            - img [ref=e209]
+  - generic [ref=e236]:
+    - button "Menu" [ref=e237]:
+      - img [ref=e239]
+      - generic: Menu
+    - button "Inspect" [ref=e243]:
+      - img [ref=e245]
+      - generic: Inspect
+    - button "Audit" [ref=e247]:
+      - generic [ref=e248]:
+        - img [ref=e249]
+        - img [ref=e260]
+      - generic: Audit
+    - button "Settings" [ref=e255]:
+      - img [ref=e257]
+      - generic: Settings

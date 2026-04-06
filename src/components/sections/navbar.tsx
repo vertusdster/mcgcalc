@@ -33,7 +33,37 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
   }, [isMenuOpen]);
 
   const ITEMS = [
-    { label: "Calculator", href: "/calculator" },
+    {
+      label: "Calculators",
+      href: "/calculator",
+      dropdownItems: [
+        {
+          title: "Dosage Calculator",
+          description: "Calculate exact syringe units for your peptide dose.",
+          href: "/calculator",
+        },
+        {
+          title: "Reverse Calculator",
+          description: "Find the right BAC water volume for a target draw amount.",
+          href: "/reverse-calculator",
+        },
+        {
+          title: "Intranasal Calculator",
+          description: "Nasal spray dosage calculations made simple.",
+          href: "/intranasal-calculator",
+        },
+        {
+          title: "Order Calculator",
+          description: "Plan how many vials you need for your protocol.",
+          href: "/order-calculator",
+        },
+        {
+          title: "Unit Converter",
+          description: "Convert between ml, mg, uL, and mcg instantly.",
+          href: "/unit-converter",
+        },
+      ],
+    },
     { label: "Peptides", href: "/peptides" },
     { label: "Blog", href: "/blog" },
     { label: "FAQ", href: "/faq" },

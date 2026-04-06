@@ -1,0 +1,21 @@
+---
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { ReverseCalculator } from '@/components/sections/reverse-calculator';
+
+const title = "Reverse Peptide Calculator — Find the Right BAC Water Volume";
+const description = "Calculate the exact amount of bacteriostatic water to add for a pre-determined syringe draw amount. Reverse engineer your reconstitution for precise dosing.";
+---
+
+<DefaultLayout title={title} description={description}>
+  <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto text-center mb-10">
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+        Reverse Peptides Calculator
+      </h1>
+      <p class="text-slate-500 dark:text-slate-400">
+        The benefit of this calculator is to find the correct amount of BAC water to reconstitute with for a pre-determined syringe draw amount, as opposed to a typical peptide calculator which instead tells you how much to draw given a specified amount of BAC water used.
+      </p>
+    </div>
+    <ReverseCalculator client:load />
+  </section>
+</DefaultLayout>
