@@ -1,36 +1,44 @@
 /**
  * E2E Tests for All Peptide Calculators
  *
- * Verified against peptidescalculator.com reference values:
+ * Reference values verified against peptidescalculator.com:
  *
  * Reverse Calculator:
+ *   5mg vial, 250mcg dose, 100 units → 20.00 ml BAC water
  *   10mg vial, 500mcg dose, 50 units → 10.00 ml BAC water
  *
  * Unit Converter:
- *   5 ml  → 5000 mg, 5000 uL, 5000000 mcg
- *   0.5 ml → 500 mg, 500 uL, 500000 mcg
+ *   5 ml  → 5,000 mg, 5,000 uL, 5,000,000 mcg
+ *   0.5 ml → 500 mg, 500 uL, 500,000 mcg
  *
  * Order Calculator:
- *   Everyday (7/wk), 100 mcg, 1/day, 4 weeks → 2800 mcg total, 1 vial each (5/10/15/20/30 mg)
+ *   Everyday (7/wk), 50mcg, 1/day, 4 weeks → 1,400 mcg (1.4 mg)
+ *   Everyday (7/wk), 100mcg, 1/day, 4 weeks → 2,800 mcg (2.8 mg)
  *
  * Intranasal Calculator (Vial Version):
  *   100mg mass, 10ml diluent, 0.1ml/spray, 5mg dose → 1mg/spray, 5 sprays, 100 total
  *
- * Main Dosage Calculator:
- *   5mg peptide, 5ml BAC water, 250mcg dose, 30U syringe → 15 units
+ * Intranasal Calculator (Powder Version):
+ *   500mcg dose, 60 doses, 0.15ml/spray, 1 spray/dose → 0.03g, 9ml
  */
 
 import { test, expect, type Page } from "@playwright/test";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-/** Clear input, type new value */
-async function clearAndType(page: Page, selector: string, value: string) {
-  const input = page.locator(selector);
-  await input.click({ clickCount: 3 });
-  await input.press("Backspace");
+/** Scope to main content, excluding Astro dev toolbar */
+function main(page: Page) {
+  return page.locator("main, .mx-auto").first();
+}
+
+/** Clear an input then type a new value. Works with the NumberInput component. */
+async function setInput(page: Page, index: number, value: string) {
+  const input = main(page).locator('input[inputmode="decimal"]').nth(index);
+  await input.click();
+  await page.keyboard.press("Meta+a");
   await input.fill(value);
-  await input.press("Tab"); // trigger blur for formatting
+  await page.keyboard.press("Tab");
+  await page.waitForTimeout(200);
 }
 
 // ─── 1. Reverse Calculator ─────────────────────────────────────────────────
@@ -44,41 +52,48 @@ test.describe("Reverse Calculator", () => {
   test("default values: 5mg vial, 250mcg dose, 100 units → 20.00 ml", async ({
     page,
   }) => {
-    // Default inputs should be 5 / 250 / 100
-    const resultText = page.locator("text=20.00 ml");
-    await expect(resultText).toBeVisible();
+    const resultBlock = page.locator("[aria-live='polite']");
+    await expect(resultBlock).toContainText("20.00 ml");
+    await expect(resultBlock).toContainText("2000 units");
   });
 
   test("10mg vial, 500mcg dose, 50 units → 10.00 ml (matches peptidescalculator.com)", async ({
     page,
   }) => {
-    // Set Peptide Vial = 10
-    const inputs = page.locator('input[type="text"][inputmode="decimal"]');
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=0', "10");
-    // Set Dosage = 500
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=1', "500");
-    // Set Units = 50
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=2', "50");
+    await setInput(page, 0, "10");
+    await setInput(page, 1, "500");
+    await setInput(page, 2, "50");
 
-    // Wait for result
-    await expect(page.locator("text=10.00 ml")).toBeVisible();
-    await expect(page.locator("text=1000 units")).toBeVisible();
+    const resultBlock = page.locator("[aria-live='polite']");
+    await expect(resultBlock).toContainText("10.00 ml");
+    await expect(resultBlock).toContainText("1000 units");
   });
 
   test("2mg vial, 100mcg dose, 10 units → 2.00 ml", async ({ page }) => {
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=0', "2");
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=1', "100");
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=2', "10");
+    await setInput(page, 0, "2");
+    await setInput(page, 1, "100");
+    await setInput(page, 2, "10");
 
-    await expect(page.locator("text=2.00 ml")).toBeVisible();
+    const resultBlock = page.locator("[aria-live='polite']");
+    await expect(resultBlock).toContainText("2.00 ml");
   });
 
-  test("shows empty state when all zeros", async ({ page }) => {
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=0', "0");
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=1', "0");
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=2', "0");
+  test("boundary: 1mg vial, 1mcg dose, 1 unit → 10.00 ml", async ({
+    page,
+  }) => {
+    await setInput(page, 0, "1");
+    await setInput(page, 1, "1");
+    await setInput(page, 2, "1");
 
-    await expect(page.locator("text=Enter valid values to see results")).toBeVisible();
+    const resultBlock = page.locator("[aria-live='polite']");
+    await expect(resultBlock).toContainText("10.00 ml");
+  });
+
+  test("shows empty state when values are zero", async ({ page }) => {
+    await setInput(page, 0, "0");
+
+    const resultBlock = page.locator("[aria-live='polite']");
+    await expect(resultBlock).toContainText("Enter valid values");
   });
 });
 
@@ -90,37 +105,55 @@ test.describe("Unit Converter", () => {
     await page.waitForLoadState("networkidle");
   });
 
-  test("5 ml → 5000 mg, 5000 uL, 5000000 mcg (matches peptidescalculator.com)", async ({
+  test("5 ml → 5,000 mg, 5,000 uL, 5,000,000 mcg (matches peptidescalculator.com)", async ({
     page,
   }) => {
-    // Default should be 5 ml
-    await expect(page.locator("text=5,000").first()).toBeVisible(); // mg
-    await expect(page.locator("text=5,000,000")).toBeVisible();     // mcg
+    await expect(page.getByText("5,000").first()).toBeVisible();
+    await expect(page.getByText("5,000,000")).toBeVisible();
   });
 
-  test("0.5 ml → 500 mg, 500 uL, 500000 mcg (matches peptidescalculator.com)", async ({
+  test("0.5 ml → 500 mg, 500 uL, 500,000 mcg (matches peptidescalculator.com)", async ({
     page,
   }) => {
-    // Clear and type 0.5
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"]', "0.5");
+    const input = main(page).locator('input[inputmode="decimal"]');
+    await input.click();
+    await page.keyboard.press("Meta+a");
+    await input.fill("0.5");
 
-    await expect(page.locator("text=500").first()).toBeVisible();     // mg
-    await expect(page.locator("text=500,000")).toBeVisible();         // mcg
+    await expect(page.getByText("500,000")).toBeVisible();
   });
 
-  test("10 mg → 0.01 ml, 10 uL, 10000 mcg", async ({ page }) => {
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"]', "10");
-    // Select mg unit
-    await page.locator("select").selectOption("mg");
+  test("10 mg → 10 uL, 10,000 mcg", async ({ page }) => {
+    const input = main(page).locator('input[inputmode="decimal"]');
+    await input.click();
+    await page.keyboard.press("Meta+a");
+    await input.fill("10");
 
-    // 10 mg = 0.01 ml = 10 uL = 10000 mcg
-    await expect(page.locator("text=10,000")).toBeVisible(); // mcg
+    // Select mg from the unit dropdown (first select in main content area)
+    await main(page).locator("select").first().selectOption("mg");
+
+    await expect(page.getByText("10,000")).toBeVisible();
   });
 
-  test("CLEAR button resets the input", async ({ page }) => {
-    await page.click("text=CLEAR");
-    const input = page.locator('input[type="text"][inputmode="decimal"]');
+  test("1000 mcg → 1 mg, 1 uL, 1,000 mcg", async ({ page }) => {
+    const input = main(page).locator('input[inputmode="decimal"]');
+    await input.click();
+    await page.keyboard.press("Meta+a");
+    await input.fill("1000");
+
+    await main(page).locator("select").first().selectOption("mcg");
+
+    // 1000 mcg = 0.001 ml = 1 mg = 1 uL
+    // formatNumber(1) returns "1" (integer), formatNumber(1000) returns "1,000"
+    // Check the mcg output row shows "1,000"
+    await expect(page.getByText("1,000").first()).toBeVisible();
+  });
+
+  test("CLEAR button resets input", async ({ page }) => {
+    await page.getByText("CLEAR").click();
+    const input = main(page).locator('input[inputmode="decimal"]');
     await expect(input).toHaveValue("");
+    await expect(page.getByText("Enter a value to convert")).toBeVisible();
   });
 });
 
@@ -132,45 +165,62 @@ test.describe("Order Calculator", () => {
     await page.waitForLoadState("networkidle");
   });
 
-  test("default: Everyday, 50mcg, 1/day, 4 weeks → 1400 mcg", async ({
+  test("default: Everyday, 50mcg, 1/day, 4 weeks → 1,400 mcg (1.4 mg)", async ({
     page,
   }) => {
-    // Default values: freq=Everyday, dose=50mcg, times=1, weeks=4
-    await expect(page.locator("text=1,400 mcg")).toBeVisible();
-    await expect(page.locator("text=1.4 mg")).toBeVisible();
+    const resultArea = main(page).locator(".border-t").last();
+    await expect(resultArea).toContainText("1,400 mcg");
+    await expect(resultArea).toContainText("1.4 mg");
   });
 
-  test("Everyday, 100mcg, 1/day, 4 weeks → 2800 mcg (matches peptidescalculator.com)", async ({
+  test("Everyday, 100mcg, 1/day, 4 weeks → 2,800 mcg (matches peptidescalculator.com)", async ({
     page,
   }) => {
-    // Change dose to 100
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=0', "100");
+    await setInput(page, 0, "100");
 
-    await expect(page.locator("text=2,800 mcg")).toBeVisible();
-    await expect(page.locator("text=2.8 mg")).toBeVisible();
-    // All standard vial sizes should need 1 vial
-    await expect(page.locator("text=5mg vials:")).toBeVisible();
+    const resultArea = main(page).locator(".border-t").last();
+    await expect(resultArea).toContainText("2,800 mcg");
+    await expect(resultArea).toContainText("2.8 mg");
   });
 
-  test("3 days/week, 200mcg, 2/day, 8 weeks → 9600 mcg", async ({ page }) => {
-    // Set frequency = 3 days per week
-    await page.locator("select").first().selectOption("3 days per week");
-    // Set dose = 200
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=0', "200");
-    // Set times per day = 2
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=1', "2");
-    // Set duration = 8
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=2', "8");
+  test("3 days/week, 200mcg, 2/day, 8 weeks → 9,600 mcg", async ({
+    page,
+  }) => {
+    await main(page).locator("select").first().selectOption("3 days per week");
+    await setInput(page, 0, "200");
+    await setInput(page, 1, "2");
+    await setInput(page, 2, "8");
 
-    // 200 * 3 * 2 * 8 = 9600 mcg
-    await expect(page.locator("text=9,600 mcg")).toBeVisible();
-    await expect(page.locator("text=9.6 mg")).toBeVisible();
+    const resultArea = main(page).locator(".border-t").last();
+    await expect(resultArea).toContainText("9,600 mcg");
+    await expect(resultArea).toContainText("9.6 mg");
+  });
+
+  test("vial breakdown shows all standard sizes", async ({ page }) => {
+    // The list items contain text like "5mg vials: 1" — use locator scoped to the list
+    const vialList = main(page).locator("ul.list-disc");
+    await expect(vialList.locator("li")).toHaveCount(5);
+    await expect(vialList).toContainText("5mg vials:");
+    await expect(vialList).toContainText("10mg vials:");
+    await expect(vialList).toContainText("15mg vials:");
+    await expect(vialList).toContainText("20mg vials:");
+    await expect(vialList).toContainText("30mg vials:");
   });
 
   test("custom vial size toggle works", async ({ page }) => {
-    const checkbox = page.locator('input[type="checkbox"]');
-    await checkbox.check();
-    await expect(page.locator("text=vials").last()).toBeVisible();
+    await page.getByRole("checkbox", { name: "Custom Vial Size" }).check();
+    // After checking, a custom vial input and result should appear
+    await expect(main(page).getByText("vials").last()).toBeVisible();
+  });
+
+  test("units can switch between mcg and mg", async ({ page }) => {
+    // Change dose unit to mg (it's the second select in the form)
+    await main(page).locator("select").nth(1).selectOption("mg");
+    await setInput(page, 0, "1");
+
+    // 1 mg * 7 * 1 * 4 = 28 mg = 28000 mcg
+    const resultArea = main(page).locator(".border-t").last();
+    await expect(resultArea).toContainText("28,000 mcg");
   });
 });
 
@@ -182,55 +232,77 @@ test.describe("Intranasal Calculator", () => {
     await page.waitForLoadState("networkidle");
   });
 
-  test("Vial: 100mg, 10ml, 0.1ml/spray, 5mg → 1mg/spray, 5 sprays, 100 total (matches peptidescalculator.com)", async ({
+  // --- Vial Version ---
+
+  test("Vial defaults: 100mg, 10ml, 0.1ml/spray, 5mg → 1mg/spray, 5 sprays, 100 total (matches peptidescalculator.com)", async ({
     page,
   }) => {
-    // Default values should already be 100/10/0.1/5mg
-    // Check results
-    await expect(page.locator("text=1 mg (1000 mcg)")).toBeVisible();
-    await expect(page.locator("text=5").nth(0)).toBeVisible(); // sprays needed = 5
-    await expect(page.locator("text=100").nth(0)).toBeVisible(); // total sprays = 100
+    const vialCard = page.locator("text=Vial Version").locator("xpath=ancestor::div[contains(@class,'rounded-2xl')]");
+    await expect(vialCard).toContainText("1 mg (1000 mcg)");
+    await expect(vialCard).toContainText("5 sprays");
+    await expect(vialCard).toContainText("100");
   });
 
-  test("Vial: 50mg, 5ml, 0.1ml/spray, 2mg dose → 1mg/spray, 2 sprays, 50 total", async ({
+  test("Vial: 50mg, 5ml, 0.1ml/spray, 2mg → 1mg/spray, 2 sprays, 50 total", async ({
     page,
   }) => {
-    // Find the "Vial Version" section inputs
-    const inputs = page.locator('input[type="text"][inputmode="decimal"]');
+    await setInput(page, 0, "50");
+    await setInput(page, 1, "5");
+    await setInput(page, 3, "2");
 
-    // mass=50, diluent=5, spray=0.1, dose=2
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=0', "50");
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=1', "5");
-    // spray vol stays 0.1
-    await clearAndType(page, 'input[type="text"][inputmode="decimal"] >> nth=3', "2");
-
-    // concentration = 50/5 = 10 mg/ml, per spray = 10*0.1 = 1 mg
-    // sprays needed = 2/1 = 2
-    // total sprays = 5/0.1 = 50
-    await expect(page.locator("text=1 mg")).toBeVisible();
+    const vialCard = page.locator("text=Vial Version").locator("xpath=ancestor::div[contains(@class,'rounded-2xl')]");
+    await expect(vialCard).toContainText("1 mg");
+    await expect(vialCard).toContainText("2 sprays");
   });
 
-  test("Powder: 500mcg dose, 60 doses, 0.15ml/spray, 1 spray/dose → 0.03g, 9ml", async ({
+  test("Vial: dose unit toggle to mcg works", async ({ page }) => {
+    // Click the mcg button in dose unit group
+    await page.locator('[aria-label="Dose unit"] button:has-text("mcg")').click();
+    await setInput(page, 3, "5000");
+
+    const vialCard = page.locator("text=Vial Version").locator("xpath=ancestor::div[contains(@class,'rounded-2xl')]");
+    await expect(vialCard).toContainText("5 sprays");
+  });
+
+  // --- Powder Version ---
+
+  test("Powder defaults: 500mcg dose, 60 doses, 0.15ml/spray, 1 spray/dose → 0.03g, 9ml", async ({
     page,
   }) => {
-    // Scroll to Powder section
-    await page.locator("text=Powder Version").scrollIntoViewIfNeeded();
-
-    // The powder inputs are after the first 4 vial inputs
-    const powderInputs = page.locator('input[type="text"][inputmode="decimal"]');
-
-    // powder dose = 500 (nth=4), doses = 60 (nth=5), spray vol = 0.15 (nth=6), sprays/dose = 1 (nth=7)
-    // These should be pre-filled with defaults
-    // 500 * 60 * 1 = 30000 mcg = 0.03 g
-    // 60 * 1 * 0.15 = 9 ml
-    await expect(page.locator("text=0.03 g")).toBeVisible();
-    await expect(page.locator("text=9 ml")).toBeVisible();
+    const powderCard = page.locator("text=Powder Version").locator("xpath=ancestor::div[contains(@class,'rounded-2xl')]");
+    await expect(powderCard).toContainText("0.03 g");
+    await expect(powderCard).toContainText("9 ml");
   });
 
-  test("Spray helper: 5 ml water → 50 sprays", async ({ page }) => {
-    await page.locator("text=Spray Volume Helper").scrollIntoViewIfNeeded();
-    // Default 5ml water, 0.1 spray vol → 50 sprays
-    await expect(page.locator("text=50").last()).toBeVisible();
+  test("Powder: 1000mcg dose, 30 doses, 0.1ml/spray, 2 sprays/dose → 0.06g, 6ml", async ({
+    page,
+  }) => {
+    await setInput(page, 4, "1000");
+    await setInput(page, 5, "30");
+    await setInput(page, 6, "0.1");
+    await setInput(page, 7, "2");
+
+    const powderCard = page.locator("text=Powder Version").locator("xpath=ancestor::div[contains(@class,'rounded-2xl')]");
+    await expect(powderCard).toContainText("0.06 g");
+    await expect(powderCard).toContainText("6 ml");
+  });
+
+  // --- Spray Helper ---
+
+  test("Spray Helper: default 5ml water → 50 sprays at 0.1ml", async ({
+    page,
+  }) => {
+    const helperCard = page.locator("text=Spray Volume Helper").locator("xpath=ancestor::div[contains(@class,'rounded-2xl')]");
+    await expect(helperCard).toContainText("No. of Sprays:");
+    await expect(helperCard).toContainText("50");
+    await expect(helperCard).toContainText("0.1");
+  });
+
+  test("Spray Helper: 10ml water → 100 sprays", async ({ page }) => {
+    const helperCard = page.locator("text=Spray Volume Helper").locator("xpath=ancestor::div[contains(@class,'rounded-2xl')]");
+    await helperCard.locator("select").selectOption("10");
+
+    await expect(helperCard).toContainText("100");
   });
 });
 
@@ -242,28 +314,39 @@ test.describe("Dosage Calculator", () => {
     await page.waitForLoadState("networkidle");
   });
 
-  test("default values produce a valid result", async ({ page }) => {
-    // Default: 30U syringe, 5mg peptide, 5ml water, 250mcg dose
-    // Concentration = 5mg / 5ml = 1 mg/ml
-    // Dose = 250mcg = 0.25mg
-    // Volume = 0.25 / 1 = 0.25 ml
-    // Units for 30U syringe (0.3ml): 0.25/0.3 * 30 = 25 units
-    await expect(page.locator("text=units")).toBeVisible();
+  test("page loads without error", async ({ page }) => {
+    await expect(
+      page.getByRole("heading", { name: "Peptide Dosage Calculator" })
+    ).toBeVisible();
+    await expect(page.getByRole("button", { name: "30 units" })).toBeVisible();
   });
 
-  test("syringe size toggle works", async ({ page }) => {
-    // Click 50 units syringe
-    await page.click("text=50 units");
-    // Click 100 units syringe
-    await page.click("text=100 units");
-    // Should still show a result
-    await expect(page.locator("text=units")).toBeVisible();
+  test("default calculation produces a result", async ({ page }) => {
+    // The result section should show the calculated units value
+    const resultSection = page.locator("[aria-live='polite']");
+    await expect(resultSection).toBeVisible();
   });
 
-  test("add peptide button adds a new row", async ({ page }) => {
-    await page.click("text=ADD PEPTIDE");
-    // Should now have 2 peptide rows
-    await expect(page.locator("text=Peptide 2")).toBeVisible();
+  test("syringe size toggle switches between sizes", async ({ page }) => {
+    // Click 50 units syringe button
+    await page.getByRole("button", { name: "50 units" }).click();
+    await page.waitForTimeout(200);
+    // Click 100 units syringe button
+    await page.getByRole("button", { name: "100 units" }).click();
+    await page.waitForTimeout(200);
+    // Verify 100 units is now pressed
+    await expect(
+      page.getByRole("button", { name: "100 units" })
+    ).toHaveAttribute("aria-pressed", "true");
+  });
+
+  test("Add Peptide button adds a new row", async ({ page }) => {
+    await page.getByRole("button", { name: "ADD PEPTIDE" }).click();
+    // "Peptide 2" appears in multiple places (quantity + dose sections)
+    // Just check that a second peptide input row exists
+    await expect(
+      main(page).locator("text=Peptide 2").first()
+    ).toBeVisible();
   });
 });
 
@@ -274,31 +357,50 @@ test.describe("Navigation", () => {
     await page.goto("/calculator");
     await page.waitForLoadState("networkidle");
 
-    // Open Calculators dropdown
-    await page.click("text=Calculators");
+    // Click the desktop Calculators trigger (first button with that name)
+    await page.getByRole("button", { name: "Calculators" }).first().click();
 
-    // Check all 5 items
-    await expect(page.locator("text=Dosage Calculator")).toBeVisible();
-    await expect(page.locator("text=Reverse Calculator")).toBeVisible();
-    await expect(page.locator("text=Intranasal Calculator")).toBeVisible();
-    await expect(page.locator("text=Order Calculator")).toBeVisible();
-    await expect(page.locator("text=Unit Converter")).toBeVisible();
+    // Check dropdown content for all 5 calculator links
+    await expect(page.getByRole("link", { name: /Dosage Calculator/i }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /Reverse Calculator/i }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /Intranasal Calculator/i }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /Order Calculator/i }).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /Unit Converter/i }).first()).toBeVisible();
   });
 
-  test("navigate from dropdown to each calculator", async ({ page }) => {
+  test("navigate to Reverse Calculator via dropdown", async ({ page }) => {
     await page.goto("/calculator");
     await page.waitForLoadState("networkidle");
 
-    // Navigate to Reverse Calculator via dropdown
-    await page.click("text=Calculators");
-    await page.click("a[href='/reverse-calculator']");
-    await expect(page).toHaveURL("/reverse-calculator");
-    await expect(page.locator("h1")).toContainText("Reverse");
+    await page.getByRole("button", { name: "Calculators" }).first().click();
+    await page.locator("a[href='/reverse-calculator']").first().click();
+    await expect(page).toHaveURL(/reverse-calculator/);
+  });
 
-    // Navigate to Unit Converter
-    await page.click("text=Calculators");
-    await page.click("a[href='/unit-converter']");
-    await expect(page).toHaveURL("/unit-converter");
-    await expect(page.locator("h1")).toContainText("Unit Converter");
+  test("navigate to Unit Converter via dropdown", async ({ page }) => {
+    await page.goto("/calculator");
+    await page.waitForLoadState("networkidle");
+
+    await page.getByRole("button", { name: "Calculators" }).first().click();
+    await page.locator("a[href='/unit-converter']").first().click();
+    await expect(page).toHaveURL(/unit-converter/);
+  });
+
+  test("all calculator pages load successfully", async ({ page }) => {
+    const pages = [
+      { url: "/calculator", heading: "Peptide Dosage Calculator" },
+      { url: "/reverse-calculator", heading: "Reverse Peptides Calculator" },
+      { url: "/intranasal-calculator", heading: "Intranasal Calculator" },
+      { url: "/order-calculator", heading: "Order Calculator" },
+      { url: "/unit-converter", heading: "Unit Converter" },
+    ];
+
+    for (const p of pages) {
+      await page.goto(p.url);
+      await page.waitForLoadState("networkidle");
+      await expect(
+        page.getByRole("heading", { name: p.heading, level: 1 })
+      ).toBeVisible();
+    }
   });
 });
