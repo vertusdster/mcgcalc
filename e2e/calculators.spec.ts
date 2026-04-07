@@ -135,7 +135,7 @@ test.describe("Unit Converter", () => {
     await expect(page.getByText("10,000")).toBeVisible();
   });
 
-  test("1000 mcg → 1 mg, 1 uL, 1,000 mcg", async ({ page }) => {
+  test("1000 mcg → 1 mg, 1 uL", async ({ page }) => {
     const input = main(page).locator('input[inputmode="decimal"]');
     await input.click();
     await page.keyboard.press("Meta+a");
@@ -144,9 +144,11 @@ test.describe("Unit Converter", () => {
     await main(page).locator("select").first().selectOption("mcg");
 
     // 1000 mcg = 0.001 ml = 1 mg = 1 uL
-    // formatNumber(1) returns "1" (integer), formatNumber(1000) returns "1,000"
-    // Check the mcg output row shows "1,000"
-    await expect(page.getByText("1,000").first()).toBeVisible();
+    // Verify actual cross-unit conversions, not just mcg→mcg echo
+    const mgRow = page.locator("text=Milligrams(mg)").locator("..");
+    const uLRow = page.locator("text=Microlitres(uL)").locator("..");
+    await expect(mgRow).toContainText("1");
+    await expect(uLRow).toContainText("1");
   });
 
   test("CLEAR button resets input", async ({ page }) => {
@@ -321,10 +323,14 @@ test.describe("Dosage Calculator", () => {
     await expect(page.getByRole("button", { name: "30 units" })).toBeVisible();
   });
 
-  test("default calculation produces a result", async ({ page }) => {
-    // The result section should show the calculated units value
+  test("default 5mg/5ml/250mcg/30U → 25 units", async ({ page }) => {
+    // Default: 30U syringe (0.3ml), 5mg peptide, 5ml BAC water, 250mcg dose
+    // Concentration = 5mg / 5ml = 1 mg/ml
+    // Volume needed = 0.25mg / 1 mg/ml = 0.25 ml
+    // Units = (0.25 / 0.3) × 30 = 25 units
     const resultSection = page.locator("[aria-live='polite']");
-    await expect(resultSection).toBeVisible();
+    await expect(resultSection).toContainText("25");
+    await expect(resultSection).toContainText("units");
   });
 
   test("syringe size toggle switches between sizes", async ({ page }) => {
