@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, BookmarkCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { STORAGE_KEY } from "@/lib/saved-calculations";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -17,7 +18,18 @@ import { ThemeToggle } from "../elements/theme-toggle";
 const Navbar = ({ currentPage }: { currentPage: string }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [hasSaved, setHasSaved] = useState(false);
   const pathname = currentPage;
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const list = JSON.parse(raw);
+        setHasSaved(Array.isArray(list) && list.length > 0);
+      }
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -33,6 +45,9 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
   }, [isMenuOpen]);
 
   const ITEMS = [
+    ...(hasSaved
+      ? [{ label: "My Calculations", href: "/saved" }]
+      : []),
     {
       label: "Calculators",
       href: "/calculator",

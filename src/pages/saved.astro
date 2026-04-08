@@ -1,0 +1,21 @@
+---
+import DefaultLayout from '@/layouts/DefaultLayout.astro';
+import { SavedCalculations } from '@/components/sections/saved-calculations';
+
+const title = "Saved Calculations — Peptide Dosage Calculator";
+const description = "View and manage your saved peptide dosage calculations.";
+---
+
+<DefaultLayout title={title} description={description}>
+  <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto text-center mb-10">
+      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+        Saved Calculations
+      </h1>
+      <p class="text-slate-500 dark:text-slate-400">
+        Your saved peptide dosage calculations, stored locally in your browser.
+      </p>
+    </div>
+    <SavedCalculations client:load />
+  </section>
+</DefaultLayout>
