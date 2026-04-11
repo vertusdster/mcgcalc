@@ -46,7 +46,7 @@ function HelpTooltip({ content }: { content: string }) {
       <TooltipTrigger asChild>
         <button
           type="button"
-          className="text-muted-foreground hover:text-foreground inline-flex items-center justify-center rounded-full transition-colors"
+          className="text-muted-foreground hover:text-foreground inline-flex align-middle items-center justify-center rounded-full transition-colors"
         >
           <HelpCircle className="h-4 w-4" />
           <span className="sr-only">Help</span>
