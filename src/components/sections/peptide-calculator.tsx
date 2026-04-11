@@ -338,7 +338,7 @@ export function PeptideCalculator() {
                     className={cn(
                       "h-12 flex-1 rounded-xl px-4 text-sm font-bold transition-all duration-200",
                       syringeVolume.value === vol.value
-                        ? "border-transparent bg-gradient-to-r from-[#1d4ed8] dark:from-slate-200 to-[#3b82f6] dark:to-slate-400 text-white dark:text-slate-900 shadow-md"
+                        ? "border-transparent bg-gradient-to-r from-[#1d4ed8] dark:from-slate-400 to-[#3b82f6] dark:to-slate-200 text-white dark:text-slate-900 shadow-md"
                         : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
                     )}
                   >
@@ -364,7 +364,7 @@ export function PeptideCalculator() {
                 size="sm"
                 onClick={addPeptide}
                 disabled={peptides.length >= 5}
-                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-[#1d4ed8] dark:hover:from-slate-200 dark:from-slate-200 hover:to-[#3b82f6] dark:hover:to-slate-400 dark:to-slate-400 hover:text-white dark:hover:text-slate-900 dark:text-slate-900"
+                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-[#1d4ed8] dark:hover:from-slate-400 dark:from-slate-400 hover:to-[#3b82f6] dark:hover:to-slate-200 dark:to-slate-200 hover:text-white dark:hover:text-slate-900 dark:text-slate-900"
               >
                 <Plus className="h-3.5 w-3.5" />
                 ADD PEPTIDE
@@ -440,7 +440,7 @@ export function PeptideCalculator() {
                       className={cn(
                         "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                         waterUnit === unit
-                          ? "bg-gradient-to-r from-[#1d4ed8] dark:from-slate-200 to-[#3b82f6] dark:to-slate-400 text-white dark:text-slate-900 shadow-sm"
+                          ? "bg-gradient-to-r from-[#1d4ed8] dark:from-slate-400 to-[#3b82f6] dark:to-slate-200 text-white dark:text-slate-900 shadow-sm"
                           : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
                       )}
                     >
@@ -494,7 +494,7 @@ export function PeptideCalculator() {
                           className={cn(
                             "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                             peptide.doseUnit === unit
-                              ? "bg-gradient-to-r from-[#1d4ed8] dark:from-slate-200 to-[#3b82f6] dark:to-slate-400 text-white dark:text-slate-900 shadow-sm"
+                              ? "bg-gradient-to-r from-[#1d4ed8] dark:from-slate-400 to-[#3b82f6] dark:to-slate-200 text-white dark:text-slate-900 shadow-sm"
                               : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
                           )}
                         >
@@ -649,7 +649,7 @@ export function PeptideCalculator() {
                           />
                           <button
                             onClick={handleSave}
-                            className="h-9 shrink-0 rounded-xl bg-gradient-to-r from-[#1d4ed8] dark:from-slate-200 to-[#3b82f6] dark:to-slate-400 px-4 text-xs font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
+                            className="h-9 shrink-0 rounded-xl bg-gradient-to-r from-[#1d4ed8] dark:from-slate-400 to-[#3b82f6] dark:to-slate-200 px-4 text-xs font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
                           >
                             Save
                           </button>
@@ -735,7 +735,7 @@ export function PeptideCalculator() {
                   <div className="ml-3 flex shrink-0 gap-2">
                     <button
                       onClick={() => handleLoad(saved)}
-                      className="rounded-lg bg-gradient-to-r from-[#1d4ed8] dark:from-slate-200 to-[#3b82f6] dark:to-slate-400 px-3 py-1.5 text-xs font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
+                      className="rounded-lg bg-gradient-to-r from-[#1d4ed8] dark:from-slate-400 to-[#3b82f6] dark:to-slate-200 px-3 py-1.5 text-xs font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
                     >
                       Load
                     </button>
