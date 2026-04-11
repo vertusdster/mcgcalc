@@ -81,7 +81,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         −
       </button>
@@ -106,7 +106,7 @@ function NumberInput({
           className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
         />
         {suffix && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400 dark:text-slate-500">
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500 dark:text-slate-400">
             {suffix}
           </span>
         )}
@@ -115,7 +115,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         +
       </button>
@@ -318,20 +318,20 @@ export function IntranasalCalculator() {
                 <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4">
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
                     Peptide per Spray:{" "}
-                    <strong className="text-[#1d4ed8]">
+                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                       {vialResult.peptidePerSprayMg} mg ({vialResult.peptidePerSprayMcg} mcg)
                     </strong>
                   </p>
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
                     Sprays Needed:{" "}
-                    <strong className="text-[#1d4ed8]">
+                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                       {vialResult.spraysNeededCeil}
                     </strong>{" "}
                     <span className="text-slate-400 dark:text-slate-500">(≈ {vialResult.spraysNeeded})</span>
                   </p>
                   <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
                     Approx. Total Sprays Available:{" "}
-                    <strong className="text-[#1d4ed8]">
+                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                       {vialResult.totalSpraysAvailable}
                     </strong>
                   </p>
@@ -453,7 +453,7 @@ export function IntranasalCalculator() {
               <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4">
                 <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
                   Powder Required:{" "}
-                  <strong className="text-[#1d4ed8]">
+                  <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                     {powderResult.powderG} g
                   </strong>{" "}
                   <span className="text-slate-400 dark:text-slate-500">
@@ -462,7 +462,7 @@ export function IntranasalCalculator() {
                 </p>
                 <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
                   Volume Required:{" "}
-                  <strong className="text-[#1d4ed8]">
+                  <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                     {powderResult.volumeMl} ml
                   </strong>
                 </p>
@@ -508,13 +508,13 @@ export function IntranasalCalculator() {
           <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4">
             <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
               No. of Sprays:{" "}
-              <strong className="text-[#1d4ed8]">
+              <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                 {helperResult.numSprays}
               </strong>
             </p>
             <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
               Spray Volume (ml):{" "}
-              <strong className="text-[#1d4ed8]">
+              <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                 {helperResult.sprayVolume}
               </strong>
             </p>

@@ -11,7 +11,6 @@ const navigation = [
   {
     title: "Resources",
     links: [
-      { name: "Blog", href: "/blog" },
       { name: "FAQ", href: "/faq" },
       { name: "About", href: "/about" },
       { name: "Contact", href: "/contact" },
@@ -62,7 +61,7 @@ export default function Footer() {
         <div className="max-w-5xl py-8">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-muted-foreground text-sm font-medium">
-              © {new Date().getFullYear()} PeptideCalculator.com — For research
+              © {new Date().getFullYear()} mcgcalc.com — For research
               purposes only.
             </p>
             <div className="flex items-center gap-6">

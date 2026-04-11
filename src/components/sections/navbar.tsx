@@ -48,6 +48,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
     ...(hasSaved
       ? [{ label: "My Calculations", href: "/saved" }]
       : []),
+    { label: "Home", href: "/" },
     {
       label: "Calculators",
       href: "/calculator",
@@ -80,7 +81,6 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
       ],
     },
     { label: "Peptides", href: "/peptides" },
-    { label: "Blog", href: "/blog" },
     { label: "FAQ", href: "/faq" },
   ];
 
@@ -301,11 +301,11 @@ export default Navbar;
 
 const NavDropdownImage = () => {
   return (
-    <div className="from-primary-900 via-primary to-primary/90 text-background bg-linear-to-r flex flex-col gap-2 rounded-xl">
+    <div className="from-primary-900 via-primary to-primary/90 bg-linear-to-r flex flex-col gap-2 rounded-xl text-white">
       <div className="space-y-1 p-5 font-medium">
-        <h3 className="">Launch today</h3>
-        <p className="text-background/80 text-sm">
-          Cut scope by half with our auto-cut tool
+        <h3>Dosage Calculator</h3>
+        <p className="text-white/80 text-sm">
+          Reconstitute, dose & draw — calculated in seconds
         </p>
       </div>
       <img

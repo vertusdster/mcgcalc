@@ -56,7 +56,7 @@ export function SavedCalculations() {
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700/50">
             <Syringe className="h-8 w-8 text-slate-400 dark:text-slate-500" />
           </div>
-          <p className="text-sm font-medium text-slate-600">No saved calculations yet</p>
+          <p className="text-sm font-medium text-slate-600 dark:text-slate-400">No saved calculations yet</p>
           <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
             Save a calculation from the{" "}
             <a href="/calculator" className="text-[#1d4ed8] underline hover:text-[#3b82f6]">
@@ -102,7 +102,7 @@ export function SavedCalculations() {
                         }}
                         className="h-7 rounded-md border border-slate-200 dark:border-slate-800 px-2 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none focus:border-[#3b82f6]"
                       />
-                      <button onClick={confirmEdit} className="rounded p-1 text-blue-600 hover:bg-blue-50">
+                      <button onClick={confirmEdit} className="rounded p-1 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30">
                         <Check className="h-4 w-4" />
                       </button>
                       <button onClick={cancelEdit} className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">
@@ -116,7 +116,7 @@ export function SavedCalculations() {
                   )}
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
-                  <span className="flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">
+                  <span className="flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-900/30 px-2.5 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
                     <BookmarkCheck className="h-3.5 w-3.5" />
                     Saved
                   </span>
@@ -131,7 +131,7 @@ export function SavedCalculations() {
                       </button>
                       <button
                         onClick={() => handleDelete(saved.id)}
-                        className="rounded-lg p-1.5 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 hover:text-red-500"
+                        className="rounded-lg p-1.5 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-500 dark:hover:text-red-400"
                         aria-label="Delete"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -170,14 +170,14 @@ export function SavedCalculations() {
                           <strong>{peptide.dose}{peptide.doseUnit}</strong> doses
                         </span>
                       </div>
-                      <div className="flex items-start gap-2 text-sm leading-relaxed text-slate-600">
+                      <div className="flex items-start gap-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                         <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400/80" />
                         <span>
                           With a concentration of <strong>{concentrationMgPerMl.toFixed(1)}mg/mL</strong>,
                           each vial contains {formatDoses(totalDosesNum)} doses
                         </span>
                       </div>
-                      <div className="flex items-start gap-2 text-sm leading-relaxed text-slate-600">
+                      <div className="flex items-start gap-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                         <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400/80" />
                         <span>or {result.volumeMl.toFixed(2)} doses in mL</span>
                       </div>
@@ -194,10 +194,10 @@ export function SavedCalculations() {
                 </div>
                 <span
                   className={cn(
-                    "rounded-lg px-3 py-1.5 text-sm font-bold text-white",
+                    "rounded-lg px-3 py-1.5 text-sm font-bold",
                     isTotalValid
-                      ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white"
-                      : "bg-slate-400",
+                      ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white dark:bg-none dark:bg-white dark:text-slate-900"
+                      : "bg-slate-400 text-white dark:bg-slate-600",
                   )}
                 >
                   {totalUnits.toFixed(1)} units

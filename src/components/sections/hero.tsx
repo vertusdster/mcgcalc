@@ -41,7 +41,7 @@ export default function Hero() {
                         {calc.title}
                       </h2>
                       {"badge" in calc && calc.badge && (
-                        <span className="rounded-full bg-[#1d4ed8]/10 px-2 py-0.5 text-xs font-bold text-[#1d4ed8]">
+                        <span className="rounded-full bg-[#1d4ed8]/10 dark:bg-[#60a5fa]/15 px-2 py-0.5 text-xs font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
                           {calc.badge}
                         </span>
                       )}
@@ -50,7 +50,7 @@ export default function Hero() {
                       {calc.description}
                     </p>
                   </div>
-                  <ChevronRight className="mt-1 size-5 shrink-0 text-slate-300 transition-colors group-hover:text-[#1d4ed8]" />
+                  <ChevronRight className="mt-1 size-5 shrink-0 text-slate-300 dark:text-slate-600 transition-colors group-hover:text-[#1d4ed8] dark:group-hover:text-[#60a5fa]" />
                 </a>
               );
             })}

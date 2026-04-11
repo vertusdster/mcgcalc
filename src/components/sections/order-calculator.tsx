@@ -81,7 +81,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         −
       </button>
@@ -106,7 +106,7 @@ function NumberInput({
           className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
         />
         {suffix && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400 dark:text-slate-500">
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500 dark:text-slate-400">
             {suffix}
           </span>
         )}
@@ -115,7 +115,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         +
       </button>
@@ -265,16 +265,16 @@ export function OrderCalculator() {
             {result ? (
               <div className="space-y-3">
                 <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4 space-y-2">
-                  <p className="text-sm font-bold text-slate-600">
+                  <p className="text-sm font-bold text-slate-600 dark:text-slate-400">
                     <Calendar className="mr-1 inline h-4 w-4" />
                     Dosing Schedule:{" "}
                     <span className="text-slate-800 dark:text-slate-200 dark:text-white">
                       {frequency.label}, {timesPerDay} time(s) per day
                     </span>
                   </p>
-                  <p className="text-sm font-bold text-slate-600">
+                  <p className="text-sm font-bold text-slate-600 dark:text-slate-400">
                     Total Amount Needed:{" "}
-                    <strong className="text-[#1d4ed8]">
+                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                       {result.totalMcg.toLocaleString()} mcg
                     </strong>{" "}
                     <span className="text-slate-400 dark:text-slate-500">
@@ -303,7 +303,7 @@ export function OrderCalculator() {
 
                   {/* Custom Vial Size */}
                   <div className="pt-2">
-                    <label className="flex items-center gap-2 text-sm text-slate-600">
+                    <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
                       <input
                         type="checkbox"
                         checked={useCustomVial}
@@ -322,9 +322,9 @@ export function OrderCalculator() {
                           onChange={(val) => setCustomVialSize(val)}
                           className="w-48"
                         />
-                        <span className="text-sm font-bold text-slate-600">
+                        <span className="text-sm font-bold text-slate-600 dark:text-slate-400">
                           →{" "}
-                          <strong className="text-[#1d4ed8]">
+                          <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
                             {result.customVialCount}
                           </strong>{" "}
                           vials
@@ -335,7 +335,7 @@ export function OrderCalculator() {
                 </div>
 
                 <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#3b82f6]/10 px-4 py-3">
-                  <p className="text-xs italic text-[#1d4ed8]">
+                  <p className="text-xs italic text-[#1d4ed8] dark:text-[#60a5fa]">
                     Calculation: {result.formulaStr}
                   </p>
                 </div>

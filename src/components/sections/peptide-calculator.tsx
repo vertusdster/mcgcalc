@@ -124,7 +124,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         −
       </button>
@@ -151,7 +151,7 @@ function NumberInput({
           className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
         />
         {suffix && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400 dark:text-slate-500">
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500 dark:text-slate-400">
             {suffix}
           </span>
         )}
@@ -162,7 +162,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         +
       </button>
@@ -384,7 +384,7 @@ export function PeptideCalculator() {
                     {peptides.length > 1 && (
                       <button
                         onClick={() => removePeptide(peptide.id)}
-                        className="rounded-full bg-slate-100 dark:bg-slate-800/80 p-2 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 hover:text-red-500"
+                        className="rounded-full bg-slate-100 dark:bg-slate-800/80 p-2 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-500 dark:hover:text-red-400"
                       >
                         <Trash2 className="h-4 w-4" />
                         <span className="sr-only">Delete</span>
@@ -597,7 +597,7 @@ export function PeptideCalculator() {
                               className="animate-in fade-in flex items-start gap-3 text-sm leading-relaxed duration-500"
                             >
                               <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-slate-400/80" />
-                              <span className="font-bold text-slate-600">
+                              <span className="font-bold text-slate-600 dark:text-slate-400">
                                 With a concentration of{" "}
                                 <strong>
                                   {concentrationMgPerMl.toFixed(2)}mg/mL
@@ -622,7 +622,7 @@ export function PeptideCalculator() {
                   {!isTotalValid && (
                     <div className="animate-in fade-in slide-in-from-bottom-2 flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-gradient-to-r from-slate-50 dark:from-slate-900 to-slate-100 dark:to-slate-800 p-3">
                       <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700">
-                        <span className="text-xs font-bold text-slate-600">
+                        <span className="text-xs font-bold text-slate-600 dark:text-slate-400">
                           !
                         </span>
                       </div>
@@ -666,7 +666,7 @@ export function PeptideCalculator() {
                       ) : (
                         <button
                           onClick={() => setShowSaveInput(true)}
-                          className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 py-2.5 text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors hover:border-[#3b82f6] hover:text-[#1d4ed8]"
+                          className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 py-2.5 text-sm font-medium text-slate-500 dark:text-slate-400 transition-colors hover:border-[#3b82f6] hover:text-[#1d4ed8] dark:hover:border-[#60a5fa] dark:hover:text-[#60a5fa]"
                         >
                           <BookmarkPlus className="h-4 w-4" />
                           Save this calculation
@@ -683,7 +683,7 @@ export function PeptideCalculator() {
                   <p className="text-muted-foreground text-sm">
                     Enter valid values to see results
                   </p>
-                  <p className="text-muted-foreground/70 mt-1 text-xs">
+                  <p className="text-muted-foreground mt-1 text-xs">
                     Results will update in real time as you type
                   </p>
                 </div>
@@ -701,9 +701,9 @@ export function PeptideCalculator() {
             className="flex w-full items-center justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800"
           >
             <span className="flex items-center gap-2">
-              <RotateCcw className="h-4 w-4 text-[#1d4ed8]" />
+              <RotateCcw className="h-4 w-4 text-[#1d4ed8] dark:text-[#60a5fa]" />
               Saved Calculations
-              <span className="rounded-full bg-[#1d4ed8]/10 px-2 py-0.5 text-xs font-bold text-[#1d4ed8]">
+              <span className="rounded-full bg-[#1d4ed8]/10 dark:bg-[#60a5fa]/15 px-2 py-0.5 text-xs font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
                 {savedCalculations.length}
               </span>
             </span>
@@ -741,7 +741,7 @@ export function PeptideCalculator() {
                     </button>
                     <button
                       onClick={() => handleDelete(saved.id)}
-                      className="rounded-lg bg-slate-100 dark:bg-slate-800/80 px-2 py-1.5 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 hover:text-red-500"
+                      className="rounded-lg bg-slate-100 dark:bg-slate-800/80 px-2 py-1.5 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-500 dark:hover:text-red-400"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>

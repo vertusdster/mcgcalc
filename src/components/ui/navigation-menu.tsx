@@ -52,6 +52,14 @@ const NavigationMenuTrigger = React.forwardRef<
   <NavigationMenuPrimitive.Trigger
     ref={ref}
     className={cn(navigationMenuTriggerStyle(), 'group', className)}
+    onPointerDown={(e) => {
+      // Prevent closing when clicking the trigger while menu is already open
+      const target = e.target as HTMLElement;
+      const trigger = target.closest('[data-state]');
+      if (trigger?.getAttribute('data-state') === 'open') {
+        e.preventDefault();
+      }
+    }}
     {...props}
   >
     {children}{' '}

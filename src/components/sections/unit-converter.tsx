@@ -155,7 +155,7 @@ export function UnitConverter() {
               <div className="space-y-4">
                 {/* Milligrams */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#1d4ed8]">
+                  <span className="text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
                     Milligrams(mg)
                   </span>
                   <div className="flex w-3/5 items-center">
@@ -170,7 +170,7 @@ export function UnitConverter() {
 
                 {/* Microlitres */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#1d4ed8]">
+                  <span className="text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
                     Microlitres(uL)
                   </span>
                   <div className="flex w-3/5 items-center">
@@ -185,7 +185,7 @@ export function UnitConverter() {
 
                 {/* Micrograms */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#1d4ed8]">
+                  <span className="text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
                     Micrograms(mcg)
                   </span>
                   <div className="flex w-3/5 items-center">
