@@ -199,7 +199,7 @@ export function SavedCalculations() {
                     onClick={() => {
                       try { localStorage.setItem(LOAD_KEY, saved.id); } catch {}
                     }}
-                    className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white dark:bg-none dark:bg-white dark:text-slate-900 px-3 py-1.5 text-xs font-bold transition-opacity hover:opacity-90"
+                    className="flex items-center gap-1.5 rounded-md bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white dark:bg-none dark:bg-white dark:text-slate-900 px-2 py-1 text-xs font-bold transition-opacity hover:opacity-90"
                   >
                     <ExternalLink className="h-3 w-3" />
                     Load
