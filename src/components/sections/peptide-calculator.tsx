@@ -369,7 +369,7 @@ export function PeptideCalculator() {
 
           {/* Peptide Quantities */}
           <div className="mb-6 space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
                 <Beaker className="h-5 w-5" />
                 <span className="text-sm font-bold">
