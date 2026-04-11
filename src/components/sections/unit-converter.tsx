@@ -121,7 +121,7 @@ export function UnitConverter() {
                 <select
                   value={inputUnit}
                   onChange={(e) => setInputUnit(e.target.value as Unit)}
-                  className="h-12 w-24 rounded-r-xl border border-slate-200 dark:border-slate-800 bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] px-3 text-center text-base font-bold text-white outline-none"
+                  className="h-12 w-24 rounded-r-xl border border-slate-200 dark:border-slate-800 bg-gradient-to-r from-[#1d4ed8] dark:from-slate-200 to-[#3b82f6] dark:to-slate-400 px-3 text-center text-base font-bold text-white dark:text-slate-900 outline-none"
                 >
                   {UNITS.map((u) => (
                     <option key={u} value={u}>
@@ -136,7 +136,7 @@ export function UnitConverter() {
             <div className="flex gap-3">
               <button
                 onClick={handleConvert}
-                className="h-10 rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] px-6 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                className="h-10 rounded-xl bg-gradient-to-r from-[#1d4ed8] dark:from-slate-200 to-[#3b82f6] dark:to-slate-400 px-6 text-sm font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
               >
                 CONVERT
               </button>
