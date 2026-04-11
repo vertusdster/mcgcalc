@@ -522,19 +522,19 @@ export function PeptideCalculator() {
                     )}
                   >
                     <div className="mb-2 flex items-end justify-between">
-                      <span className="text-lg font-bold tracking-tight text-slate-800 dark:text-slate-200">
+                      <span className="text-base font-bold tracking-tight text-slate-800 dark:text-slate-200">
                         {peptides.length > 1 ? "Total Volume" : "Formulate"}
                       </span>
                       <div className="flex items-baseline gap-1">
                         <span
                           className={cn(
-                            "text-2xl font-black tabular-nums",
+                            "text-xl font-black tabular-nums",
                             isTotalValid ? "text-[#1d4ed8] dark:text-white" : "text-slate-500 dark:text-slate-400",
                           )}
                         >
                           {totalUnits.toFixed(1)}
                         </span>
-                        <span className="text-base font-bold text-slate-700 dark:text-slate-300">
+                        <span className="text-sm font-bold text-slate-700 dark:text-slate-300">
                           units
                         </span>
                       </div>
