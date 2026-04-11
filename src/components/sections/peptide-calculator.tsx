@@ -385,7 +385,7 @@ export function PeptideCalculator() {
                 className="h-8 shrink-0 gap-1 text-xs font-bold shadow-sm transition-all duration-300 dark:border-slate-700/60 dark:bg-transparent dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
               >
                 <Plus className="h-3.5 w-3.5" />
-                ADD PEPTIDE
+                Add Peptide
               </Button>
             </div>
 
@@ -535,7 +535,7 @@ export function PeptideCalculator() {
                     className={cn(
                       "rounded-2xl p-6 transition-all duration-500",
                       isTotalValid
-                        ? "border border-[#3b82f6]/20 bg-[#1d4ed8]/[0.03]"
+                        ? "border border-[#3b82f6]/20 dark:border-[#60a5fa]/20 bg-[#1d4ed8]/[0.03] dark:bg-[#60a5fa]/[0.06]"
                         : "border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50",
                     )}
                   >

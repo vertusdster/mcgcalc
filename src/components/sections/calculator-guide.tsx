@@ -44,7 +44,7 @@ function StepCards() {
             {item.step}
           </span>
           <div className="relative text-center">
-            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
               {item.title}
             </h3>
             <p className="text-muted-foreground mt-1 text-sm">

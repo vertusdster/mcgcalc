@@ -158,7 +158,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
             >
               <Button
                 variant="outline"
-                className="dark:bg-foreground dark:text-background"
+                className="dark:bg-white dark:text-slate-900"
               >
                 Peptide Calculator
               </Button>
@@ -167,7 +167,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
             <div
               className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
             >
-              <ThemeToggle className="dark:bg-foreground dark:text-background" />
+              <ThemeToggle className="dark:bg-white dark:text-slate-900" />
             </div>
 
             {/* Hamburger Menu Button (Mobile Only) */}

@@ -185,7 +185,7 @@ export function OrderCalculator() {
         <div className="space-y-5 p-6">
           {/* Frequency */}
           <div className="space-y-2">
-            <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+            <label className="text-lg font-bold text-slate-800 dark:text-white">
               Frequency
             </label>
             <select
@@ -206,7 +206,7 @@ export function OrderCalculator() {
 
           {/* Dose Amount */}
           <div className="space-y-2">
-            <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+            <label className="text-lg font-bold text-slate-800 dark:text-white">
               Dose Amount
             </label>
             <div className="flex gap-2">
@@ -234,7 +234,7 @@ export function OrderCalculator() {
           {/* Times Per Day & Duration */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <label className="text-lg font-bold text-slate-800 dark:text-white">
                 Times Per Day
               </label>
               <NumberInput
@@ -246,7 +246,7 @@ export function OrderCalculator() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <label className="text-lg font-bold text-slate-800 dark:text-white">
                 Duration{" "}
                 <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(weeks)</span>
               </label>
@@ -268,7 +268,7 @@ export function OrderCalculator() {
                   <p className="text-sm font-bold text-slate-600 dark:text-slate-400">
                     <Calendar className="mr-1 inline h-4 w-4" />
                     Dosing Schedule:{" "}
-                    <span className="text-slate-800 dark:text-slate-200 dark:text-white">
+                    <span className="text-slate-800 dark:text-white">
                       {frequency.label}, {timesPerDay} time(s) per day
                     </span>
                   </p>
@@ -293,7 +293,7 @@ export function OrderCalculator() {
                           className="text-sm text-slate-600 dark:text-slate-400"
                         >
                           {v.size}mg vials:{" "}
-                          <strong className="text-slate-800 dark:text-slate-200 dark:text-white">
+                          <strong className="text-slate-800 dark:text-white">
                             {v.count}
                           </strong>
                         </li>

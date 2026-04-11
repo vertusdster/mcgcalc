@@ -111,7 +111,7 @@ export function SavedCalculations() {
                       </button>
                     </div>
                   ) : (
-                    <span className="truncate text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+                    <span className="truncate text-lg font-bold text-slate-800 dark:text-white">
                       {saved.label}
                     </span>
                   )}

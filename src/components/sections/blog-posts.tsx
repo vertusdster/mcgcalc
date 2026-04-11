@@ -123,7 +123,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
                 <a
                   key={post.id}
                   href={`/blog/${post.id}/`}
-                  className="bg-card group flex flex-col rounded-xl border shadow-sm transition-all hover:border-[#3b82f6]/40 hover:shadow-md"
+                  className="bg-card group flex flex-col rounded-xl border shadow-sm transition-all hover:border-[#3b82f6]/40 dark:hover:border-[#60a5fa]/30 hover:shadow-md"
                 >
                   {post.data.image && (
                     <div className="overflow-hidden rounded-t-xl">
@@ -178,9 +178,9 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
       {/* Calculator CTA */}
       <section className="mt-16">
         <div className="container max-w-5xl">
-          <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#3b82f6]/20 bg-[#1d4ed8]/5 px-8 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#3b82f6]/20 dark:border-[#60a5fa]/20 bg-[#1d4ed8]/5 dark:bg-[#60a5fa]/[0.06] px-8 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <p className="font-semibold text-slate-800 dark:text-slate-200 dark:text-white">
+              <p className="font-semibold text-slate-800 dark:text-white">
                 Ready to calculate your dose?
               </p>
               <p className="text-muted-foreground mt-1 text-sm">

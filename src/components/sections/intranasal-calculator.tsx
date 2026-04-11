@@ -208,18 +208,18 @@ export function IntranasalCalculator() {
       {/* === Vial Version === */}
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
-          <h2 className="text-2xl font-black text-slate-800 dark:text-slate-200 dark:text-white">
+          <h2 className="text-2xl font-black text-slate-800 dark:text-white">
             Vial Version
           </h2>
 
           {/* Mass in Vial */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
                 Mass in Vial{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(mg)</span>
+                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(mg)</span>{" "}
+                <HelpTooltip content="Total mass of peptide in the vial in milligrams." />
               </span>
-              <HelpTooltip content="Total mass of peptide in the vial in milligrams." />
             </div>
             <div className="w-3/5">
               <NumberInput
@@ -236,11 +236,11 @@ export function IntranasalCalculator() {
           {/* Diluent Volume */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
                 Diluent Volume{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>
+                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>{" "}
+                <HelpTooltip content="Volume of bacteriostatic water or saline added to the vial." />
               </span>
-              <HelpTooltip content="Volume of bacteriostatic water or saline added to the vial." />
             </div>
             <div className="w-3/5">
               <NumberInput
@@ -257,11 +257,11 @@ export function IntranasalCalculator() {
           {/* Volume/Spray */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
                 Volume/Spray{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>
+                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>{" "}
+                <HelpTooltip content="Volume per spray pump actuation. Standard nasal sprayers deliver ~0.1 ml per spray." />
               </span>
-              <HelpTooltip content="Volume per spray pump actuation. Standard nasal sprayers deliver ~0.1 ml per spray." />
             </div>
             <div className="w-3/5">
               <NumberInput
@@ -278,10 +278,10 @@ export function IntranasalCalculator() {
           {/* Desired Dose */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
-                Desired Dose
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
+                Desired Dose{" "}
+                <HelpTooltip content="The dose you want to administer per session." />
               </span>
-              <HelpTooltip content="The dose you want to administer per session." />
             </div>
             <div className="flex w-3/5 gap-2">
               <NumberInput
@@ -367,17 +367,17 @@ export function IntranasalCalculator() {
       {/* === Powder Version === */}
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
-          <h2 className="text-2xl font-black text-slate-800 dark:text-slate-200 dark:text-white">
+          <h2 className="text-2xl font-black text-slate-800 dark:text-white">
             Powder Version
           </h2>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
                 Desired Dose{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(mcg)</span>
+                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(mcg)</span>{" "}
+                <HelpTooltip content="The desired dose per administration in micrograms." />
               </span>
-              <HelpTooltip content="The desired dose per administration in micrograms." />
             </div>
             <div className="w-3/5">
               <NumberInput
@@ -393,10 +393,10 @@ export function IntranasalCalculator() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
-                Number of Doses
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
+                Number of Doses{" "}
+                <HelpTooltip content="Total number of doses you want to prepare." />
               </span>
-              <HelpTooltip content="Total number of doses you want to prepare." />
             </div>
             <div className="w-3/5">
               <NumberInput
@@ -411,11 +411,11 @@ export function IntranasalCalculator() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
                 Volume/Spray{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>
+                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>{" "}
+                <HelpTooltip content="Volume of each spray pump actuation in ml." />
               </span>
-              <HelpTooltip content="Volume of each spray pump actuation in ml." />
             </div>
             <div className="w-3/5">
               <NumberInput
@@ -431,10 +431,10 @@ export function IntranasalCalculator() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
-                Sprays per Dose
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
+                Sprays per Dose{" "}
+                <HelpTooltip content="Number of sprays needed per single dose." />
               </span>
-              <HelpTooltip content="Number of sprays needed per single dose." />
             </div>
             <div className="w-3/5">
               <NumberInput
@@ -479,16 +479,16 @@ export function IntranasalCalculator() {
       {/* === Spray Volume Helper === */}
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
-          <h2 className="text-2xl font-black text-slate-800 dark:text-slate-200 dark:text-white">
+          <h2 className="text-2xl font-black text-slate-800 dark:text-white">
             Spray Volume Helper
           </h2>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
-                ML of Water
+              <span className="text-lg font-bold text-slate-800 dark:text-white">
+                ML of Water{" "}
+                <HelpTooltip content="Total ml of water used in the spray bottle." />
               </span>
-              <HelpTooltip content="Total ml of water used in the spray bottle." />
             </div>
             <div className="w-3/5">
               <select

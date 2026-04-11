@@ -156,15 +156,15 @@ export function ReverseCalculator() {
         <div className="space-y-6 p-6">
           {/* Peptide Vial */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-              <Beaker className="h-5 w-5" />
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+              <Beaker className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
-                Enter Peptide Vial Contents (in mg)
+                Enter Peptide Vial Contents (in mg){" "}
+                <HelpTooltip content="Enter the total amount of peptide in the vial in milligrams (mg)." />
               </span>
-              <HelpTooltip content="Enter the total amount of peptide in the vial in milligrams (mg)." />
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-xl font-bold text-slate-800 dark:text-white">
                 Peptide Vial{" "}
                 <span className="text-base font-normal text-slate-400 dark:text-slate-500">
                   (mg)
@@ -185,15 +185,15 @@ export function ReverseCalculator() {
 
           {/* Dosage */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-              <Syringe className="h-5 w-5" />
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+              <Syringe className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
-                Enter Dosage (in micrograms, mcg)
+                Enter Dosage (in micrograms, mcg){" "}
+                <HelpTooltip content="Enter the desired dose per injection in micrograms (mcg)." />
               </span>
-              <HelpTooltip content="Enter the desired dose per injection in micrograms (mcg)." />
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-xl font-bold text-slate-800 dark:text-white">
                 Dosage{" "}
                 <span className="text-base font-normal text-slate-400 dark:text-slate-500">
                   (per dose)
@@ -214,15 +214,15 @@ export function ReverseCalculator() {
 
           {/* Desired Units */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-              <FlaskConical className="h-5 w-5" />
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+              <FlaskConical className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
-                Enter Desired Units to Draw
+                Enter Desired Units to Draw{" "}
+                <HelpTooltip content="Enter how many units you want to draw on the syringe for each dose. This determines how much BAC water to add." />
               </span>
-              <HelpTooltip content="Enter how many units you want to draw on the syringe for each dose. This determines how much BAC water to add." />
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-xl font-bold text-slate-800 dark:text-white">
                 Units
               </span>
               <div className="w-3/5">
@@ -243,12 +243,12 @@ export function ReverseCalculator() {
             <div aria-live="polite" aria-atomic="true">
               {result ? (
                 <div className="space-y-4">
-                  <div className="rounded-2xl border border-[#3b82f6]/20 bg-[#1d4ed8]/[0.03] p-6">
+                  <div className="rounded-2xl border border-[#3b82f6]/20 dark:border-[#60a5fa]/20 bg-[#1d4ed8]/[0.03] dark:bg-[#60a5fa]/[0.06] p-6">
                     <h3 className="mb-4 text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
                       Required BAC Water For Peptide Reconstitution
                     </h3>
                     <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#3b82f6]/10 p-5">
-                      <p className="text-base font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+                      <p className="text-base font-bold text-slate-800 dark:text-white">
                         Reconstitute your peptide vial using{" "}
                         <span className="text-[#1d4ed8] dark:text-[#60a5fa]">
                           {result.bacWaterMl.toFixed(2)} ml

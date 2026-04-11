@@ -29,7 +29,7 @@ export default function Hero() {
                   href={calc.href}
                   className={cn(
                     "bg-card border-border/50 group flex items-start gap-4 rounded-2xl border p-5 shadow-sm",
-                    "transition-all duration-200 hover:border-[#3b82f6]/40 hover:shadow-md",
+                    "transition-all duration-200 hover:border-[#3b82f6]/40 dark:hover:border-[#60a5fa]/30 hover:shadow-md",
                   )}
                 >
                   <div className="bg-primary/10 flex size-11 shrink-0 items-center justify-center rounded-xl">
@@ -37,7 +37,7 @@ export default function Hero() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-base font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+                      <h2 className="text-base font-bold text-slate-800 dark:text-white">
                         {calc.title}
                       </h2>
                       {"badge" in calc && calc.badge && (
@@ -50,7 +50,7 @@ export default function Hero() {
                       {calc.description}
                     </p>
                   </div>
-                  <ChevronRight className="mt-1 size-5 shrink-0 text-slate-300 dark:text-slate-600 transition-colors group-hover:text-[#1d4ed8] dark:group-hover:text-[#60a5fa]" />
+                  <ChevronRight className="mt-1 size-5 shrink-0 text-slate-300 dark:text-slate-500 transition-colors group-hover:text-[#1d4ed8] dark:group-hover:text-[#60a5fa]" />
                 </a>
               );
             })}

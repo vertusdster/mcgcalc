@@ -100,7 +100,7 @@ export function UnitConverter() {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+              <span className="text-xl font-bold text-slate-800 dark:text-white">
                 Value
               </span>
               <div className="flex w-3/5 gap-2">
@@ -138,13 +138,13 @@ export function UnitConverter() {
                 onClick={handleConvert}
                 className="h-10 rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white px-6 text-sm font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
               >
-                CONVERT
+                Convert
               </button>
               <button
                 onClick={handleClear}
                 className="h-10 rounded-xl bg-slate-100 dark:bg-slate-800/80 px-6 text-sm font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-slate-200 dark:hover:bg-slate-700"
               >
-                CLEAR
+                Clear
               </button>
             </div>
           </div>
@@ -159,7 +159,7 @@ export function UnitConverter() {
                     Milligrams(mg)
                   </span>
                   <div className="flex w-3/5 items-center">
-                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-white">
                       {formatNumber(results.mg)}
                     </div>
                     <div className="rounded-r-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 px-4 py-3 text-sm font-bold text-slate-500 dark:text-slate-400">
@@ -174,7 +174,7 @@ export function UnitConverter() {
                     Microlitres(uL)
                   </span>
                   <div className="flex w-3/5 items-center">
-                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-white">
                       {formatNumber(results.uL)}
                     </div>
                     <div className="rounded-r-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 px-4 py-3 text-sm font-bold text-slate-500 dark:text-slate-400">
@@ -189,7 +189,7 @@ export function UnitConverter() {
                     Micrograms(mcg)
                   </span>
                   <div className="flex w-3/5 items-center">
-                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
+                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-white">
                       {formatNumber(results.mcg)}
                     </div>
                     <div className="rounded-r-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 px-4 py-3 text-sm font-bold text-slate-500 dark:text-slate-400">
