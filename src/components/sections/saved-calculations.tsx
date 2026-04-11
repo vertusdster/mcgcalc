@@ -196,7 +196,7 @@ export function SavedCalculations() {
                   className={cn(
                     "rounded-lg px-3 py-1.5 text-sm font-bold text-white",
                     isTotalValid
-                      ? "bg-gradient-to-r from-[#1d4ed8] dark:from-slate-400 to-[#3b82f6] dark:to-slate-200"
+                      ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white"
                       : "bg-slate-400",
                   )}
                 >

@@ -300,7 +300,7 @@ export function IntranasalCalculator() {
                     className={cn(
                       "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                       doseUnit === unit
-                        ? "bg-gradient-to-r from-[#1d4ed8] dark:from-slate-400 to-[#3b82f6] dark:to-slate-200 text-white dark:text-slate-900 shadow-sm"
+                        ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white text-white dark:text-slate-900 shadow-sm"
                         : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
                     )}
                   >
