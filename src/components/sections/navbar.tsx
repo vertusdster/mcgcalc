@@ -160,7 +160,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
                 variant="outline"
                 className="dark:bg-foreground dark:text-background"
               >
-                peptidescalculator
+                Peptide Calculator
               </Button>
             </a>
 
