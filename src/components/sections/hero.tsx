@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section className="bg-background relative overflow-hidden pt-16 pb-20 md:pt-28 md:pb-28">
       <div className="relative z-10">
-        <div className="container max-w-5xl text-center">
+        <div className="container max-w-5xl text-center hidden md:block">
           <h1 className="text-4xl font-semibold tracking-tighter md:text-5xl lg:text-6xl">
             mcgcalc
           </h1>
