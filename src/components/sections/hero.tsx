@@ -37,7 +37,7 @@ export default function Hero() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-base font-bold text-slate-800 dark:text-white">
+                      <h2 className="text-base font-bold text-slate-800 dark:text-slate-200 dark:text-white">
                         {calc.title}
                       </h2>
                       {"badge" in calc && calc.badge && (

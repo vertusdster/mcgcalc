@@ -81,7 +81,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         −
       </button>
@@ -103,10 +103,10 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#3b82f6]/30 focus:border-[#3b82f6] focus:bg-white dark:text-white"
+          className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
         />
         {suffix && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">
+          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400 dark:text-slate-500">
             {suffix}
           </span>
         )}
@@ -115,7 +115,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
       >
         +
       </button>
@@ -180,12 +180,12 @@ export function OrderCalculator() {
   }, [doseAmount, doseUnit, timesPerDay, durationWeeks, frequency, customVialSize]);
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30">
-      <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50">
+    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40">
+      <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
           {/* Frequency */}
           <div className="space-y-2">
-            <label className="text-lg font-bold text-slate-800 dark:text-white">
+            <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
               Frequency
             </label>
             <select
@@ -194,7 +194,7 @@ export function OrderCalculator() {
                 const f = FREQUENCY_OPTIONS.find((o) => o.label === e.target.value);
                 if (f) setFrequency(f);
               }}
-              className="h-12 w-full rounded-xl border border-slate-200 bg-[#1e3a5f]/5 px-4 text-base font-bold text-slate-800 outline-none focus:border-[#3b82f6] dark:text-white"
+              className="h-12 w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 text-base font-bold text-slate-800 dark:text-slate-200 outline-none focus:border-[#3b82f6] dark:text-white"
             >
               {FREQUENCY_OPTIONS.map((opt) => (
                 <option key={opt.label} value={opt.label}>
@@ -206,7 +206,7 @@ export function OrderCalculator() {
 
           {/* Dose Amount */}
           <div className="space-y-2">
-            <label className="text-lg font-bold text-slate-800 dark:text-white">
+            <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
               Dose Amount
             </label>
             <div className="flex gap-2">
@@ -220,7 +220,7 @@ export function OrderCalculator() {
               <select
                 value={doseUnit}
                 onChange={(e) => setDoseUnit(e.target.value as "mcg" | "mg")}
-                className="h-12 w-24 rounded-xl border border-slate-200 bg-[#1e3a5f]/5 px-3 text-center text-base font-bold text-slate-800 outline-none focus:border-[#3b82f6] dark:text-white"
+                className="h-12 w-24 rounded-xl border border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-3 text-center text-base font-bold text-slate-800 dark:text-slate-200 outline-none focus:border-[#3b82f6] dark:text-white"
               >
                 {DOSE_UNITS.map((u) => (
                   <option key={u} value={u}>
@@ -234,7 +234,7 @@ export function OrderCalculator() {
           {/* Times Per Day & Duration */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-lg font-bold text-slate-800 dark:text-white">
+              <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
                 Times Per Day
               </label>
               <NumberInput
@@ -246,9 +246,9 @@ export function OrderCalculator() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-lg font-bold text-slate-800 dark:text-white">
+              <label className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
                 Duration{" "}
-                <span className="text-sm font-normal text-slate-400">(weeks)</span>
+                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(weeks)</span>
               </label>
               <NumberInput
                 value={durationWeeks}
@@ -264,11 +264,11 @@ export function OrderCalculator() {
           <div className="border-border/50 border-t pt-4">
             {result ? (
               <div className="space-y-3">
-                <div className="rounded-xl bg-[#1e3a5f]/5 p-4 space-y-2">
+                <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4 space-y-2">
                   <p className="text-sm font-bold text-slate-600">
                     <Calendar className="mr-1 inline h-4 w-4" />
                     Dosing Schedule:{" "}
-                    <span className="text-slate-800 dark:text-white">
+                    <span className="text-slate-800 dark:text-slate-200 dark:text-white">
                       {frequency.label}, {timesPerDay} time(s) per day
                     </span>
                   </p>
@@ -277,13 +277,13 @@ export function OrderCalculator() {
                     <strong className="text-[#1d4ed8]">
                       {result.totalMcg.toLocaleString()} mcg
                     </strong>{" "}
-                    <span className="text-slate-400">
+                    <span className="text-slate-400 dark:text-slate-500">
                       ({result.totalMg} mg)
                     </span>
                   </p>
 
                   <div className="pt-2">
-                    <p className="mb-1 text-sm font-bold text-slate-700 dark:text-slate-300">
+                    <p className="mb-1 text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
                       Vials Needed:
                     </p>
                     <ul className="ml-4 list-disc space-y-0.5">
@@ -293,7 +293,7 @@ export function OrderCalculator() {
                           className="text-sm text-slate-600 dark:text-slate-400"
                         >
                           {v.size}mg vials:{" "}
-                          <strong className="text-slate-800 dark:text-white">
+                          <strong className="text-slate-800 dark:text-slate-200 dark:text-white">
                             {v.count}
                           </strong>
                         </li>
@@ -341,9 +341,9 @@ export function OrderCalculator() {
                 </div>
               </div>
             ) : (
-              <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200/50">
-                  <ShoppingCart className="h-8 w-8 text-slate-400" />
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800/50 bg-gradient-to-br from-slate-50 dark:from-slate-900 to-slate-100 dark:to-slate-800 p-8 text-center">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700/50">
+                  <ShoppingCart className="h-8 w-8 text-slate-400 dark:text-slate-500" />
                 </div>
                 <p className="text-muted-foreground text-sm">
                   Enter valid values to see results

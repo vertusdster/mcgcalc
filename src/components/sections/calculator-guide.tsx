@@ -44,7 +44,7 @@ function StepCards() {
             {item.step}
           </span>
           <div className="relative text-center">
-            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
               {item.title}
             </h3>
             <p className="text-muted-foreground mt-1 text-sm">
@@ -73,7 +73,7 @@ export function CalculatorGuide() {
   if (isDesktop) {
     return (
       <div className="w-full">
-        <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-200">
+        <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300 dark:text-slate-200">
           How to Use the Peptide Calculator
         </h2>
         <StepCards />
@@ -86,13 +86,13 @@ export function CalculatorGuide() {
     <div className="w-full">
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+        className="flex w-full items-center justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
       >
         <span>How to Use the Peptide Calculator</span>
         {open ? (
-          <ChevronUp className="h-4 w-4 text-slate-400" />
+          <ChevronUp className="h-4 w-4 text-slate-400 dark:text-slate-500" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-slate-400" />
+          <ChevronDown className="h-4 w-4 text-slate-400 dark:text-slate-500" />
         )}
       </button>
 

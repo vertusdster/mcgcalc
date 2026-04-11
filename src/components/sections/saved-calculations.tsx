@@ -52,12 +52,12 @@ export function SavedCalculations() {
   if (calculations.length === 0) {
     return (
       <div className="mx-auto w-full max-w-xl">
-        <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-slate-50 to-slate-100 p-8 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200/50">
-            <Syringe className="h-8 w-8 text-slate-400" />
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800/50 bg-gradient-to-br from-slate-50 dark:from-slate-900 to-slate-100 dark:to-slate-800 p-8 text-center">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700/50">
+            <Syringe className="h-8 w-8 text-slate-400 dark:text-slate-500" />
           </div>
           <p className="text-sm font-medium text-slate-600">No saved calculations yet</p>
-          <p className="mt-1 text-xs text-slate-400">
+          <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
             Save a calculation from the{" "}
             <a href="/calculator" className="text-[#1d4ed8] underline hover:text-[#3b82f6]">
               Dosage Calculator
@@ -82,13 +82,13 @@ export function SavedCalculations() {
         return (
           <div
             key={saved.id}
-            className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50"
+            className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none"
           >
             <div className="p-5">
               {/* Header */}
               <div className="mb-5 flex items-center justify-between">
                 <div className="flex min-w-0 items-center gap-2">
-                  <Syringe className="h-5 w-5 shrink-0 text-slate-400" />
+                  <Syringe className="h-5 w-5 shrink-0 text-slate-400 dark:text-slate-500" />
                   {editingId === saved.id ? (
                     <div className="flex items-center gap-1.5">
                       <input
@@ -100,17 +100,17 @@ export function SavedCalculations() {
                           if (e.key === "Enter") confirmEdit();
                           if (e.key === "Escape") cancelEdit();
                         }}
-                        className="h-7 rounded-md border border-slate-200 px-2 text-sm font-semibold text-slate-800 outline-none focus:border-[#3b82f6]"
+                        className="h-7 rounded-md border border-slate-200 dark:border-slate-800 px-2 text-sm font-semibold text-slate-800 dark:text-slate-200 outline-none focus:border-[#3b82f6]"
                       />
                       <button onClick={confirmEdit} className="rounded p-1 text-blue-600 hover:bg-blue-50">
                         <Check className="h-4 w-4" />
                       </button>
-                      <button onClick={cancelEdit} className="rounded p-1 text-slate-400 hover:bg-slate-100">
+                      <button onClick={cancelEdit} className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">
                         <X className="h-4 w-4" />
                       </button>
                     </div>
                   ) : (
-                    <span className="truncate text-lg font-bold text-slate-800 dark:text-white">
+                    <span className="truncate text-lg font-bold text-slate-800 dark:text-slate-200 dark:text-white">
                       {saved.label}
                     </span>
                   )}
@@ -124,14 +124,14 @@ export function SavedCalculations() {
                     <>
                       <button
                         onClick={() => startEdit(saved)}
-                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-[#1d4ed8]"
+                        className="rounded-lg p-1.5 text-slate-400 dark:text-slate-500 transition-colors hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-[#1d4ed8]"
                         aria-label="Edit label"
                       >
                         <Pencil className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleDelete(saved.id)}
-                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-500"
+                        className="rounded-lg p-1.5 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 hover:text-red-500"
                         aria-label="Delete"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -163,7 +163,7 @@ export function SavedCalculations() {
 
                   return (
                     <li key={result.id} className="space-y-1">
-                      <div className="flex items-start gap-2 text-sm leading-relaxed text-slate-700">
+                      <div className="flex items-start gap-2 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
                         <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1d4ed8]" />
                         <span>
                           Draw <strong>{result.units} units</strong> for{" "}
@@ -188,7 +188,7 @@ export function SavedCalculations() {
 
               {/* Footer */}
               <div className="mt-4 flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm text-slate-500">
+                <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                   <span className="font-bold">{new Date(saved.savedAt).toLocaleDateString("en-CA")}</span>
                   <span>{saved.peptides.length} peptide{saved.peptides.length > 1 ? "s" : ""}</span>
                 </div>

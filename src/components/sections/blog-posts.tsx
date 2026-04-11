@@ -180,7 +180,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
         <div className="container max-w-5xl">
           <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#3b82f6]/20 bg-[#1d4ed8]/5 px-8 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <p className="font-semibold text-slate-800 dark:text-white">
+              <p className="font-semibold text-slate-800 dark:text-slate-200 dark:text-white">
                 Ready to calculate your dose?
               </p>
               <p className="text-muted-foreground mt-1 text-sm">
