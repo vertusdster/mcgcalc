@@ -24,6 +24,7 @@ export interface CalculationResult {
 }
 
 export const STORAGE_KEY = "peptide-saved-calculations";
+export const LOAD_KEY = "peptide-load-calculation";
 
 export const SYRINGE_VOLUMES = [
   { value: 30, label: "30 units", ml: 0.3 },

@@ -100,7 +100,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
           </a>
 
           {/* Desktop Navigation */}
-          <NavigationMenu className="hidden items-center gap-8 lg:flex">
+          <NavigationMenu className="hidden items-center gap-8 lg:flex" delayDuration={200}>
             <NavigationMenuList>
               {ITEMS.map((link) =>
                 link.dropdownItems ? (
@@ -160,7 +160,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
                 variant="outline"
                 className="dark:bg-foreground dark:text-background"
               >
-                Try Calculator
+                peptidescalculator
               </Button>
             </a>
 
@@ -303,9 +303,9 @@ const NavDropdownImage = () => {
   return (
     <div className="from-primary-900 via-primary to-primary/90 bg-linear-to-r flex flex-col gap-2 rounded-xl text-white">
       <div className="space-y-1 p-5 font-medium">
-        <h3>Dosage Calculator</h3>
+        <h3>Peptide Calculators</h3>
         <p className="text-white/80 text-sm">
-          Reconstitute, dose & draw — calculated in seconds
+          Dosing, reconstitution & unit conversion — all in one place
         </p>
       </div>
       <img

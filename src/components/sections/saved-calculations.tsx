@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Trash2, Pencil, Check, X, Syringe, BookmarkCheck } from "lucide-react";
+import { Trash2, Pencil, Check, X, Syringe, BookmarkCheck, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatedSyringe } from "@/components/elements/animated-syringe";
 import {
@@ -8,6 +8,7 @@ import {
   updateSavedCalculation,
   computeResults,
   getSyringeVolume,
+  LOAD_KEY,
 } from "@/lib/saved-calculations";
 import type { SavedCalculation } from "@/lib/saved-calculations";
 
@@ -192,16 +193,28 @@ export function SavedCalculations() {
                   <span className="font-bold">{new Date(saved.savedAt).toLocaleDateString("en-CA")}</span>
                   <span>{saved.peptides.length} peptide{saved.peptides.length > 1 ? "s" : ""}</span>
                 </div>
-                <span
+                <div className="flex items-center gap-2">
+                  <a
+                    href="/calculator"
+                    onClick={() => {
+                      try { localStorage.setItem(LOAD_KEY, saved.id); } catch {}
+                    }}
+                    className="flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white dark:bg-none dark:bg-white dark:text-slate-900 px-3 py-1.5 text-xs font-bold transition-opacity hover:opacity-90"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                    Load
+                  </a>
+                  <span
                   className={cn(
-                    "rounded-lg px-3 py-1.5 text-sm font-bold",
+                    "rounded-md px-2 py-1 text-xs font-bold",
                     isTotalValid
-                      ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white dark:bg-none dark:bg-white dark:text-slate-900"
-                      : "bg-slate-400 text-white dark:bg-slate-600",
+                      ? "bg-[#1d4ed8]/10 text-[#1d4ed8] dark:bg-[#60a5fa]/15 dark:text-[#60a5fa]"
+                      : "bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-400",
                   )}
                 >
                   {totalUnits.toFixed(1)} units
                 </span>
+                </div>
               </div>
             </div>
           </div>

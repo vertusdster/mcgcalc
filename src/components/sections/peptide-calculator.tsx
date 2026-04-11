@@ -32,6 +32,7 @@ import { AnimatedSyringe } from "@/components/elements/animated-syringe";
 import type { Peptide, SavedCalculation, CalculationResult } from "@/lib/saved-calculations";
 import {
   STORAGE_KEY,
+  LOAD_KEY,
   SYRINGE_VOLUMES,
   loadSavedCalculations,
   persistSavedCalculations,
@@ -188,7 +189,24 @@ export function PeptideCalculator() {
 
   // Load from localStorage on mount
   useEffect(() => {
-    setSavedCalculations(loadSavedCalculations());
+    const saved = loadSavedCalculations();
+    setSavedCalculations(saved);
+
+    // Check if redirected from /saved with a load request
+    try {
+      const loadId = localStorage.getItem(LOAD_KEY);
+      if (loadId) {
+        localStorage.removeItem(LOAD_KEY);
+        const target = saved.find((s) => s.id === loadId);
+        if (target) {
+          const vol = SYRINGE_VOLUMES.find((v) => v.value === target.syringeValue) ?? SYRINGE_VOLUMES[0];
+          setSyringeVolume(vol);
+          setWaterVolume(target.waterVolume);
+          setWaterUnit(target.waterUnit);
+          setPeptides(target.peptides.map((p) => ({ ...p, id: generateId() })));
+        }
+      }
+    } catch {}
   }, []);
 
   const persistSaved = useCallback((list: SavedCalculation[]) => {
