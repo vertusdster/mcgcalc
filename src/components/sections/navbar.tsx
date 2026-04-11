@@ -139,7 +139,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
                       href={link.href}
                       className={cn(
                         "hover:text-accent-foreground dark:hover:text-white p-2 lg:text-base",
-                        pathname === link.href && "font-bold",
+                        (pathname === link.href || pathname === link.href + "/") && "font-bold",
                       )}
                     >
                       {link.label}
@@ -273,7 +273,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
                 href={link.href}
                 className={cn(
                   "text-lg tracking-[-0.36px]",
-                  pathname === link.href && "text-muted-foreground",
+                  (pathname === link.href || pathname === link.href + "/") && "text-muted-foreground",
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -285,7 +285,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
             href="/about"
             className={cn(
               "text-lg tracking-[-0.36px]",
-              pathname === "/about" && "text-muted-foreground",
+              (pathname === "/about" || pathname === "/about/") && "text-muted-foreground",
             )}
             onClick={() => setIsMenuOpen(false)}
           >
