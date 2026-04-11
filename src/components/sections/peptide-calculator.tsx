@@ -364,7 +364,7 @@ export function PeptideCalculator() {
                 size="sm"
                 onClick={addPeptide}
                 disabled={peptides.length >= 5}
-                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-[#1d4ed8] hover:to-[#3b82f6] dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 dark:text-slate-900"
+                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-[#1d4ed8] hover:to-[#3b82f6] dark:hover:bg-slate-200 hover:text-white dark:hover:text-slate-900 dark:text-white"
               >
                 <Plus className="h-3.5 w-3.5" />
                 ADD PEPTIDE
