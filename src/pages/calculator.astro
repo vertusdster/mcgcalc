@@ -1,6 +1,7 @@
 ---
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { PeptideCalculator } from '@/components/sections/peptide-calculator';
+import { CalculatorGuide } from '@/components/sections/calculator-guide';
 
 const title = "Free Peptide Dosage Calculator — Exact Syringe Units Instantly";
 const description = "Calculate the exact injection volume for your peptide dose. Supports multiple peptides, different syringe sizes, and bacteriostatic water volumes in mL or IU.";
@@ -37,6 +38,13 @@ const schema = {
         Enter your peptide quantity, bacteriostatic water volume, and desired dose to instantly calculate the exact syringe units to draw.
       </p>
     </div>
-    <PeptideCalculator client:load />
+    <div class="mx-auto max-w-5xl flex flex-col lg:flex-row lg:items-start lg:gap-4">
+      <div class="flex-1">
+        <PeptideCalculator client:load />
+      </div>
+      <div class="mt-8 lg:mt-0 lg:w-72 lg:shrink-0">
+        <CalculatorGuide client:load />
+      </div>
+    </div>
   </section>
 </DefaultLayout>

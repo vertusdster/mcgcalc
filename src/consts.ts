@@ -2,6 +2,17 @@ export const SITE_TITLE = "Peptide Calculator";
 export const SITE_DESCRIPTION =
   "Free online peptide dosage calculator. Instantly calculate the exact injection volume for your peptide dose based on vial quantity, bacteriostatic water, and desired dose.";
 
+export const CALCULATORS = [
+  {
+    title: "Peptide Dosage Calculator",
+    description:
+      "Calculate the exact injection volume for your peptide dose. Supports multiple peptides, different syringe sizes, and bacteriostatic water volumes in mL or IU.",
+    href: "/calculator",
+    icon: "syringe" as const,
+    badge: "Popular",
+  },
+] as const;
+
 export const SITE_METADATA = {
   title: {
     default: SITE_TITLE,

@@ -59,7 +59,7 @@ export function SavedCalculations() {
           <p className="text-sm font-medium text-slate-600">No saved calculations yet</p>
           <p className="mt-1 text-xs text-slate-400">
             Save a calculation from the{" "}
-            <a href="/calculator" className="text-[#11696f] underline hover:text-[#2bb3ba]">
+            <a href="/calculator" className="text-[#1d4ed8] underline hover:text-[#3b82f6]">
               Dosage Calculator
             </a>{" "}
             to see it here.
@@ -100,9 +100,9 @@ export function SavedCalculations() {
                           if (e.key === "Enter") confirmEdit();
                           if (e.key === "Escape") cancelEdit();
                         }}
-                        className="h-7 rounded-md border border-slate-200 px-2 text-sm font-semibold text-slate-800 outline-none focus:border-[#2bb3ba]"
+                        className="h-7 rounded-md border border-slate-200 px-2 text-sm font-semibold text-slate-800 outline-none focus:border-[#3b82f6]"
                       />
-                      <button onClick={confirmEdit} className="rounded p-1 text-green-600 hover:bg-green-50">
+                      <button onClick={confirmEdit} className="rounded p-1 text-blue-600 hover:bg-blue-50">
                         <Check className="h-4 w-4" />
                       </button>
                       <button onClick={cancelEdit} className="rounded p-1 text-slate-400 hover:bg-slate-100">
@@ -116,7 +116,7 @@ export function SavedCalculations() {
                   )}
                 </div>
                 <div className="flex shrink-0 items-center gap-2">
-                  <span className="flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-xs font-semibold text-green-600">
+                  <span className="flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-600">
                     <BookmarkCheck className="h-3.5 w-3.5" />
                     Saved
                   </span>
@@ -124,7 +124,7 @@ export function SavedCalculations() {
                     <>
                       <button
                         onClick={() => startEdit(saved)}
-                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-[#11696f]"
+                        className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-[#1d4ed8]"
                         aria-label="Edit label"
                       >
                         <Pencil className="h-4 w-4" />
@@ -164,7 +164,7 @@ export function SavedCalculations() {
                   return (
                     <li key={result.id} className="space-y-1">
                       <div className="flex items-start gap-2 text-sm leading-relaxed text-slate-700">
-                        <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#11696f]" />
+                        <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1d4ed8]" />
                         <span>
                           Draw <strong>{result.units} units</strong> for{" "}
                           <strong>{peptide.dose}{peptide.doseUnit}</strong> doses
@@ -196,7 +196,7 @@ export function SavedCalculations() {
                   className={cn(
                     "rounded-lg px-3 py-1.5 text-sm font-bold text-white",
                     isTotalValid
-                      ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba]"
+                      ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6]"
                       : "bg-slate-400",
                   )}
                 >

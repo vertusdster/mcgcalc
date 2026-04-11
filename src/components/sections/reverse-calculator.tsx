@@ -81,7 +81,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
       >
         −
       </button>
@@ -103,7 +103,7 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#2bb3ba]/30 focus:border-[#2bb3ba] focus:bg-white dark:text-white"
+          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#3b82f6]/30 focus:border-[#3b82f6] focus:bg-white dark:text-white"
         />
         {suffix && (
           <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">
@@ -115,7 +115,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
       >
         +
       </button>
@@ -151,7 +151,7 @@ export function ReverseCalculator() {
   }, [peptideVial, dosage, desiredUnits]);
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
+    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50">
         <div className="space-y-6 p-6">
           {/* Peptide Vial */}
@@ -243,14 +243,14 @@ export function ReverseCalculator() {
             <div aria-live="polite" aria-atomic="true">
               {result ? (
                 <div className="space-y-4">
-                  <div className="rounded-2xl border border-[#2bb3ba]/20 bg-[#11696f]/[0.03] p-6">
-                    <h3 className="mb-4 text-lg font-bold text-[#11696f]">
+                  <div className="rounded-2xl border border-[#3b82f6]/20 bg-[#1d4ed8]/[0.03] p-6">
+                    <h3 className="mb-4 text-lg font-bold text-[#1d4ed8]">
                       Required BAC Water For Peptide Reconstitution
                     </h3>
-                    <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#2bb3ba]/10 p-5">
+                    <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#3b82f6]/10 p-5">
                       <p className="text-base font-bold text-slate-800 dark:text-white">
                         Reconstitute your peptide vial using{" "}
-                        <span className="text-[#11696f]">
+                        <span className="text-[#1d4ed8]">
                           {result.bacWaterMl.toFixed(2)} ml
                         </span>{" "}
                         of BAC water.

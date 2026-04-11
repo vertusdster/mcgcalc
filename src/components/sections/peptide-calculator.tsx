@@ -124,7 +124,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
       >
         −
       </button>
@@ -148,7 +148,7 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#2bb3ba]/30 focus:border-[#2bb3ba] focus:bg-white dark:text-white"
+          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#3b82f6]/30 focus:border-[#3b82f6] focus:bg-white dark:text-white"
         />
         {suffix && (
           <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">
@@ -162,7 +162,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
       >
         +
       </button>
@@ -311,7 +311,7 @@ export function PeptideCalculator() {
   const debouncedValid = isTotalValid;
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
+    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50">
         <div className="space-y-6 p-6">
           {/* Syringe Volume */}
@@ -338,7 +338,7 @@ export function PeptideCalculator() {
                     className={cn(
                       "h-12 flex-1 rounded-xl px-4 text-sm font-bold transition-all duration-200",
                       syringeVolume.value === vol.value
-                        ? "border-transparent bg-gradient-to-r from-[#11696f] to-[#2bb3ba] text-white shadow-md"
+                        ? "border-transparent bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white shadow-md"
                         : "bg-slate-100 text-slate-500 hover:bg-slate-200",
                     )}
                   >
@@ -364,7 +364,7 @@ export function PeptideCalculator() {
                 size="sm"
                 onClick={addPeptide}
                 disabled={peptides.length >= 5}
-                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-[#11696f] hover:to-[#2bb3ba] hover:text-white"
+                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 hover:border-transparent hover:bg-gradient-to-r hover:from-[#1d4ed8] hover:to-[#3b82f6] hover:text-white"
               >
                 <Plus className="h-3.5 w-3.5" />
                 ADD PEPTIDE
@@ -440,7 +440,7 @@ export function PeptideCalculator() {
                       className={cn(
                         "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                         waterUnit === unit
-                          ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba] text-white shadow-sm"
+                          ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white shadow-sm"
                           : "bg-slate-100 text-slate-500 hover:bg-slate-200",
                       )}
                     >
@@ -494,7 +494,7 @@ export function PeptideCalculator() {
                           className={cn(
                             "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                             peptide.doseUnit === unit
-                              ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba] text-white shadow-sm"
+                              ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] text-white shadow-sm"
                               : "bg-slate-100 text-slate-500 hover:bg-slate-200",
                           )}
                         >
@@ -517,7 +517,7 @@ export function PeptideCalculator() {
                     className={cn(
                       "rounded-2xl p-6 transition-all duration-500",
                       isTotalValid
-                        ? "border border-[#2bb3ba]/20 bg-[#11696f]/[0.03]"
+                        ? "border border-[#3b82f6]/20 bg-[#1d4ed8]/[0.03]"
                         : "border border-slate-200 bg-slate-50",
                     )}
                   >
@@ -529,7 +529,7 @@ export function PeptideCalculator() {
                         <span
                           className={cn(
                             "text-2xl font-black tabular-nums",
-                            isTotalValid ? "text-[#11696f]" : "text-slate-500",
+                            isTotalValid ? "text-[#1d4ed8]" : "text-slate-500",
                           )}
                         >
                           {totalUnits.toFixed(1)}
@@ -554,7 +554,7 @@ export function PeptideCalculator() {
                             key={result.id}
                             className="flex items-start gap-3 text-sm leading-relaxed"
                           >
-                            <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#11696f]" />
+                            <div className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1d4ed8]" />
                             <span className="text-slate-700">
                               Draw <strong>{result.units} units</strong> for{" "}
                               <strong>
@@ -644,12 +644,12 @@ export function PeptideCalculator() {
                             value={saveLabel}
                             onChange={(e) => setSaveLabel(e.target.value)}
                             onKeyDown={(e) => e.key === "Enter" && handleSave()}
-                            className="h-9 rounded-xl border-slate-200 text-sm focus-visible:ring-1 focus-visible:ring-[#2bb3ba]"
+                            className="h-9 rounded-xl border-slate-200 text-sm focus-visible:ring-1 focus-visible:ring-[#3b82f6]"
                             autoFocus
                           />
                           <button
                             onClick={handleSave}
-                            className="h-9 shrink-0 rounded-xl bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-4 text-xs font-bold text-white transition-opacity hover:opacity-90"
+                            className="h-9 shrink-0 rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] px-4 text-xs font-bold text-white transition-opacity hover:opacity-90"
                           >
                             Save
                           </button>
@@ -666,7 +666,7 @@ export function PeptideCalculator() {
                       ) : (
                         <button
                           onClick={() => setShowSaveInput(true)}
-                          className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:border-[#2bb3ba] hover:text-[#11696f]"
+                          className="flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-slate-300 py-2.5 text-sm font-medium text-slate-500 transition-colors hover:border-[#3b82f6] hover:text-[#1d4ed8]"
                         >
                           <BookmarkPlus className="h-4 w-4" />
                           Save this calculation
@@ -701,9 +701,9 @@ export function PeptideCalculator() {
             className="flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
           >
             <span className="flex items-center gap-2">
-              <RotateCcw className="h-4 w-4 text-[#11696f]" />
+              <RotateCcw className="h-4 w-4 text-[#1d4ed8]" />
               Saved Calculations
-              <span className="rounded-full bg-[#11696f]/10 px-2 py-0.5 text-xs font-bold text-[#11696f]">
+              <span className="rounded-full bg-[#1d4ed8]/10 px-2 py-0.5 text-xs font-bold text-[#1d4ed8]">
                 {savedCalculations.length}
               </span>
             </span>
@@ -735,7 +735,7 @@ export function PeptideCalculator() {
                   <div className="ml-3 flex shrink-0 gap-2">
                     <button
                       onClick={() => handleLoad(saved)}
-                      className="rounded-lg bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-3 py-1.5 text-xs font-bold text-white transition-opacity hover:opacity-90"
+                      className="rounded-lg bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] px-3 py-1.5 text-xs font-bold text-white transition-opacity hover:opacity-90"
                     >
                       Load
                     </button>

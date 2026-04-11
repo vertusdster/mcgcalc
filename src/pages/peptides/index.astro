@@ -33,13 +33,13 @@ const description = "Browse our complete peptide database. Click any peptide to 
             {byCategory[category].map(peptide => (
               <a
                 href={`/peptides/${peptide.id}`}
-                class="group rounded-xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:border-[#2bb3ba] hover:shadow-md"
+                class="group rounded-xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:border-[#3b82f6] hover:shadow-md"
               >
                 <div class="flex items-start justify-between gap-2">
-                  <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-[#11696f] transition-colors">
+                  <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-[#1d4ed8] transition-colors">
                     {peptide.data.name}
                   </h3>
-                  <span class="shrink-0 rounded-full bg-[#11696f]/10 px-2 py-0.5 text-xs font-medium text-[#11696f]">
+                  <span class="shrink-0 rounded-full bg-[#1d4ed8]/10 px-2 py-0.5 text-xs font-medium text-[#1d4ed8]">
                     {peptide.data.category}
                   </span>
                 </div>

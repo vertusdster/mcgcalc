@@ -34,7 +34,7 @@ export function AnimatedSyringe({
                 "absolute bottom-0 left-0 top-0 z-10 transition-all duration-200 ease-out",
                 clampedFill > 0 ? "rounded-none" : "",
                 isValid
-                  ? "bg-gradient-to-r from-[#11696f] to-[#2bb3ba]"
+                  ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6]"
                   : "bg-slate-300",
               )}
               style={{

@@ -87,7 +87,7 @@ export function UnitConverter() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
+    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50">
         <div className="space-y-6 p-6">
           {/* Input */}
@@ -115,13 +115,13 @@ export function UnitConverter() {
                         setInputValue(v);
                       }
                     }}
-                    className="h-12 w-full rounded-l-xl border border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#2bb3ba]/30 focus:border-[#2bb3ba] focus:bg-white dark:text-white"
+                    className="h-12 w-full rounded-l-xl border border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#3b82f6]/30 focus:border-[#3b82f6] focus:bg-white dark:text-white"
                   />
                 </div>
                 <select
                   value={inputUnit}
                   onChange={(e) => setInputUnit(e.target.value as Unit)}
-                  className="h-12 w-24 rounded-r-xl border border-slate-200 bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-3 text-center text-base font-bold text-white outline-none"
+                  className="h-12 w-24 rounded-r-xl border border-slate-200 bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] px-3 text-center text-base font-bold text-white outline-none"
                 >
                   {UNITS.map((u) => (
                     <option key={u} value={u}>
@@ -136,7 +136,7 @@ export function UnitConverter() {
             <div className="flex gap-3">
               <button
                 onClick={handleConvert}
-                className="h-10 rounded-xl bg-gradient-to-r from-[#11696f] to-[#2bb3ba] px-6 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                className="h-10 rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] px-6 text-sm font-bold text-white transition-opacity hover:opacity-90"
               >
                 CONVERT
               </button>
@@ -155,7 +155,7 @@ export function UnitConverter() {
               <div className="space-y-4">
                 {/* Milligrams */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#11696f]">
+                  <span className="text-lg font-bold text-[#1d4ed8]">
                     Milligrams(mg)
                   </span>
                   <div className="flex w-3/5 items-center">
@@ -170,7 +170,7 @@ export function UnitConverter() {
 
                 {/* Microlitres */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#11696f]">
+                  <span className="text-lg font-bold text-[#1d4ed8]">
                     Microlitres(uL)
                   </span>
                   <div className="flex w-3/5 items-center">
@@ -185,7 +185,7 @@ export function UnitConverter() {
 
                 {/* Micrograms */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#11696f]">
+                  <span className="text-lg font-bold text-[#1d4ed8]">
                     Micrograms(mcg)
                   </span>
                   <div className="flex w-3/5 items-center">

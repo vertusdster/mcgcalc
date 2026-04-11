@@ -81,7 +81,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
       >
         −
       </button>
@@ -103,7 +103,7 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#2bb3ba]/30 focus:border-[#2bb3ba] focus:bg-white dark:text-white"
+          className="h-12 w-full border-y border-slate-200 bg-[#1e3a5f]/5 text-center text-lg font-bold text-slate-800 outline-none selection:bg-[#3b82f6]/30 focus:border-[#3b82f6] focus:bg-white dark:text-white"
         />
         {suffix && (
           <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-400">
@@ -115,7 +115,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#11696f]/10 hover:text-[#11696f] active:bg-[#11696f]/20"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 text-xl font-bold text-slate-500 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] active:bg-[#1d4ed8]/20"
       >
         +
       </button>
@@ -180,7 +180,7 @@ export function OrderCalculator() {
   }, [doseAmount, doseUnit, timesPerDay, durationWeeks, frequency, customVialSize]);
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#2bb3ba]/30">
+    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50">
         <div className="space-y-5 p-6">
           {/* Frequency */}
@@ -194,7 +194,7 @@ export function OrderCalculator() {
                 const f = FREQUENCY_OPTIONS.find((o) => o.label === e.target.value);
                 if (f) setFrequency(f);
               }}
-              className="h-12 w-full rounded-xl border border-slate-200 bg-[#1e3a5f]/5 px-4 text-base font-bold text-slate-800 outline-none focus:border-[#2bb3ba] dark:text-white"
+              className="h-12 w-full rounded-xl border border-slate-200 bg-[#1e3a5f]/5 px-4 text-base font-bold text-slate-800 outline-none focus:border-[#3b82f6] dark:text-white"
             >
               {FREQUENCY_OPTIONS.map((opt) => (
                 <option key={opt.label} value={opt.label}>
@@ -220,7 +220,7 @@ export function OrderCalculator() {
               <select
                 value={doseUnit}
                 onChange={(e) => setDoseUnit(e.target.value as "mcg" | "mg")}
-                className="h-12 w-24 rounded-xl border border-slate-200 bg-[#1e3a5f]/5 px-3 text-center text-base font-bold text-slate-800 outline-none focus:border-[#2bb3ba] dark:text-white"
+                className="h-12 w-24 rounded-xl border border-slate-200 bg-[#1e3a5f]/5 px-3 text-center text-base font-bold text-slate-800 outline-none focus:border-[#3b82f6] dark:text-white"
               >
                 {DOSE_UNITS.map((u) => (
                   <option key={u} value={u}>
@@ -274,7 +274,7 @@ export function OrderCalculator() {
                   </p>
                   <p className="text-sm font-bold text-slate-600">
                     Total Amount Needed:{" "}
-                    <strong className="text-[#11696f]">
+                    <strong className="text-[#1d4ed8]">
                       {result.totalMcg.toLocaleString()} mcg
                     </strong>{" "}
                     <span className="text-slate-400">
@@ -308,7 +308,7 @@ export function OrderCalculator() {
                         type="checkbox"
                         checked={useCustomVial}
                         onChange={(e) => setUseCustomVial(e.target.checked)}
-                        className="rounded accent-[#11696f]"
+                        className="rounded accent-[#1d4ed8]"
                       />
                       <span className="font-bold">Custom Vial Size</span>
                     </label>
@@ -324,7 +324,7 @@ export function OrderCalculator() {
                         />
                         <span className="text-sm font-bold text-slate-600">
                           →{" "}
-                          <strong className="text-[#11696f]">
+                          <strong className="text-[#1d4ed8]">
                             {result.customVialCount}
                           </strong>{" "}
                           vials
@@ -334,8 +334,8 @@ export function OrderCalculator() {
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#2bb3ba]/10 px-4 py-3">
-                  <p className="text-xs italic text-[#11696f]">
+                <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#3b82f6]/10 px-4 py-3">
+                  <p className="text-xs italic text-[#1d4ed8]">
                     Calculation: {result.formulaStr}
                   </p>
                 </div>

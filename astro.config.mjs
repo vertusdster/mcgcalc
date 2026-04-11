@@ -8,7 +8,10 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://example.com",
+  // IMPORTANT for Vercel Deployment: 
+  // Update this 'site' URL to your actual production domain (e.g., "https://mcgcalc.com" or "https://<your-project>.vercel.app") 
+  // Otherwise, the generated sitemap for SEO will generate links with example.com!
+  site: process.env.URL || "https://mcgcalc.com",
   integrations: [mdx(), sitemap(), react()],
   output: "static",
 

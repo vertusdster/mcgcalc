@@ -1,9 +1,27 @@
 ---
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import Hero from '@/components/sections/hero';
+import { PeptideCalculator } from '@/components/sections/peptide-calculator';
+import { CalculatorGuide } from '@/components/sections/calculator-guide';
 ---
 
 <DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <Hero client:only='react' />
+  <section class="py-16 px-4">
+    <div class="max-w-2xl mx-auto text-center mb-10">
+      <h1 class="text-4xl font-semibold tracking-tighter md:text-5xl lg:text-6xl">
+        mcgcalc
+      </h1>
+      <p class="text-muted-foreground font-mona mt-4 text-balance text-xl md:text-2xl">
+        Peptide & Dosage Calculators
+      </p>
+    </div>
+    <div class="mx-auto max-w-5xl flex flex-col lg:flex-row lg:items-start lg:gap-4">
+      <div class="flex-1">
+        <PeptideCalculator client:load />
+      </div>
+      <div class="mt-8 lg:mt-0 lg:w-72 lg:shrink-0">
+        <CalculatorGuide client:load />
+      </div>
+    </div>
+  </section>
 </DefaultLayout>
