@@ -369,9 +369,9 @@ export function PeptideCalculator() {
 
           {/* Peptide Quantities */}
           <div className="mb-6 space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-                <Beaker className="h-5 w-5" />
+                <Beaker className="h-5 w-5 shrink-0" />
                 <span className="text-sm font-bold">
                   Enter the Quantity of Peptide
                 </span>
@@ -382,7 +382,7 @@ export function PeptideCalculator() {
                 size="sm"
                 onClick={addPeptide}
                 disabled={peptides.length >= 5}
-                className="h-8 gap-1.5 text-xs font-bold shadow-sm transition-all duration-300 dark:border-slate-700/60 dark:bg-transparent dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
+                className="h-8 shrink-0 gap-1 text-xs font-bold shadow-sm transition-all duration-300 dark:border-slate-700/60 dark:bg-transparent dark:text-white dark:hover:bg-slate-800 dark:hover:text-white"
               >
                 <Plus className="h-3.5 w-3.5" />
                 ADD PEPTIDE
