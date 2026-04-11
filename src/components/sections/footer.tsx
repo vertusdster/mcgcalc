@@ -13,7 +13,6 @@ const navigation = [
     links: [
       { name: "FAQ", href: "/faq" },
       { name: "About", href: "/about" },
-      { name: "Contact", href: "/contact" },
     ],
   },
   {
