@@ -34,7 +34,7 @@ export function AnimatedSyringe({
                 "absolute bottom-0 left-0 top-0 z-10 transition-all duration-200 ease-out",
                 clampedFill > 0 ? "rounded-none" : "",
                 isValid
-                  ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-sky-400"
+                  ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-blue-600"
                   : "bg-slate-300 dark:bg-slate-800",
               )}
               style={{
@@ -59,7 +59,7 @@ export function AnimatedSyringe({
                       "absolute top-1/2 text-[10px] font-bold tabular-nums transition-colors duration-300",
                       isInLiquid
                         ? isValid
-                          ? "text-white dark:text-slate-900"
+                          ? "text-white"
                           : "text-amber-800"
                         : "text-slate-500 dark:text-slate-400",
                     )}
@@ -86,7 +86,7 @@ export function AnimatedSyringe({
                       "absolute top-0 w-0.5 transition-colors duration-300",
                       isInLiquid
                         ? isValid
-                          ? "bg-white dark:bg-slate-900"
+                          ? "bg-white"
                           : "bg-amber-800"
                         : "bg-slate-400 dark:bg-slate-600",
                     )}
@@ -113,7 +113,7 @@ export function AnimatedSyringe({
                       i % 5 === 0 ? "h-3.5 w-0.5" : "h-2 w-px",
                       isInLiquid
                         ? isValid
-                          ? "bg-white dark:bg-slate-900"
+                          ? "bg-white"
                           : "bg-amber-700"
                         : "bg-slate-300 dark:bg-slate-700",
                     )}
@@ -138,7 +138,7 @@ export function AnimatedSyringe({
                       "absolute bottom-0 w-0.5 transition-colors duration-300",
                       isInLiquid
                         ? isValid
-                          ? "bg-white dark:bg-slate-900"
+                          ? "bg-white"
                           : "bg-amber-800"
                         : "bg-slate-400 dark:bg-slate-600",
                     )}
@@ -165,7 +165,7 @@ export function AnimatedSyringe({
                       i % 5 === 0 ? "h-3.5 w-0.5" : "h-2 w-px",
                       isInLiquid
                         ? isValid
-                          ? "bg-white dark:bg-slate-900"
+                          ? "bg-white"
                           : "bg-amber-700"
                         : "bg-slate-300 dark:bg-slate-700",
                     )}
