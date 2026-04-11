@@ -28,7 +28,7 @@ export function AnimatedSyringe({
     >
       <div className="px-2">
         <div className="relative mx-auto w-full max-w-md">
-          <div className="relative h-12 overflow-hidden rounded-none border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/50">
+          <div className="relative h-12 max-[389px]:h-10 overflow-hidden rounded-none border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/50">
             <div
               className={cn(
                 "absolute bottom-0 left-0 top-0 z-10 transition-all duration-200 ease-out",

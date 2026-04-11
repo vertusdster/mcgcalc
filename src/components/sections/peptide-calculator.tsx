@@ -121,7 +121,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20 max-sm:h-10 max-sm:w-10 max-sm:text-lg"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20 max-sm:h-10 max-sm:w-10 max-sm:text-lg max-[389px]:h-9 max-[389px]:w-9 max-[389px]:text-base"
       >
         −
       </button>
@@ -145,7 +145,7 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white max-sm:h-10 max-sm:text-base"
+          className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white max-sm:h-10 max-sm:text-base max-[389px]:h-9 max-[389px]:text-sm"
         />
         {suffix && (
           <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500 dark:text-slate-400">
@@ -159,7 +159,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20 max-sm:h-10 max-sm:w-10 max-sm:text-lg"
+        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20 max-sm:h-10 max-sm:w-10 max-sm:text-lg max-[389px]:h-9 max-[389px]:w-9 max-[389px]:text-base"
       >
         +
       </button>
@@ -327,10 +327,10 @@ export function PeptideCalculator() {
   return (
     <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
-        <div className="space-y-6 p-6">
+        <div className="space-y-6 p-6 max-[389px]:space-y-3 max-[389px]:p-4">
           {/* Syringe Volume */}
-          <div className="mb-6 space-y-4">
-            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+          <div className="mb-6 max-[389px]:mb-3 space-y-4 max-[389px]:space-y-2">
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400 max-[389px]:hidden">
               <Syringe className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
                 Select the Total Syringe Volume{" "}
@@ -338,9 +338,14 @@ export function PeptideCalculator() {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <Label className="text-xl font-bold text-slate-800 dark:text-slate-200">Volume</Label>
+              <div className="flex items-center gap-1">
+                <Label className="text-xl max-[389px]:text-sm font-bold text-slate-800 dark:text-slate-200">Volume</Label>
+                <span className="hidden max-[389px]:inline shrink-0">
+                  <HelpTooltip content="Select the total volume of the syringe you are using. Common sizes are 0.3mL (30 units), 0.5mL (50 units), and 1mL (100 units)." />
+                </span>
+              </div>
               <div
-                className="flex w-3/5 gap-2"
+                className="flex w-3/5 max-[389px]:w-2/3 gap-2 max-[389px]:gap-1"
                 role="group"
                 aria-label="Syringe volume"
               >
@@ -350,7 +355,7 @@ export function PeptideCalculator() {
                     onClick={() => setSyringeVolume(vol)}
                     aria-pressed={syringeVolume.value === vol.value}
                     className={cn(
-                      "h-12 flex-1 rounded-xl px-4 text-sm font-bold transition-all duration-200",
+                      "h-12 max-[389px]:h-10 flex-1 rounded-xl px-4 max-[389px]:px-2 text-sm max-[389px]:text-xs font-bold transition-all duration-200",
                       syringeVolume.value === vol.value
                         ? "border-transparent bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white text-white dark:text-slate-900 shadow-md"
                         : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
@@ -364,9 +369,9 @@ export function PeptideCalculator() {
           </div>
 
           {/* Peptide Quantities */}
-          <div className="mb-6 space-y-4">
+          <div className="mb-6 max-[389px]:mb-3 space-y-4 max-[389px]:space-y-2">
             <div className="flex items-center justify-between">
-              <div className="flex items-start gap-1.5 text-slate-500 dark:text-slate-400">
+              <div className="flex items-start gap-1.5 min-w-0 max-w-[60%] text-slate-500 dark:text-slate-400 max-[389px]:hidden">
                 <Beaker className="mt-0.5 h-5 w-5 shrink-0" />
                 <span className="text-sm font-bold">
                   Enter the Quantity of Peptide{" "}
@@ -391,21 +396,26 @@ export function PeptideCalculator() {
                   key={peptide.id}
                   className="animate-in fade-in flex items-center justify-between duration-300"
                 >
-                  <div className="flex items-center gap-3">
-                    <span className="text-xl font-bold text-slate-800 dark:text-slate-200">
+                  <div className="flex items-center gap-3 max-[389px]:gap-1.5">
+                    <span className="text-xl max-[389px]:text-sm font-bold text-slate-800 dark:text-slate-200">
                       Peptide {index + 1}
                     </span>
+                    {index === 0 && (
+                      <span className="hidden max-[389px]:inline shrink-0">
+                        <HelpTooltip content="Enter total milligrams (mg) per vial. You can add up to 5 peptides." />
+                      </span>
+                    )}
                     {peptides.length > 1 && (
                       <button
                         onClick={() => removePeptide(peptide.id)}
-                        className="rounded-full bg-slate-100 dark:bg-slate-800/80 p-2 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-500 dark:hover:text-red-400"
+                        className="rounded-full bg-slate-100 dark:bg-slate-800/80 p-2 max-[389px]:p-1.5 text-slate-400 dark:text-slate-500 transition-colors hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-500 dark:hover:text-red-400"
                       >
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="h-4 w-4 max-[389px]:h-3.5 max-[389px]:w-3.5" />
                         <span className="sr-only">Delete</span>
                       </button>
                     )}
                   </div>
-                  <div className="flex w-3/5 items-center">
+                  <div className="flex w-3/5 max-[389px]:w-2/3 items-center">
                     <NumberInput
                       value={peptide.quantity}
                       stepMode="small"
@@ -423,8 +433,8 @@ export function PeptideCalculator() {
           </div>
 
           {/* Water Volume */}
-          <div className="mb-6 space-y-4">
-            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+          <div className="mb-6 max-[389px]:mb-3 space-y-4 max-[389px]:space-y-2">
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400 max-[389px]:hidden">
               <Droplets className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
                 Enter the Quantity of Bacteriostatic Water{" "}
@@ -432,8 +442,13 @@ export function PeptideCalculator() {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <Label className="text-xl font-bold text-slate-800 dark:text-slate-200">Water</Label>
-              <div className="flex w-3/5 gap-2">
+              <div className="flex items-center gap-1">
+                <Label className="text-xl max-[389px]:text-sm font-bold text-slate-800 dark:text-slate-200">Water</Label>
+                <span className="hidden max-[389px]:inline shrink-0">
+                  <HelpTooltip content="Enter the volume of Bacteriostatic Water added. Use ml for direct volume, or IU if measuring with a U-100 insulin syringe (100 IU = 1 mL)." />
+                </span>
+              </div>
+              <div className="flex w-3/5 max-[389px]:w-2/3 gap-2 max-[389px]:gap-1">
                 <NumberInput
                   value={waterVolume}
                   stepMode="small"
@@ -452,7 +467,7 @@ export function PeptideCalculator() {
                       onClick={() => setWaterUnit(unit)}
                       aria-pressed={waterUnit === unit}
                       className={cn(
-                        "h-12 px-3 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl max-sm:h-10 max-sm:px-2 max-sm:text-xs",
+                        "h-12 px-3 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl max-sm:h-10 max-sm:px-2 max-sm:text-xs max-[389px]:h-9 max-[389px]:px-1.5",
                         waterUnit === unit
                           ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white text-white dark:text-slate-900 shadow-sm"
                           : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
@@ -467,8 +482,8 @@ export function PeptideCalculator() {
           </div>
 
           {/* Peptide Doses */}
-          <div className="mb-6 space-y-4">
-            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+          <div className="mb-6 max-[389px]:mb-3 space-y-4 max-[389px]:space-y-2">
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400 max-[389px]:hidden">
               <Syringe className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
                 Enter the Quantity of Peptide in each dose{" "}
@@ -482,10 +497,17 @@ export function PeptideCalculator() {
                   key={peptide.id}
                   className="animate-in fade-in flex items-center justify-between duration-300"
                 >
-                  <Label className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Peptide {index + 1}
-                  </Label>
-                  <div className="flex w-3/5 gap-2">
+                  <div className="flex items-center gap-1">
+                    <Label className="text-xl max-[389px]:text-sm font-bold text-slate-800 dark:text-slate-200">
+                      Peptide {index + 1}
+                    </Label>
+                    {index === 0 && (
+                      <span className="hidden max-[389px]:inline shrink-0">
+                        <HelpTooltip content="Enter the required dose for each peptide. Choose mcg or mg as unit." />
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex w-3/5 max-[389px]:w-2/3 gap-2 max-[389px]:gap-1">
                     <NumberInput
                       value={peptide.dose}
                       stepMode="large"
@@ -506,7 +528,7 @@ export function PeptideCalculator() {
                           }
                           aria-pressed={peptide.doseUnit === unit}
                           className={cn(
-                            "h-12 px-3 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl max-sm:h-10 max-sm:px-2 max-sm:text-xs",
+                            "h-12 px-3 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl max-sm:h-10 max-sm:px-2 max-sm:text-xs max-[389px]:h-9 max-[389px]:px-1.5",
                             peptide.doseUnit === unit
                               ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white text-white dark:text-slate-900 shadow-sm"
                               : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
@@ -529,7 +551,7 @@ export function PeptideCalculator() {
                 <div className="space-y-4">
                   <div
                     className={cn(
-                      "rounded-2xl p-6 transition-all duration-500",
+                      "rounded-2xl p-6 max-[389px]:p-4 transition-all duration-500",
                       isTotalValid
                         ? "border border-[#3b82f6]/20 dark:border-[#60a5fa]/20 bg-[#1d4ed8]/[0.03] dark:bg-[#60a5fa]/[0.06]"
                         : "border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50",
