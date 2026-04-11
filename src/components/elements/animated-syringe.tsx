@@ -56,7 +56,7 @@ export function AnimatedSyringe({
                   <span
                     key={mark}
                     className={cn(
-                      "absolute top-1/2 text-[10px] font-bold tabular-nums transition-colors duration-300",
+                      "absolute top-1/2 text-[10px] font-bold tabular-nums",
                       isInLiquid
                         ? isValid
                           ? "text-white"
@@ -83,7 +83,7 @@ export function AnimatedSyringe({
                   <div
                     key={mark}
                     className={cn(
-                      "absolute top-0 w-0.5 transition-colors duration-300",
+                      "absolute top-0 w-0.5",
                       isInLiquid
                         ? isValid
                           ? "bg-white"
@@ -109,7 +109,7 @@ export function AnimatedSyringe({
                   <div
                     key={i}
                     className={cn(
-                      "absolute top-0 transition-colors duration-300",
+                      "absolute top-0",
                       i % 5 === 0 ? "h-3.5 w-0.5" : "h-2 w-px",
                       isInLiquid
                         ? isValid
@@ -135,7 +135,7 @@ export function AnimatedSyringe({
                   <div
                     key={mark}
                     className={cn(
-                      "absolute bottom-0 w-0.5 transition-colors duration-300",
+                      "absolute bottom-0 w-0.5",
                       isInLiquid
                         ? isValid
                           ? "bg-white"
@@ -161,7 +161,7 @@ export function AnimatedSyringe({
                   <div
                     key={i}
                     className={cn(
-                      "absolute bottom-0 transition-colors duration-300",
+                      "absolute bottom-0",
                       i % 5 === 0 ? "h-3.5 w-0.5" : "h-2 w-px",
                       isInLiquid
                         ? isValid

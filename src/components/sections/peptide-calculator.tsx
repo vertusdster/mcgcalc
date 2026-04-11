@@ -4,8 +4,6 @@ import {
   useMemo,
   useEffect,
   useRef,
-  useTransition,
-  useDeferredValue,
 } from "react";
 import {
   Plus,
@@ -96,7 +94,6 @@ function NumberInput({
   className?: string;
 }) {
   const [display, setDisplay] = useState(String(value));
-  const [, startTransition] = useTransition();
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
@@ -112,8 +109,7 @@ function NumberInput({
     setDisplay((prev) => {
       const cur = Number(prev) || 0;
       const next = format(clamp(cur + dir * smartStep(cur, stepMode)));
-      // Commit to parent as low-priority — display updates first
-      startTransition(() => onChangeRef.current(next));
+      onChangeRef.current(next);
       return next;
     });
   };
@@ -140,7 +136,7 @@ function NumberInput({
             const v = e.target.value;
             if (v === "" || /^[0-9]*\.?[0-9]*$/.test(v)) {
               setDisplay(v);
-              startTransition(() => onChangeRef.current(v));
+              onChangeRef.current(v);
             }
           }}
           onBlur={(e) => {
