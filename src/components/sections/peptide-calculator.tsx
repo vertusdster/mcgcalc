@@ -334,12 +334,12 @@ export function PeptideCalculator() {
         <div className="space-y-6 p-6">
           {/* Syringe Volume */}
           <div className="mb-6 space-y-4">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-              <Syringe className="h-5 w-5" />
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+              <Syringe className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
-                Select the Total Syringe Volume
+                Select the Total Syringe Volume{" "}
+                <HelpTooltip content="Select the total volume of the syringe you are using. Common sizes are 0.3mL (30 units), 0.5mL (50 units), and 1mL (100 units)." />
               </span>
-              <HelpTooltip content="Select the total volume of the syringe you are using. Common sizes are 0.3mL (30 units), 0.5mL (50 units), and 1mL (100 units)." />
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-xl font-bold text-slate-800 dark:text-slate-200">Volume</Label>
@@ -428,12 +428,12 @@ export function PeptideCalculator() {
 
           {/* Water Volume */}
           <div className="mb-6 space-y-4">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-              <Droplets className="h-5 w-5" />
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+              <Droplets className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
-                Enter the Quantity of Bacteriostatic Water
+                Enter the Quantity of Bacteriostatic Water{" "}
+                <HelpTooltip content="Enter the volume of Bacteriostatic Water added. Use ml for direct volume, or IU if measuring with a U-100 insulin syringe (100 IU = 1 mL)." />
               </span>
-              <HelpTooltip content="Enter the volume of Bacteriostatic Water added. Use ml for direct volume, or IU if measuring with a U-100 insulin syringe (100 IU = 1 mL)." />
             </div>
             <div className="flex items-center justify-between">
               <Label className="text-xl font-bold text-slate-800 dark:text-slate-200">Water</Label>
@@ -472,12 +472,12 @@ export function PeptideCalculator() {
 
           {/* Peptide Doses */}
           <div className="mb-6 space-y-4">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
-              <Syringe className="h-5 w-5" />
+            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+              <Syringe className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
-                Enter the Quantity of Peptide in each dose
+                Enter the Quantity of Peptide in each dose{" "}
+                <HelpTooltip content="Enter the required dose for each peptide. Choose mcg or mg as unit." />
               </span>
-              <HelpTooltip content="Enter the required dose for each peptide. Choose mcg or mg as unit." />
             </div>
 
             <div className="space-y-4">
