@@ -370,9 +370,9 @@ export function PeptideCalculator() {
           {/* Peptide Quantities */}
           <div className="mb-6 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex min-w-0 items-center gap-1.5 text-slate-500 dark:text-slate-400">
+              <div className="flex flex-wrap items-center gap-1.5 text-slate-500 dark:text-slate-400">
                 <Beaker className="h-5 w-5 shrink-0" />
-                <span className="truncate text-sm font-bold">
+                <span className="text-sm font-bold">
                   Enter the Quantity of Peptide
                 </span>
                 <HelpTooltip content="Enter total milligrams (mg) per vial. You can add up to 5 peptides." />
