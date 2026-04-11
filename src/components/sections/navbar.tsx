@@ -139,7 +139,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
                       href={link.href}
                       className={cn(
                         "hover:text-accent-foreground dark:hover:text-white p-2 lg:text-base",
-                        pathname === link.href && "text-accent-foreground dark:text-white",
+                        pathname === link.href && "font-bold",
                       )}
                     >
                       {link.label}
