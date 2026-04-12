@@ -778,6 +778,16 @@ https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{CID}/PNG?image_size=larg
 - ✅ **明确重构假设** — 表格前说明浓度计算基础（如 5mg/2mL = 2.5mg/mL）
 - ✅ **示例剂量列** — 将 µg/kg 转换为具体 µg 数值（假设体重或标注为示例）
 - ✅ **注射体积列** — 显示 mL 体积，便于理解
+- ✅ **剂量来源引用（Fact-Check 支持）** — 表格下方必须列出每个剂量档位对应的 PubMed 论文引用，让用户可以自行验证。格式：
+
+```markdown
+**Dose range sources:**
+- 10 µg/kg — low-dose baseline used in [Author et al. (Year)](https://pubmed.ncbi.nlm.nih.gov/{PMID}/)
+- 25–50 µg/kg — standard range in [Author et al. (Year)](https://pubmed.ncbi.nlm.nih.gov/{PMID}/) and [Author et al. (Year)](https://pubmed.ncbi.nlm.nih.gov/{PMID}/)
+- 50–100 µg/kg — high-dose studies reviewed in [Author et al. (Year)](https://pubmed.ncbi.nlm.nih.gov/{PMID}/); no dose-limiting toxicity reported
+```
+
+> **竞品对比：** 竞品的 200→300→400→500 µg 四阶递增无任何文献引用，用户无法验证。我们的每个剂量档位都锚定在具体论文上，这是核心差异化优势。
 
 - 渐进表下方加注：剂量数值来源于文献中报告的范围，非固定方案
 - 注明给药途径（SC/IP/oral）和实验物种
