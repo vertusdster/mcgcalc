@@ -7,7 +7,7 @@ export const CALCULATORS = [
     title: "Peptide Dosage Calculator",
     description:
       "Calculate the exact injection volume for your peptide dose. Supports multiple peptides, different syringe sizes, and bacteriostatic water volumes in mL or IU.",
-    href: "/calculator",
+    href: "/peptide-calculator",
     icon: "syringe" as const,
     badge: "Popular",
   },

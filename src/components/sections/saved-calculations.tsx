@@ -60,7 +60,7 @@ export function SavedCalculations() {
           <p className="text-sm font-medium text-slate-600 dark:text-slate-400">No saved calculations yet</p>
           <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
             Save a calculation from the{" "}
-            <a href="/calculator" className="text-[#1d4ed8] underline hover:text-[#3b82f6]">
+            <a href="/peptide-calculator" className="text-[#1d4ed8] underline hover:text-[#3b82f6]">
               Dosage Calculator
             </a>{" "}
             to see it here.
@@ -195,7 +195,7 @@ export function SavedCalculations() {
                 </div>
                 <div className="flex items-center gap-2">
                   <a
-                    href="/calculator"
+                    href="/peptide-calculator"
                     onClick={() => {
                       try { localStorage.setItem(LOAD_KEY, saved.id); } catch {}
                     }}

@@ -75,7 +75,7 @@ export function AboutSection() {
           </h2>
           <ul className="space-y-4 text-lg">
             <li>
-              <strong>Privacy first.</strong> We don't collect personal data. No accounts, no analytics cookies, no fingerprinting.
+              <strong>Privacy first.</strong> We don't collect personal data. No analytics cookies, no fingerprinting. Core calculators are always free.
             </li>
             <li>
               <strong>Accuracy matters.</strong> Calculations are validated against standard reconstitution formulas. Results update in real time as you type.
@@ -87,6 +87,12 @@ export function AboutSection() {
               <strong>For research purposes.</strong> This tool is intended for educational and informational use. Always consult a qualified healthcare professional for medical decisions.
             </li>
           </ul>
+          <p className="text-lg">
+            <a href="/about/team" className="text-[#1d4ed8] dark:text-[#60a5fa] underline hover:opacity-80">
+              Meet the team
+            </a>{" "}
+            behind mcgcalc.
+          </p>
         </div>
       </section>
     </>

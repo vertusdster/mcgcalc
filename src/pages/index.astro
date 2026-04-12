@@ -1,26 +1,130 @@
 ---
 import DefaultLayout from '@/layouts/DefaultLayout.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { PeptideCalculator } from '@/components/sections/peptide-calculator';
-import { CalculatorGuide } from '@/components/sections/calculator-guide';
+import { getCollection } from 'astro:content';
+
+const peptides = await getCollection('peptides');
+const categories = [...new Set(peptides.map(p => p.data.category))].sort();
+
+const calculators = [
+  {
+    title: "Dosage Calculator",
+    description: "Calculate exact syringe units for your peptide dose based on vial size, BAC water, and target dose.",
+    href: "/peptide-calculator",
+    badge: "Popular",
+  },
+  {
+    title: "Reverse Calculator",
+    description: "Find the right BAC water volume to achieve a specific number of units per dose.",
+    href: "/reverse-calculator",
+  },
+  {
+    title: "Intranasal Calculator",
+    description: "Nasal spray dosage calculations for intranasal peptide protocols.",
+    href: "/intranasal-calculator",
+  },
+  {
+    title: "Order Calculator",
+    description: "Plan how many vials you need for your full protocol duration.",
+    href: "/order-calculator",
+  },
+  {
+    title: "Unit Converter",
+    description: "Convert between mL, mg, mcg, and uL instantly.",
+    href: "/unit-converter",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "mcgcalc",
+  "url": "https://mcgcalc.com",
+  "description": SITE_DESCRIPTION,
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://mcgcalc.com/peptides?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
 ---
 
-<DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <section class="py-4 md:py-16 px-4">
-    <div class="max-w-2xl mx-auto text-center mb-10 hidden md:block">
+<DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION} schema={schema}>
+  <!-- Hero -->
+  <section class="py-16 md:py-28 lg:py-32 px-4">
+    <div class="max-w-3xl mx-auto text-center">
       <h1 class="text-4xl font-semibold tracking-tighter md:text-5xl lg:text-6xl">
-        mcgcalc
+        Peptide Dosage Calculators
       </h1>
       <p class="text-muted-foreground font-mona mt-4 text-balance text-xl md:text-2xl">
-        Peptide & Dosage Calculators
+        Free, private tools for precise peptide reconstitution and dosing. All calculations run in your browser.
       </p>
-    </div>
-    <div class="mx-auto max-w-5xl flex flex-col lg:flex-row lg:items-start lg:gap-4">
-      <div class="flex-1">
-        <PeptideCalculator client:load />
+      <div class="mt-8 flex items-center justify-center gap-3">
+        <a
+          href="/peptide-calculator"
+          class="rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white px-6 py-3 text-sm font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
+        >
+          Open Calculator
+        </a>
+        <a
+          href="/peptides"
+          class="rounded-xl border border-border px-6 py-3 text-sm font-bold transition-colors hover:bg-accent"
+        >
+          Browse Peptides
+        </a>
       </div>
-      <div class="mt-8 lg:mt-0 lg:w-72 lg:shrink-0">
-        <CalculatorGuide client:load />
+    </div>
+  </section>
+
+  <!-- Calculator Cards -->
+  <section class="pb-16 md:pb-24 px-4">
+    <div class="container max-w-5xl">
+      <h2 class="text-2xl font-semibold tracking-tight mb-8 text-center">5 Tools, One Platform</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {calculators.map((calc) => (
+          <a
+            href={calc.href}
+            class="group relative rounded-2xl border bg-card p-6 shadow-sm transition-all hover:border-[#3b82f6]/40 dark:hover:border-[#60a5fa]/30 hover:shadow-md"
+          >
+            {calc.badge && (
+              <span class="absolute top-4 right-4 rounded-full bg-[#1d4ed8]/10 text-[#1d4ed8] dark:text-[#60a5fa] px-2.5 py-0.5 text-xs font-semibold">
+                {calc.badge}
+              </span>
+            )}
+            <h3 class="font-semibold text-lg group-hover:text-[#1d4ed8] dark:group-hover:text-[#60a5fa] transition-colors">
+              {calc.title}
+            </h3>
+            <p class="text-muted-foreground text-sm mt-2 leading-relaxed">
+              {calc.description}
+            </p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Peptide Categories -->
+  <section class="border-t py-16 md:py-24 px-4">
+    <div class="container max-w-5xl">
+      <h2 class="text-2xl font-semibold tracking-tight mb-2 text-center">Peptide Library</h2>
+      <p class="text-muted-foreground text-center mb-8">{peptides.length} peptides with pre-filled calculator defaults</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        {categories.map((cat) => (
+          <a
+            href={`/peptides?category=${encodeURIComponent(cat)}`}
+            class="rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:border-[#3b82f6]/40"
+          >
+            {cat}
+            <span class="text-muted-foreground ml-1.5">
+              ({peptides.filter(p => p.data.category === cat).length})
+            </span>
+          </a>
+        ))}
+      </div>
+      <div class="mt-8 text-center">
+        <a href="/peptides" class="text-sm font-semibold text-[#1d4ed8] dark:text-[#60a5fa] hover:underline">
+          View all peptides &rarr;
+        </a>
       </div>
     </div>
   </section>

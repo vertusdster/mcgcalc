@@ -4,7 +4,7 @@ const navigation = [
   {
     title: "Tools",
     links: [
-      { name: "Peptide Calculator", href: "/calculator" },
+      { name: "Peptide Calculator", href: "/peptide-calculator" },
       { name: "Peptides List", href: "/peptides" },
     ],
   },
@@ -13,6 +13,7 @@ const navigation = [
     links: [
       { name: "FAQ", href: "/faq" },
       { name: "About", href: "/about" },
+      { name: "Team", href: "/about/team" },
       { name: "Contact", href: "/contact" },
     ],
   },

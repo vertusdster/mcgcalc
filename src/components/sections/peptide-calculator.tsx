@@ -167,10 +167,15 @@ function NumberInput({
   );
 }
 
-export function PeptideCalculator() {
+interface PeptideCalculatorProps {
+  defaultDose?: number;
+  defaultVialSize?: number;
+}
+
+export function PeptideCalculator({ defaultDose, defaultVialSize }: PeptideCalculatorProps = {}) {
   const [syringeVolume, setSyringeVolume] = useState(SYRINGE_VOLUMES[0]);
   const [peptides, setPeptides] = useState<Peptide[]>([
-    { id: generateId(), quantity: 5, dose: 250, doseUnit: "mcg" },
+    { id: generateId(), quantity: defaultVialSize ?? 5, dose: defaultDose ?? 250, doseUnit: "mcg" },
   ]);
   const [waterVolume, setWaterVolume] = useState<number | string>(5);
   const [waterUnit, setWaterUnit] = useState<"ml" | "IU">("ml");

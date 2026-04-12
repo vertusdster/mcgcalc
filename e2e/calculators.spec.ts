@@ -312,7 +312,7 @@ test.describe("Intranasal Calculator", () => {
 
 test.describe("Dosage Calculator", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("/calculator");
+    await page.goto("/peptide-calculator");
     await page.waitForLoadState("networkidle");
   });
 
@@ -360,7 +360,7 @@ test.describe("Dosage Calculator", () => {
 
 test.describe("Navigation", () => {
   test("Calculators dropdown contains all 5 tools", async ({ page }) => {
-    await page.goto("/calculator");
+    await page.goto("/peptide-calculator");
     await page.waitForLoadState("networkidle");
 
     // Click the desktop Calculators trigger (first button with that name)
@@ -375,7 +375,7 @@ test.describe("Navigation", () => {
   });
 
   test("navigate to Reverse Calculator via dropdown", async ({ page }) => {
-    await page.goto("/calculator");
+    await page.goto("/peptide-calculator");
     await page.waitForLoadState("networkidle");
 
     await page.getByRole("button", { name: "Calculators" }).first().click();
@@ -384,7 +384,7 @@ test.describe("Navigation", () => {
   });
 
   test("navigate to Unit Converter via dropdown", async ({ page }) => {
-    await page.goto("/calculator");
+    await page.goto("/peptide-calculator");
     await page.waitForLoadState("networkidle");
 
     await page.getByRole("button", { name: "Calculators" }).first().click();
@@ -394,7 +394,7 @@ test.describe("Navigation", () => {
 
   test("all calculator pages load successfully", async ({ page }) => {
     const pages = [
-      { url: "/calculator", heading: "Peptide Dosage Calculator" },
+      { url: "/peptide-calculator", heading: "Peptide Dosage Calculator" },
       { url: "/reverse-calculator", heading: "Reverse Peptides Calculator" },
       { url: "/intranasal-calculator", heading: "Intranasal Calculator" },
       { url: "/order-calculator", heading: "Order Calculator" },

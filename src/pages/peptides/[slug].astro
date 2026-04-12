@@ -149,7 +149,7 @@ const schema = {
             <p class="mb-3 text-sm font-semibold text-slate-500 uppercase tracking-wide">
               {data.name} Reconstitution Calculator
             </p>
-            <PeptideCalculator client:load />
+            <PeptideCalculator client:load defaultDose={data.defaultDose} defaultVialSize={data.defaultVialSize} />
           </div>
         </div>
       </div>

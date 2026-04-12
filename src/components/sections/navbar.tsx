@@ -51,12 +51,12 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
     { label: "Home", href: "/" },
     {
       label: "Calculators",
-      href: "/calculator",
+      href: "/peptide-calculator",
       dropdownItems: [
         {
           title: "Dosage Calculator",
           description: "Calculate exact syringe units for your peptide dose.",
-          href: "/calculator",
+          href: "/peptide-calculator",
         },
         {
           title: "Reverse Calculator",
@@ -153,7 +153,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
           {/* CTA Buttons */}
           <div className="flex items-center gap-2.5">
             <a
-              href="/calculator"
+              href="/peptide-calculator"
               className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
             >
               <Button

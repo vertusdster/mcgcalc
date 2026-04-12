@@ -83,7 +83,7 @@ const FAQ_ITEMS = [
       {
         question: "Is mcgcalc free to use?",
         answer:
-          "Yes, completely free — no accounts, no sign-ups, no hidden fees. All calculations run entirely in your browser.",
+          "Yes, completely free — no sign-ups required, no hidden fees. All calculations run entirely in your browser.",
       },
       {
         question: "Does mcgcalc store my personal data?",

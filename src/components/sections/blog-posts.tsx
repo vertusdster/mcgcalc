@@ -189,7 +189,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
               </p>
             </div>
             <a
-              href="/calculator"
+              href="/peptide-calculator"
               className="shrink-0 rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white px-6 py-3 text-sm font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
             >
               Open Calculator →

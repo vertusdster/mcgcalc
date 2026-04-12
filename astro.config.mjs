@@ -15,6 +15,10 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), react()],
   output: "static",
 
+  redirects: {
+    "/calculator": "/peptide-calculator",
+  },
+
   fonts: [
     {
       provider: fontProviders.google(),

@@ -38,7 +38,7 @@ export default function Hero() {
           </p>
           <div className="mt-7 flex items-center justify-center gap-3">
             <Button asChild size="lg">
-              <a href="/calculator">
+              <a href="/peptide-calculator">
                 Calculate Now
                 <ChevronRight className="size-4" />
               </a>
@@ -110,7 +110,7 @@ export default function Hero() {
 
           <div className="mt-12 text-center">
             <Button asChild size="lg">
-              <a href="/calculator">
+              <a href="/peptide-calculator">
                 Try the Calculator — It&apos;s Free
                 <ChevronRight className="size-4" />
               </a>

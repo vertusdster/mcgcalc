@@ -5,12 +5,12 @@ import Footer from '@/components/sections/footer';
 import Navbar from '@/components/sections/navbar';
 import Banner from '@/components/sections/banner';
 
-const { title, description } = Astro.props;
+const { title, description, schema } = Astro.props;
 ---
 
 <html lang="en">
     <head>
-        <BaseHead title={title} description={description}  />
+        <BaseHead title={title} description={description} schema={schema} />
         <Font cssVariable="--font-inter" preload />
         <Font cssVariable="--font-sans" preload />
         <Font cssVariable="--font-mono" preload />
