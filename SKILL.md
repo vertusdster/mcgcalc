@@ -263,7 +263,8 @@ async function fetchPubMedDetails(pmids) {
     const ac = (block.match(/<Author /g) || []).length;
     const authors = firstAuthor ? (ac > 1 ? `${firstAuthor} et al.` : firstAuthor) : 'Unknown';
     const isReview = block.includes('Review</PublicationType>') || title.toLowerCase().includes('review');
-    articles.push({ pmid, title, journal, year, abstract, authors, isReview, pubmedUrl: `https://pubmed.ncbi.nlm.nih.gov/${pmid}/` });
+    const isOpenAccess = block.includes('free-pmc') || block.includes('PMC') || block.includes('open access');
+    articles.push({ pmid, title, journal, year, abstract, authors, isReview, isOpenAccess, pubmedUrl: `https://pubmed.ncbi.nlm.nih.gov/${pmid}/` });
   }
   return articles;
 }
@@ -600,6 +601,43 @@ https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{CID}/PNG?image_size=larg
 - ❌ 直接使用竞品网站的图片（版权问题）
 - ❌ 从论文中截图未经授权的图片
 - ❌ 使用低分辨率或水印图片
+
+**论文图片的合法使用：**
+
+如果想引用论文中的研究图表（如实验结果、机制图等），必须遵循以下规则：
+
+1. **仅使用开放获取（CC-BY）论文的图片**
+   - 检查论文许可：查找 "Creative Commons Attribution" 或 "CC-BY" 标识
+   - PubMed 中标注为 "Free PMC article" 的论文通常是开放获取
+   - 常见开放期刊：PLoS ONE, Frontiers, MDPI, BMC 系列
+
+2. **必须完整注明出处**
+   ```markdown
+   <figure class="my-6">
+     <img src="/images/peptides/{slug}-mechanism.png" alt="BPC-157 作用机制" class="rounded-lg border" />
+     <figcaption class="text-sm text-muted-foreground mt-2">
+       Figure adapted from <a href="https://pubmed.ncbi.nlm.nih.gov/{PMID}/">Author et al. (Year)</a>, 
+       licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+     </figcaption>
+   </figure>
+   ```
+
+3. **优先重新绘制图表**
+   - 基于论文数据自己绘制（数据不受版权保护）
+   - 使用工具：Figma, Canva, BioRender, ChemDraw
+   - 注明 "Data from [Author et al., Year]"
+
+4. **检查许可的脚本**
+   ```bash
+   # 检查 PubMed 文章是否为开放获取
+   curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=PMC{PMCID}&retmode=xml" | grep -i "license"
+   ```
+
+**推荐做法：**
+- 优先使用自己生成的分子结构图（PubChem API、RDKit）
+- 使用图标 + 文字描述代替复杂的机制图
+- 如果必须使用论文图片，仅选择 CC-BY 许可的开放获取论文
+- 在 Subagent B（论文搜索）中标注论文的开放获取状态
 
 **在 MDX 中使用图片：**
 ```mdx
