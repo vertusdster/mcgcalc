@@ -39,7 +39,9 @@ const schema = {
   "datePublished": data.pubDate.toISOString(),
   "dateModified": (data.updatedDate ?? data.pubDate).toISOString(),
   "author": data.reviewedBy
-    ? { "@type": "Person", "name": data.reviewedBy }
+    ? (data.reviewedBy.includes("Team")
+      ? { "@type": "Organization", "name": data.reviewedBy }
+      : { "@type": "Person", "name": data.reviewedBy })
     : { "@type": "Organization", "name": "Peptide Calculator" },
   "publisher": { "@type": "Organization", "name": "Peptide Calculator" },
   "mainEntityOfPage": { "@type": "WebPage", "@id": Astro.url.href }
@@ -73,7 +75,9 @@ const schema = {
           </h1>
           {data.reviewedBy && (
             <p class="mt-2 text-sm text-muted-foreground">
-              Researched & reviewed by <strong>{data.reviewedBy}</strong>
+              Researched & reviewed by {data.reviewedBy.includes("Team")
+                ? <a href="/about/team" class="font-semibold text-[#1d4ed8] hover:underline">{data.reviewedBy}</a>
+                : <strong>{data.reviewedBy}</strong>}
             </p>
           )}
 

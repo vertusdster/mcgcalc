@@ -409,15 +409,16 @@ Subagent B 返回论文 JSON 后，主上下文负责：
 
 ### 自动填充：审稿人信息
 
-所有肽类页面统一使用团队页面（`src/components/sections/team-section.tsx`）中的科学顾问信息：
+所有肽类页面统一使用 "Editorial Team"，链接到 `/about/team` 页面：
 
 ```yaml
-reviewedBy: "Dr. Sarah Chen, PhD Biochemistry"
+reviewedBy: "Editorial Team"
 ```
 
-- 来源：`/about/team` 页面的 Lead Scientific Advisor
-- 如果团队信息发生变更，只需修改 `team-section.tsx` 中的 `team` 数组，然后批量更新所有肽类页面的 `reviewedBy` 字段
-- 这比竞品的 "Dr. Logan, M.D." 更具体（含专业方向），且与站内 `/about/team` 页面形成 E-E-A-T 内链闭环
+- 模板 `[slug].astro` 会自动检测 reviewedBy 是否包含 "Team"，如果是则渲染为指向 `/about/team` 的链接
+- JSON-LD schema 中 author 类型自动设为 Organization（而非 Person）
+- `/about/team` 页面展示完整团队信息（科学顾问 + 开发者），形成 E-E-A-T 内链闭环
+- 如果未来需要改回个人署名，只需修改 frontmatter 中的 reviewedBy 值，模板会自动切换为 Person 类型
 
 ### 可自动获取/推导的数据
 
@@ -538,7 +539,7 @@ keywords:
   - "{肽名} dosage calculator"
   - "{肽名} how many units"
   - "{肽名} BAC water"
-reviewedBy: "Dr. Sarah Chen, PhD Biochemistry"
+reviewedBy: "Editorial Team"
 pubDate: {YYYY-MM-DD}
 updatedDate: {YYYY-MM-DD}
 ---
