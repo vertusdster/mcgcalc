@@ -756,24 +756,35 @@ https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{CID}/PNG?image_size=larg
 - 标注 "Based on published preclinical literature"
 - **两张表格**：
   1. **剂量分层表** — 按 low/standard/high/oral 分层，标注剂量范围、频率、持续时间、给药途径、实验物种
-  2. **渐进式研究设计表** — 按周/阶段递增剂量，模拟竞品的渐进方案但基于文献数据而非编造。格式：
+  2. **渐进式研究设计表（带 IU 换算）** — 按周/阶段递增剂量，模拟竞品的渐进方案但基于文献数据而非编造。**关键：必须包含 IU 换算列**。格式：
 
 ```markdown
 > The following graduated design reflects dosing escalation patterns observed across
 > multiple published rodent studies. It is not a clinical protocol.
 
-| Phase | Duration | Dose | Frequency | Route |
-|-------|----------|------|-----------|-------|
-| Acclimation | Week 1–2 | {低剂量} µg/kg | Once daily | SC |
-| Standard | Week 3–6 | {中剂量} µg/kg | Once daily | SC |
-| Extended | Week 7–12 | {高剂量} µg/kg | Once daily | SC |
+**Reconstitution assumption:** 5 mg vial + 2 mL BAC water = 2.5 mg/mL concentration
+
+| Phase | Duration | Dose (µg/kg) | Example Dose* | Injection Volume | Syringe Units (IU) | Frequency | Route |
+|-------|----------|--------------|---------------|------------------|-------------------|-----------|-------|
+| Acclimation | Week 1–2 | 10 µg/kg | 200 µg | 0.08 mL | **8 IU** | Once daily | SC |
+| Standard | Week 3–6 | 25–50 µg/kg | 250 µg | 0.10 mL | **10 IU** | Once daily | SC |
+| Extended | Week 7–12 | 50–100 µg/kg | 500 µg | 0.20 mL | **20 IU** | Once daily | SC |
+
+*Example doses calculated for illustrative purposes based on common vial configurations.
 ```
+
+**重要改进（相比竞品）：**
+- ✅ **增加 IU 列** — 竞品只有 µg/kg，我们直接给出注射器单位，更实用
+- ✅ **明确重构假设** — 表格前说明浓度计算基础（如 5mg/2mL = 2.5mg/mL）
+- ✅ **示例剂量列** — 将 µg/kg 转换为具体 µg 数值（假设体重或标注为示例）
+- ✅ **注射体积列** — 显示 mL 体积，便于理解
 
 - 渐进表下方加注：剂量数值来源于文献中报告的范围，非固定方案
 - 注明给药途径（SC/IP/oral）和实验物种
 - 不使用 "protocol" 或 "cycle" 等暗示人体使用的词汇
 - 使用 "research dosing parameters" 或 "published study designs"
 - 如果该肽有口服生物利用度数据，单独列一行 oral route
+- **IU 换算必须基于明确的重构比例**（在表格前声明，如 "5 mg vial + 2 mL BAC water"）
 
 #### 6. Stability & Storage（150-250 字）
 
