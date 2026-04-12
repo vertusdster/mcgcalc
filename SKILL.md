@@ -560,6 +560,67 @@ import { Disclaimer } from '../../components/sections/peptide-disclaimer.tsx';
 - 区别于同类肽的独特物理化学性质（如 BPC-157 的 pH 稳定性）
 - 不做任何疗效声明，仅陈述"被研究用于..."
 - 🔗 **站内交叉引用：** 提及同类或相关肽时，必须链接到本站对应页面（如 "similar in structure to [TB-500](/peptides/tb-500)"）
+- 📷 **可选：分子结构图** — 如果有高质量的分子结构图，可在此章节末尾添加（见下方「图片获取指南」）
+
+#### 2.5 图片获取与使用指南（可选）
+
+**图片类型：**
+1. **2D 分子结构式** — 显示化学键和原子排列
+2. **3D 分子模型** — 显示空间构象
+3. **序列图示** — 氨基酸序列可视化
+
+**获取来源（按优先级）：**
+
+**方案 1：PubChem 官方 API（推荐，免费且合法）**
+```
+https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{CID}/PNG?image_size=large
+```
+- 优点：免费、无版权问题、自动生成
+- 缺点：仅适用于有 PubChem CID 的化合物
+- 使用方法：通过代理下载到 `public/images/peptides/{slug}-structure.png`
+
+**方案 2：使用 RDKit 或 ChemDraw 生成（最佳质量）**
+- 基于 SMILES 或分子式生成高质量 SVG/PNG
+- 需要化学绘图软件或 Python RDKit 库
+- 完全自主生成，无版权问题
+
+**方案 3：引用 PubChem 外链（临时方案）**
+```markdown
+![{肽名} 分子结构](https://pubchem.ncbi.nlm.nih.gov/image/imagefly.cgi?cid={CID}&width=300&height=300)
+```
+- 优点：无需下载，实时更新
+- 缺点：依赖外部服务，加载速度慢
+
+**方案 4：图标 + 文字描述（简单方案）**
+- 使用 Lucide React 图标库中的化学相关图标
+- 配合文字描述分子特征
+- 适用于无法获取结构图的情况
+
+**严禁：**
+- ❌ 直接使用竞品网站的图片（版权问题）
+- ❌ 从论文中截图未经授权的图片
+- ❌ 使用低分辨率或水印图片
+
+**在 MDX 中使用图片：**
+```mdx
+## What Is {肽名}?
+
+{文字内容...}
+
+<div class="my-6 flex justify-center">
+  <img 
+    src="/images/peptides/{slug}-structure.png" 
+    alt="{肽名} 2D molecular structure"
+    class="max-w-md rounded-lg border shadow-sm"
+  />
+</div>
+```
+
+**图片文件命名规范：**
+- 2D 结构：`{slug}-structure.png` 或 `{slug}-2d.png`
+- 3D 模型：`{slug}-3d.png`
+- 序列图：`{slug}-sequence.png`
+- 存放位置：`public/images/peptides/`
 
 #### 3. Research Context（1000-1800 字）⚠️ 需要论文输入
 
