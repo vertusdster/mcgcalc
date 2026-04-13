@@ -1,6 +1,50 @@
 # SKILL: Peptide Content Page Author
 
-> 生成高质量肽类内容页面，在 SEO 技术、E-E-A-T 权威性、生物黑客实用性三个维度全面超越竞品 peptidescalculator.com。
+> 生成高质量肽类内容页面，在 SEO 技术、E-E-A-T 权威性、生物黑客实用性三个维度全面超越竞品。同时通过信息架构分层，让 L1 新手到 L3 硬核用户都能在 10 秒内找到自己需要的内容。
+
+## 用户分层模型（所有内容决策的基础）
+
+本站的生物黑客用户分三层，每层的需求和行为模式完全不同。内容结构、IA 排序、组件设计都必须同时服务这三层：
+
+| 层级 | 画像 | 核心诉求 | 心智模型 | 在页面上的行为 |
+|------|------|---------|---------|--------------|
+| L1 新手 | Reddit 听说 BPC-157，刚买了 5mg 粉，没有化学背景 | "今晚抽几个单位" | 250 mcg 一针，不懂 µg/kg | 想在前 200px 拿到答案，不会读综述 |
+| L2 中段 | 看过 Reddit 长贴，知道 µg/kg，会用计算器 | "给我数字 + 来源交代" | 能接受 µg/kg 表格，不读 PubMed | 扫 dosing parameters 表，用计算器 |
+| L3 硬核 | 读原文，关心 n 值、种属外推、独立复现 | "给我文献让我自己判断" | 看 Research Gaps、点 PubMed 链接 | 通读全文，验证引用 |
+
+**设计原则：**
+- L1 靠 TL;DR 卡片 + 计算器锚点导航，跳过学术内容直达工具
+- L2 靠 dosing parameters 表 + 计算器 sidebar
+- L3 靠 Research Context 深度 + PubMed 引用链
+- 学术深度是资产不是负债——不删减，只补快速通道
+
+## 竞品格局与 SEO 定位
+
+### SERP 双赛道
+
+| 赛道 | 代表竞品 | 排名关键词类型 | 页面特征 |
+|------|---------|-------------|---------|
+| 工具型 | PeptideCalc.online, Cellgenic, Health-Helix | "bpc-157 calculator" | 计算器首屏，内容在下 |
+| 内容型 | Peptides.org, The Peptide Report, NDN Superstore | "bpc-157 dosage guide / how many units" | 长文 + 表格 + FAQ |
+
+mcgcalc 的定位是**两者兼有**（深度学术内容 + 交互计算器），通过 IA 分层同时吃两个赛道的流量。
+
+### 竞品共性弱点（我们的机会）
+
+- 多数竞品计算器不输出 IU syringe units（我们已有）
+- 多数竞品无 "一瓶能打几天" 输出（用户高频问题）
+- 多数竞品无 PubMed 引用（E-E-A-T 信号缺失）
+- 纯工具站无深度内容，纯内容站无交互计算器
+- SPA 竞品 JS 渲染延迟索引，我们 Astro SSG 静态 HTML 首次爬取即完整
+
+### 排名相关的 UX 模式（来自 SERP 分析）
+
+- 计算器首屏 + 深度内容下方 → 同时吃工具词和信息词
+- Visual syringe graphic（我们已有 AnimatedSyringe 组件）
+- U-100 syringe unit 输出（我们已有）
+- "How many doses per vial" 输出 → 回答 Reddit 第二高频问题
+- FAQ 章节 → 捕获长尾搜索词
+- TL;DR / Key Takeaways 首屏 → 降低跳出率
 
 ## 前置条件（权限）
 
@@ -15,7 +59,10 @@
 
 ## 触发条件
 
-当需要创建或升级 `src/content/peptides/` 下的肽类内容页面时使用此 SKILL。
+当需要创建或升级 `src/content/peptides/` 下的肽类内容页面时使用此 SKILL。也适用于：
+- 优化现有页面的信息架构（L1/L2/L3 分层）
+- 增强计算器组件（presets、doses per vial 等）
+- 创建肽类相关博客文章（L1 长尾 SEO）
 
 ## 执行流程总览
 
@@ -545,7 +592,23 @@ updatedDate: {YYYY-MM-DD}
 ---
 ```
 
-### 内容结构（按顺序）
+### 内容结构（按顺序）— IA 分层设计
+
+> **信息架构原则：** 页面从上到下按用户层级递进 — L1 在前 200px 拿到答案（TL;DR 卡片），L2 在中段找到表格和计算器，L3 在全文中获得学术深度。不删减任何内容，只补快速通道。
+
+```
+┌─ Disclaimer ─────────────────────────────────┐  ← 合规
+├─ TL;DR Quick Nav Card 🆕 ────────────────────┤  ← L1 在这里拿到答案
+├─ What Is {肽名}? ────────────────────────────┤  ← L1/L2 快速了解
+├─ Research Context (1000-1800 词) ─────────────┤  ← L3 深度阅读
+├─ Reconstitution Mathematics ──────────────────┤  ← L2 验证计算
+├─ Common Research Dosing Parameters ───────────┤  ← L2 核心内容
+│  └─ [Jump to calculator →] 导航提示 🆕 ───────┤  ← L1 分流到计算器
+│  └─ Graduated Dosing Table ───────────────────┤
+├─ Stability & Storage ─────────────────────────┤  ← L1/L2 实操
+├─ FAQ ─────────────────────────────────────────┤  ← L1 长尾 SEO
+└─ Brief Disclaimer ────────────────────────────┘  ← 合规
+```
 
 #### 1. 严格免责声明
 ```mdx
@@ -553,6 +616,46 @@ import { Disclaimer } from '../../components/sections/peptide-disclaimer.tsx';
 
 <Disclaimer type="strict" />
 ```
+
+#### 1.5 TL;DR 快速导航卡片（L1 快速通道）🆕
+
+> 这是 L1 用户的生命线。他不会读综述，他需要在前 200px 拿到答案或找到计算器入口。
+
+在 Disclaimer 之后、正文之前，插入 `<QuickNavCard>` 组件：
+
+```mdx
+import { QuickNavCard } from '../../components/sections/quick-nav-card.tsx';
+
+<QuickNavCard
+  quickAnswer="With a 5 mg vial in 2 mL BAC water, a 250 mcg dose = 10 units on a U-100 syringe."
+  dosesPerVial={20}
+  doseAmount={250}
+  vialSize={5}
+/>
+```
+
+**组件要求（`src/components/sections/quick-nav-card.tsx`）：**
+- 紧凑卡片（3-4 行），视觉上用 border + bg-card 区分于正文
+- 第一行：直接回答 L1 最常问的问题（"250 mcg = 10 IU"）
+- 第二行：一瓶能打几次（`vialSize × 1000 ÷ doseAmount`）
+- 第三行："Jump to Calculator" 按钮，锚点跳转到 `#calculator`
+- 移动端尤其重要：计算器在 order-1（页面顶部），用户滚过后进入长文，这个卡片是回到计算器的唯一快速通道
+- 合规安全：卡片内容是数学换算结果，不是剂量推荐
+
+**页面模板配合（`src/pages/peptides/[slug].astro`）：**
+- 计算器容器 `<div>` 必须加 `id="calculator"` 以支持锚点跳转
+
+**每个肽页面的 quickAnswer 需要根据该肽的 defaultDose 和 defaultVialSize 定制。**
+
+#### 1.7 Graduated Dosing 表格上方导航提示（L1 → 计算器分流）🆕
+
+在 Graduated Dosing Design 表格的 blockquote 之后、reconstitution assumption 之前，加一行：
+
+```markdown
+> Prefer the calculator? Enter your vial size, BAC water volume, and target dose in mcg — it handles all unit conversions. [Jump to calculator →](#calculator)
+```
+
+纯 MDX 内联链接，不需要组件。作用：告诉 L1 "你不用读懂这个 8 列表格，去计算器填数字就行"。
 
 #### 2. What Is {肽名}?（200-300 字）
 
@@ -562,104 +665,121 @@ import { Disclaimer } from '../../components/sections/peptide-disclaimer.tsx';
 - 区别于同类肽的独特物理化学性质（如 BPC-157 的 pH 稳定性）
 - 不做任何疗效声明，仅陈述"被研究用于..."
 - 🔗 **站内交叉引用：** 提及同类或相关肽时，必须链接到本站对应页面（如 "similar in structure to [TB-500](/peptides/tb-500)"）
-- 📷 **可选：分子结构图** — 如果有高质量的分子结构图，可在此章节末尾添加（见下方「图片获取指南」）
+- 📷 **分子结构图** — 在章节末尾添加 2D 结构图（见下方「图片获取指南」）。优先 Wikimedia SVG，其次 PubChem PNG。所有 20 个肽均有 PubChem CID，因此每个页面都能获取到图片
 
-#### 2.5 图片获取与使用指南（可选）
+#### 2.5 图片获取与使用指南
 
-**图片类型：**
-1. **2D 分子结构式** — 显示化学键和原子排列
-2. **3D 分子模型** — 显示空间构象
-3. **序列图示** — 氨基酸序列可视化
+> 每个肽页面应至少包含 1 张分子结构图。图片提升页面视觉丰富度、降低跳出率、增加 Google Images 流量入口。
 
-**获取来源（按优先级）：**
+**三级图片源（按优先级执行，命中即停）：**
 
-**方案 1：PubChem 官方 API（推荐，免费且合法）**
+**优先级 1：Wikimedia Commons SVG（最佳质量，公共领域）**
+
+分子结构式在 Wikimedia 上属于公共领域（不受版权保护）。SVG 格式无损缩放，适合所有屏幕。
+
+已验证可用的肽类 SVG：
+| 肽 | Wikimedia URL | 许可 |
+|----|--------------|------|
+| BPC-157 | `https://upload.wikimedia.org/wikipedia/commons/d/d4/BPC-157.svg` | Public Domain |
+| Semaglutide | `https://upload.wikimedia.org/wikipedia/commons/9/99/Semaglutide_vs._liraglutide_v01.svg` | Public Domain |
+
+使用方式 — 构建时下载到本地（不要 hotlink，避免外部依赖）：
+```bash
+curl -o public/images/peptides/{slug}-structure.svg \
+  "https://upload.wikimedia.org/wikipedia/commons/{path}"
 ```
-https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{CID}/PNG?image_size=large
+
+如果需要 PNG 缩略图，Wikimedia 支持服务端渲染：
 ```
-- 优点：免费、无版权问题、自动生成
-- 缺点：仅适用于有 PubChem CID 的化合物
-- 使用方法：通过代理下载到 `public/images/peptides/{slug}-structure.png`
-
-**方案 2：使用 RDKit 或 ChemDraw 生成（最佳质量）**
-- 基于 SMILES 或分子式生成高质量 SVG/PNG
-- 需要化学绘图软件或 Python RDKit 库
-- 完全自主生成，无版权问题
-
-**方案 3：引用 PubChem 外链（临时方案）**
-```markdown
-![{肽名} 分子结构](https://pubchem.ncbi.nlm.nih.gov/image/imagefly.cgi?cid={CID}&width=300&height=300)
+https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/BPC-157.svg/500px-BPC-157.svg.png
 ```
-- 优点：无需下载，实时更新
-- 缺点：依赖外部服务，加载速度慢
 
-**方案 4：图标 + 文字描述（简单方案）**
-- 使用 Lucide React 图标库中的化学相关图标
-- 配合文字描述分子特征
-- 适用于无法获取结构图的情况
+**查找方法：** 在 `https://commons.wikimedia.org` 搜索肽名称 + "structure" 或 "skeletal formula"。
+
+**优先级 2：PubChem PUG-REST API（覆盖最广，公共领域）**
+
+所有有 PubChem CID 的肽都能自动获取 2D 结构图。美国政府作品，公共领域，无需署名。
+
+```
+https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{CID}/PNG?image_size=500x500
+```
+
+已验证的肽类 CID：
+| 肽 | CID | 图片 URL |
+|----|-----|---------|
+| BPC-157 | 9941957 | `.../cid/9941957/PNG?image_size=500x500` |
+| TB-500 | 62707662 | `.../cid/62707662/PNG?image_size=500x500` |
+| Thymosin Beta-4 | 45382195 | `.../cid/45382195/PNG?image_size=500x500` |
+| Semaglutide | 56843331 | `.../cid/56843331/PNG?image_size=500x500` |
+| Ipamorelin | 9831659 | `.../cid/9831659/PNG?image_size=500x500` |
+| CJC-1295 | 91971820 | `.../cid/91971820/PNG?image_size=500x500` |
+
+使用方式 — 构建时下载（API 有限流，5 req/s）：
+```bash
+curl -o public/images/peptides/{slug}-structure.png \
+  "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/{CID}/PNG?image_size=500x500"
+```
+
+支持的尺寸：`200x200`、`300x300`（默认）、`500x500`、`1000x1000`。仅 PNG 格式。
+
+**优先级 3：RCSB PDB 3D 结构图（仅限有晶体结构的肽）**
+
+适用于有实验测定 3D 结构的肽（多数小肽没有）。CC-BY 4.0 许可，需署名。
+
+```
+https://cdn.rcsb.org/images/structures/{mid2}/{pdb_id}/{pdb_id}_assembly-1.jpeg
+```
+其中 `{mid2}` 是 PDB ID 的第 2-3 位字符（如 `7ki0` → `ki`）。
+
+已验证：Semaglutide 有 PDB 条目 [7KI0](https://www.rcsb.org/structure/7KI0)（与 GLP-1 受体结合的 3D 结构）。BPC-157、Ipamorelin、CJC-1295、TB-500 均无 PDB 条目。
+
+**署名要求（CC-BY 4.0）：**
+```html
+<figcaption>3D structure from <a href="https://www.rcsb.org/structure/{PDB_ID}">RCSB PDB</a>, CC-BY 4.0</figcaption>
+```
 
 **严禁：**
-- ❌ 直接使用竞品网站的图片（版权问题）
-- ❌ 从论文中截图未经授权的图片
-- ❌ 使用低分辨率或水印图片
+- 直接使用竞品网站的图片
+- 从非 CC-BY 论文截图
+- 使用低分辨率或水印图片
+- 生产环境 hotlink 外部图片（必须下载到 `public/images/peptides/`）
 
 **论文图片的合法使用：**
 
-如果想引用论文中的研究图表（如实验结果、机制图等），必须遵循以下规则：
-
-1. **仅使用开放获取（CC-BY）论文的图片**
-   - 检查论文许可：查找 "Creative Commons Attribution" 或 "CC-BY" 标识
-   - PubMed 中标注为 "Free PMC article" 的论文通常是开放获取
-   - 常见开放期刊：PLoS ONE, Frontiers, MDPI, BMC 系列
-
-2. **必须完整注明出处**
-   ```markdown
-   <figure class="my-6">
-     <img src="/images/peptides/{slug}-mechanism.png" alt="BPC-157 作用机制" class="rounded-lg border" />
-     <figcaption class="text-sm text-muted-foreground mt-2">
-       Figure adapted from <a href="https://pubmed.ncbi.nlm.nih.gov/{PMID}/">Author et al. (Year)</a>, 
-       licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
-     </figcaption>
-   </figure>
-   ```
-
-3. **优先重新绘制图表**
-   - 基于论文数据自己绘制（数据不受版权保护）
-   - 使用工具：Figma, Canva, BioRender, ChemDraw
-   - 注明 "Data from [Author et al., Year]"
-
-4. **检查许可的脚本**
-   ```bash
-   # 检查 PubMed 文章是否为开放获取
-   curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id=PMC{PMCID}&retmode=xml" | grep -i "license"
-   ```
-
-**推荐做法：**
-- 优先使用自己生成的分子结构图（PubChem API、RDKit）
-- 使用图标 + 文字描述代替复杂的机制图
-- 如果必须使用论文图片，仅选择 CC-BY 许可的开放获取论文
-- 在 Subagent B（论文搜索）中标注论文的开放获取状态
+仅限 CC-BY 开放获取论文的图片（PLoS ONE, Frontiers, MDPI, BMC 系列）：
+1. 确认论文许可为 CC-BY（PubMed 标注 "Free PMC article"）
+2. 下载到本地，完整署名：
+```html
+<figure class="my-6">
+  <img src="/images/peptides/{slug}-mechanism.png" alt="{描述}" class="rounded-lg border" />
+  <figcaption class="text-sm text-muted-foreground mt-2">
+    Figure from <a href="https://pubmed.ncbi.nlm.nih.gov/{PMID}/">Author et al. (Year)</a>,
+    licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+  </figcaption>
+</figure>
+```
 
 **在 MDX 中使用图片：**
 ```mdx
-## What Is {肽名}?
-
-{文字内容...}
-
 <div class="my-6 flex justify-center">
-  <img 
-    src="/images/peptides/{slug}-structure.png" 
+  <img
+    src="/images/peptides/{slug}-structure.png"
     alt="{肽名} 2D molecular structure"
     class="max-w-md rounded-lg border shadow-sm"
   />
 </div>
 ```
 
-**图片文件命名规范：**
-- 2D 结构：`{slug}-structure.png` 或 `{slug}-2d.png`
-- 3D 模型：`{slug}-3d.png`
-- 序列图：`{slug}-sequence.png`
+**文件命名规范：**
+- Wikimedia SVG：`{slug}-structure.svg`
+- PubChem PNG：`{slug}-structure.png`
+- PDB 3D：`{slug}-3d.jpeg`
+- 论文图片：`{slug}-mechanism.png`
 - 存放位置：`public/images/peptides/`
+
+**构建时批量下载脚本（可选）：**
+
+在 `scripts/fetch-peptide-images.sh` 中维护一个 CID 映射表，`npm run build` 前执行一次即可。Wikimedia SVG 优先，PubChem PNG 兜底。
 
 #### 3. Research Context（1000-1800 字）⚠️ 需要论文输入
 
@@ -1063,6 +1183,66 @@ npx astro build 2>&1 | tail -20
 | 无存储指导 | 每页必含 Stability & Storage 章节 |
 | 无 FAQ | 每页 4-6 个 FAQ，覆盖长尾搜索词 |
 | 100+ 肽类链接堆砌在侧边栏 | 干净的面包屑导航 + 分类索引 |
+| 多数竞品无 "一瓶打几天" 输出 | 计算器 + TL;DR 卡片均展示 doses per vial |
+| L1 新手找不到快速入口 | TL;DR 卡片 + calculator 锚点导航 |
+| 纯工具站无深度内容 | Research Context 1000-1800 词 + PubMed 引用 |
+| 纯内容站无交互计算器 | 每页 sticky calculator + research protocol presets |
+
+## 计算器增强策略（组件层改动）🆕
+
+### Doses Per Vial 输出
+
+用户输入 vial size + dose 后，计算器自动显示 "X doses per vial"。这是 Reddit 上第二高频问题（RealPeptides 专门写了一整篇文章回答它），一行除法即可实现。
+
+**实现位置：** `src/components/sections/peptide-calculator.tsx`
+**计算：** `Math.floor(vialSize * 1000 / doseInMcg)`（vialSize 单位 mg，dose 单位 mcg）
+**展示：** 在计算结果区域显示，如 "20 doses per vial"
+
+### Research Protocol Presets 下拉
+
+在计算器中加一个可选的 "Research protocol presets" 下拉，预设基于文献的常见剂量档位：
+
+| Preset 名称 | 预填 dose 值 | 来源 |
+|-------------|-------------|------|
+| Conservative (Acclimation) | 200 mcg | 10 µg/kg 文献基线 |
+| Standard | 250 mcg | 25-50 µg/kg 文献中位 |
+| Extended | 500 mcg | 50-100 µg/kg 文献上限 |
+
+**关键设计决策：**
+- 不需要体重输入 — 直接用社区共识的 mcg 值作为 preset，不做 µg/kg × kg 换算
+- 选择 preset 只是预填 dose 输入框，用户可以随时修改
+- 合规上它是"预填一个输入框"，不是"推荐剂量"
+- Preset 值来自 Graduated Dosing 表格中的 Example Dose 列
+- 每个肽的 presets 不同，通过 frontmatter 或组件 props 传入
+
+**实现位置：** `src/components/sections/peptide-calculator.tsx`
+**Props 扩展：** `presets?: Array<{ label: string; dose: number }>`
+
+## 博客内容策略（L1 长尾 SEO）🆕
+
+当前博客是 5 篇占位文章（Astro 框架、城市园艺），与肽类完全无关。这是最大的 SEO 浪费。
+
+### 策略：用博客做 L1 分流
+
+主页（`/peptides/bpc-157`）继续吃学术中高意图词（"bpc-157 dosage research"），博客吃纯新手长尾词。每篇博客是独立着陆页，可以各自优化不同关键词。
+
+### 优先级排序的博客主题
+
+| 优先级 | 标题 | 目标关键词 | 内链目标 | 字数 |
+|--------|------|-----------|---------|------|
+| P0 | "BPC-157: How Many Units to Draw (Quick Reference)" | bpc-157 how many units | 计算器 + BPC-157 主页 | 500-800 |
+| P0 | "How Long Does a Vial of BPC-157 Last?" | bpc-157 vial doses | order calculator + BPC-157 主页 | 500-800 |
+| P1 | "BPC-157 + TB-500 Stack: Combined Reconstitution Guide" | bpc-157 tb-500 stack | multi-peptide calculator | 600-1000 |
+| P1 | "BPC-157 Reconstitution Step-by-Step (With Photos)" | bpc-157 how to reconstitute | BPC-157 主页 Stability 章节 | 500-800 |
+| P2 | "Peptide Storage Guide: How Long Does Reconstituted Peptide Last?" | peptide storage refrigerator | 各肽页面 Stability 章节 | 600-800 |
+
+### 博客写作规范
+
+- 写给 L1，不需要学术深度
+- 每篇必须内链到至少 1 个计算器页面 + 1 个肽内容页面
+- 不给具体剂量推荐，所有数字都导回计算器
+- 使用 "research literature reports..." 而非 "you should take..."
+- FAQ 格式优先（Google Featured Snippet 友好）
 
 ## 示例：升级 BPC-157 页面时的提醒
 
@@ -1077,7 +1257,20 @@ npx astro build 2>&1 | tail -20
 > - BPC-157 + TB-500 协同研究（如有）
 > - 安全性/毒理学数据
 >
-> 审稿人将自动填充为 "Dr. Sarah Chen, PhD Biochemistry"（来自 /about/team）。
+> 审稿人将自动填充为 "Editorial Team"（链接到 /about/team）。
 > 竞品页面将自动通过无头浏览器抓取分析。
 >
 > 请提供论文列表，或者我可以先基于现有引用扩充内容框架，后续再补充 PMID 链接。
+
+## 实施优先级总览 🆕
+
+按 ROI（投入产出比）排序，不按时间：
+
+| 优先级 | 改动 | 影响层 | 工作量 | 预期效果 |
+|--------|------|--------|--------|---------|
+| P0 | TL;DR 卡片 + calculator 锚点 | L1 | 新建 1 组件 + 编辑 2 文件 | L1 跳出率下降，前 200px 即可拿到答案 |
+| P0 | Graduated Dosing 表格上方导航提示 | L1 | 1 行 MDX | L1 从表格分流到计算器 |
+| P1 | Doses per vial 输出 | L1/L2 | 计算器加 1 行除法 | 回答 Reddit 第二高频问题 |
+| P1 | Research protocol presets 下拉 | L1/L2 | 计算器加下拉组件 | 消除 L1 的 "250 mcg 从哪来" 困惑 |
+| P2 | 替换占位博客为肽类长尾文章 | L1 SEO | 内容工作 | 吃 "how many units" 等新手长尾词 |
+| P2 | 其他肽页面补 TL;DR 卡片 | L1 | 批量编辑 19 个 .md 文件 | 全站 L1 体验一致 |
