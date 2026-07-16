@@ -13,6 +13,6 @@ const blogDescription = "Guides, dosage references, and research insights on pep
 ---
 
 <DefaultLayout title={blogTitle} description={blogDescription}>
-	<BlogPosts posts={posts} client:only='react' />
+	<BlogPosts posts={posts} client:load />
 </DefaultLayout>
 

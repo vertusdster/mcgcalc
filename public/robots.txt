@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /saved/
+Disallow: /code_artifact.html
 
 Sitemap: https://mcgcalc.com/sitemap-index.xml

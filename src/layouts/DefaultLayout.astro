@@ -18,7 +18,7 @@ const { title, description, schema, noindex } = Astro.props;
     </head>
     <body class={`h-screen antialiased flex flex-col`}
     >
-<Navbar currentPage={Astro.url.pathname} client:only='react' />
+<Navbar currentPage={Astro.url.pathname} client:load />
         <main class="flex-1"><slot /></main>
         <Footer />
     </body>

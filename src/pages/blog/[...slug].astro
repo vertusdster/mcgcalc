@@ -34,7 +34,7 @@ const schema = {
 ---
 <DefaultLayout title={`${post.data.title} | ${SITE_TITLE}`} description={post.data.description} schema={schema}>
 	<div class="py-16 md:py-28 lg:py-32">
-		<BlogPost post={post} client:only='react'>
+		<BlogPost post={post} client:load>
 			<Content />
 		</BlogPost>
 
