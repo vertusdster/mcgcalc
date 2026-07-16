@@ -21,7 +21,7 @@ export function Disclaimer({ type = "strict" }: DisclaimerProps) {
         <ShieldAlert className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-400" />
         <div className="text-sm leading-relaxed text-amber-900 dark:text-amber-200">
           <p className="font-bold uppercase tracking-wide">
-            ⚠ RESEARCH CHEMICAL ONLY — FOR IN VITRO / LABORATORY USE
+            RESEARCH CHEMICAL ONLY — FOR IN VITRO / LABORATORY USE
           </p>
           <p className="mt-2">
             This information is provided exclusively for educational and
