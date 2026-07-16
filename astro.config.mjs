@@ -21,6 +21,22 @@ export default defineConfig({
   ],
   output: "static",
 
+  markdown: {
+    // Dual-theme syntax highlighting. defaultColor: "light" bakes the light
+    // theme inline (so code blocks match the page in light mode) and emits
+    // --shiki-dark CSS variables that global.css applies under .dark.
+    // Without this, Astro defaults to github-dark and renders a black box
+    // on the white light-mode page.
+    shikiConfig: {
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
+      },
+      defaultColor: "light",
+      wrap: true,
+    },
+  },
+
   redirects: {
     "/calculator": "/peptide-calculator",
   },

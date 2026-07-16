@@ -248,3 +248,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Shiki dual-theme: light theme is baked inline (defaultColor: "light"),
+   swap to the --shiki-dark CSS variables when the .dark class is active. */
+.dark .astro-code,
+.dark .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
