@@ -9,11 +9,12 @@ interface Props {
 	description: string;
 	image?: string;
 	schema?: object;
+	noindex?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image, schema } = Astro.props;
+const { title, description, image, schema, noindex = false } = Astro.props;
 const finalTitle = title || SITE_METADATA.title.default;
 const finalDescription = description || SITE_METADATA.description;
 const finalImage = image || SITE_METADATA.openGraph.images[0].url;
@@ -31,7 +32,7 @@ const imageURL = new URL(finalImage, Astro.url);
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Hubot+Sans:wght@400;500;600;700&family=Mona+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<meta name="robots" content={`${SITE_METADATA.robots.index ? 'index' : 'noindex'}, ${SITE_METADATA.robots.follow ? 'follow' : 'nofollow'}`} />
+<meta name="robots" content={noindex ? 'noindex, nofollow' : `${SITE_METADATA.robots.index ? 'index' : 'noindex'}, ${SITE_METADATA.robots.follow ? 'follow' : 'nofollow'}`} />
 <meta name="keywords" content={SITE_METADATA.keywords.join(', ')} />
 <meta name="author" content={SITE_METADATA.authors[0].name} />
 <meta name="creator" content={SITE_METADATA.creator} />

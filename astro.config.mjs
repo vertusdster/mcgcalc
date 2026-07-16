@@ -12,7 +12,13 @@ export default defineConfig({
   // Update this 'site' URL to your actual production domain (e.g., "https://mcgcalc.com" or "https://<your-project>.vercel.app") 
   // Otherwise, the generated sitemap for SEO will generate links with example.com!
   site: "https://mcgcalc.com",
-  integrations: [mdx(), sitemap(), react()],
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: (page) => !page.includes("/saved/"),
+    }),
+    react(),
+  ],
   output: "static",
 
   redirects: {

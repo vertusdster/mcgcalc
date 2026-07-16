@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /saved/
+
+Sitemap: https://mcgcalc.com/sitemap-index.xml
