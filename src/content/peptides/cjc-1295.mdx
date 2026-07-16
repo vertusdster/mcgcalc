@@ -1,0 +1,190 @@
+---
+name: CJC-1295
+description: CJC-1295 reconstitution calculator and dosage guide. Compute exact syringe units for any vial size, BAC water volume, and target dose (DAC & no-DAC).
+category: Growth Hormone
+defaultDose: 100
+defaultVialSize: 2
+molecularWeight: "3647.20 g/mol"
+molecularFormula: "C165H269N47O46"
+casNumber: "446262-90-4"
+pubchemCid: "91971820"
+sequence: "Modified GRF(1-29): Tyr-D-Ala-Asp-Ala-Ile-Phe-Thr-Gln-Ser-Tyr-Arg-Lys-Val-Leu-Ala-Gln-Leu-Ser-Ala-Arg-Lys-Leu-Leu-Gln-Asp-Ile-Leu-Ser-Arg + C-terminal Lys-DAC linker"
+synonyms:
+  - "DAC:GRF"
+  - "CJC 1295"
+  - "Modified GRF 1-29 (no-DAC form)"
+  - "Mod-GRF 1-29"
+keywords:
+  - "CJC-1295 reconstitution"
+  - "CJC-1295 dosage calculator"
+  - "CJC-1295 how many units"
+  - "CJC-1295 DAC vs no DAC"
+  - "CJC-1295 BAC water"
+  - "GHRH analog"
+  - "growth hormone releasing hormone"
+  - "peptide calculator"
+reviewedBy: "Editorial Team"
+pubDate: 2024-01-01
+updatedDate: 2026-07-16
+---
+
+import { Disclaimer } from '../../components/sections/peptide-disclaimer.tsx';
+
+<Disclaimer type="strict" />
+
+## What Is CJC-1295?
+
+CJC-1295 is a synthetic analog of **growth-hormone-releasing hormone (GHRH)**, based on the first 29 amino acids of native GHRH (the biologically active GRF 1-29 fragment). It carries four stabilizing substitutions — D-Ala², Gln⁸, Ala¹⁵, and Leu²⁷ — that make it resistant to enzymatic cleavage by DPP-IV and trypsin-like proteases, extending its activity relative to the native hormone. As a GHRH-pathway agent it stimulates the pituitary to release growth hormone (GH), and it is mechanistically complementary to ghrelin-receptor agonists like [Ipamorelin](/peptides/ipamorelin), with which it is frequently co-studied.
+
+**Two distinct forms are sold under the same name**, and confusing them is the single most common CJC-1295 error:
+
+- **CJC-1295 with DAC** (Drug Affinity Complex) adds a C-terminal lysine bearing a maleimidopropionic-acid linker. As [Timms et al. (2019)](https://pubmed.ncbi.nlm.nih.gov/30489688/) describe, this reactive group covalently binds free thiols on plasma albumin _in vivo_, producing a multi-day half-life. This is the form referenced by the PubChem identity on this page (CID 91971820, ~3647 g/mol).
+- **CJC-1295 without DAC** — properly called **Modified GRF 1-29** or "Mod-GRF 1-29" — lacks the albumin-binding linker, giving it a short half-life (~30 minutes) that requires frequent dosing. Its commonly cited mass (~3368 g/mol) is lower because it omits the DAC group. PubChem does not return a distinct verified CID for this form, so its chemistry should be treated as supplier-reported.
+
+## Research Context
+
+> **Evidence Level:** The following summarizes findings from peer-reviewed
+> preclinical studies and one pivotal early-phase human study. CJC-1295 is not
+> an approved drug. Findings should not be interpreted as clinical
+> recommendations.
+
+### Overview
+
+The CJC-1295 literature is small and dominated by pharmacology rather than clinical outcomes. It clusters around four themes: the albumin-binding half-life-extension mechanism unique to the DAC form, the resulting effects on GH and IGF-1 secretion, a single pivotal human pharmacokinetic study, and a body of anti-doping and regulatory work reflecting its unregulated distribution. The pharmacokinetic mechanism is the best-characterized aspect; efficacy data beyond hormone-level changes are limited.
+
+### DAC and Albumin-Binding Half-Life Extension
+
+The defining innovation of CJC-1295 with DAC is covalent albumin binding. [Timms et al. (2019)](https://pubmed.ncbi.nlm.nih.gov/30489688/) characterized the peptide as a 30-residue GRF analog bearing a reactive maleimidopropionic-acid group that binds free thiols on plasma proteins, and follow-up work by [Timms et al. (2020)](https://pubmed.ncbi.nlm.nih.gov/30938069/) confirmed the C-terminal maleimido group forms a stable conjugate with serum albumin, enabling GH stimulation for more than six days after a single dose. This bioconjugation strategy is what separates the DAC form from short-acting GHRH analogs like [Sermorelin](/peptides/sermorelin) and the no-DAC Mod-GRF 1-29.
+
+### Human Pharmacokinetics and GH/IGF-1 Response
+
+The pivotal human dataset is [Teichman et al. (2006)](https://pubmed.ncbi.nlm.nih.gov/16352683/) in the _Journal of Clinical Endocrinology & Metabolism_. In healthy adults, single subcutaneous doses of CJC-1295 produced dose-dependent, sustained increases in GH and IGF-1, with mean IGF-1 elevations maintained for six or more days, and the peptide was reported as well tolerated in that study. This is the strongest human evidence for the compound and the empirical basis for the "once- or twice-weekly" dosing associated with the DAC form.
+
+### Preclinical Efficacy and Mechanism
+
+Animal work established proof of mechanism before the human study. [Alba et al. (2006)](https://pubmed.ncbi.nlm.nih.gov/16822960/) showed that once-daily CJC-1295 normalized growth in GHRH-knockout mice by covalently binding endogenous albumin to extend its action, whereas a short-acting GHRH analog failed to do so. This model directly demonstrated that the albumin-binding strategy translates into sustained biological activity, connecting the bioconjugation chemistry to a functional GH/IGF-1 outcome.
+
+### Detection, Safety, and Regulatory Context
+
+A substantial share of the CJC-1295 literature concerns its unregulated use rather than therapeutic development. [Henninge et al. (2011)](https://pubmed.ncbi.nlm.nih.gov/21204297/) identified CJC-1295 in an illicitly manufactured preparation, evidence it reached distribution before completing clinical trials, and [Van Hout and Hearne (2016)](https://pubmed.ncbi.nlm.nih.gov/26771670/) documented online folk-pharmacology communities self-administering it for muscle gain and fat loss. Recent reviews including [Coutinho et al. (2026)](https://pubmed.ncbi.nlm.nih.gov/41880199/) and [Mendias et al. (2026)](https://pubmed.ncbi.nlm.nih.gov/41966639/) classify CJC-1295 among GHRH-analog enhancement peptides sold outside regulatory oversight; it is prohibited in sport by anti-doping authorities.
+
+### Methodological Observations
+
+The evidence base rests on one human PK study (Teichman 2006), a knockout-mouse efficacy model (Alba 2006), and analytical/detection chemistry papers. There are no controlled trials of body-composition, strength, or long-term metabolic outcomes. Much of the recent literature is anti-doping methodology rather than clinical pharmacology, reflecting the compound's status as an unapproved but widely distributed peptide.
+
+### Research Gaps and Limitations
+
+- **Evidence level gap** — Beyond the single Teichman (2006) PK study, there are no randomized controlled trials of clinical endpoints in humans.
+- **Form-confusion gap** — The DAC and no-DAC forms differ in half-life by orders of magnitude, yet are sold interchangeably; dosing data from one form cannot be applied to the other.
+- **Translational gap** — Sustained IGF-1 elevation is a biomarker, not a validated outcome; long-term consequences of chronic GH-axis stimulation are uncharacterized in humans.
+- **Safety gap** — No long-term human safety data exist; theoretical concerns include insulin resistance, edema, and IGF-1-related risks.
+- **Chemistry gap** — The no-DAC (Mod-GRF 1-29) form lacks a distinct PubChem-verified identity; supplier-reported mass and formula should be independently confirmed.
+
+## Reconstitution Mathematics
+
+Accurate reconstitution is critical for consistent dosing in any laboratory protocol. The interactive calculator on this page handles all the arithmetic — but understanding the underlying formula is useful for verification:
+
+```
+Concentration (mg/mL) = Vial Size (mg) ÷ BAC Water Added (mL)
+Dose Volume (mL)      = Desired Dose (mg) ÷ Concentration (mg/mL)
+Syringe Units (IU)    = Dose Volume (mL) × 100   [for U-100 insulin syringe]
+```
+
+**Common laboratory reconstitution examples:**
+
+| Vial Size | BAC Water | Concentration | 100 mcg dose |
+|-----------|-----------|---------------|--------------|
+| 2 mg      | 1 mL      | 2.0 mg/mL     | **5 IU**     |
+| 2 mg      | 2 mL      | 1.0 mg/mL     | **10 IU**    |
+| 5 mg      | 2 mL      | 2.5 mg/mL     | **4 IU**     |
+
+Use the **interactive calculator** on this page for any custom vial size, water volume, or dose.
+
+## Common Research Dosing Parameters
+
+> Based on published preclinical literature and the Teichman (2006) human PK study. These are not clinical recommendations.
+
+Dosing differs fundamentally between the two forms because of the half-life gap. The following table reflects patterns reported or modeled in the literature:
+
+| Form | Example Dose | Frequency | Route | Basis |
+|------|--------------|-----------|-------|-------|
+| No-DAC (Mod-GRF 1-29) | 100 µg | 1–3× daily | SC | Short ~30-min half-life; frequent dosing |
+| With DAC (low) | 1000 µg | 1× weekly | SC | Multi-day IGF-1 elevation ([Teichman 2006](https://pubmed.ncbi.nlm.nih.gov/16352683/)) |
+| With DAC (standard) | 2000 µg | 1–2× weekly | SC | Sustained-release range from PK data |
+
+**Key observations from the literature:**
+- The DAC form's multi-day half-life ([Timms et al., 2020](https://pubmed.ncbi.nlm.nih.gov/30938069/)) is why it is dosed weekly, not daily
+- The no-DAC form is dosed like other short-acting secretagogues — frequently, often alongside a GHRP such as [Ipamorelin](/peptides/ipamorelin)
+- Human dosing data come from a single early-phase study; no dose-finding trial for physique or performance endpoints exists
+
+### Graduated Dosing Design from Published Studies
+
+> The following graduated design reflects escalation patterns discussed in the
+> GHRH-analog literature for the DAC form. It is not a clinical protocol.
+
+**Reconstitution assumption:** 2 mg vial + 1 mL BAC water = 2 mg/mL concentration
+
+| Phase | Duration | Example Dose* | Injection Volume | Syringe Units (IU) | Frequency | Route |
+|-------|----------|--------------|------------------|--------------------|-----------|-------|
+| Acclimation | Week 1–2 | 500 µg | 0.25 mL | **25 IU** | 1× weekly | SC |
+| Standard | Week 3–6 | 1000 µg | 0.50 mL | **50 IU** | 1× weekly | SC |
+| Extended | Week 7–12 | 2000 µg | 1.00 mL | **100 IU** | 1–2× weekly | SC |
+
+*Example doses calculated for illustrative purposes based on common vial configurations.
+
+**Dose range sources:**
+- Weekly DAC dosing basis from the sustained IGF-1 response in [Teichman et al. (2006)](https://pubmed.ncbi.nlm.nih.gov/16352683/)
+- Mechanistic rationale for multi-day activity from [Timms et al. (2019)](https://pubmed.ncbi.nlm.nih.gov/30489688/) and [Timms et al. (2020)](https://pubmed.ncbi.nlm.nih.gov/30938069/)
+- Proof of sustained action in vivo from [Alba et al. (2006)](https://pubmed.ncbi.nlm.nih.gov/16822960/)
+
+**Important notes:**
+- These parameters apply to the **DAC** form; no-DAC (Mod-GRF 1-29) requires frequent daily dosing instead
+- A 2000 µg dose at 2 mg/mL fills a full 1 mL (100 IU) — verify this against your syringe capacity
+- IU values assume a U-100 insulin syringe (1 IU = 0.01 mL)
+
+## Stability & Storage
+
+| State | Temperature | Duration |
+|-------|-------------|----------|
+| Lyophilized (dry powder) | −20 °C (freezer) | 24+ months |
+| Reconstituted in BAC water | 2–8 °C (refrigerator) | Up to 28 days |
+| Reconstituted, room temp | 20–25 °C | 48 hours maximum |
+
+Bacteriostatic water (BAC water, 0.9% benzyl alcohol) is the standard diluent for reconstitution because benzyl alcohol acts as a preservative, extending the usable life of the reconstituted solution.
+
+**Reconstitution procedure (standard laboratory protocol):**
+
+1. Allow vial to reach room temperature (~15 minutes)
+2. Wipe septum with 70% isopropyl alcohol
+3. Draw desired BAC water volume into a sterile syringe
+4. Insert needle at a 45° angle and inject **slowly along the vial wall** — do not inject directly onto the lyophilized cake
+5. Gently swirl (do not shake or vortex) until fully dissolved
+6. Label vial with date, concentration, and store per table above
+
+## Frequently Asked Questions
+
+**How many units do I draw for 100 mcg of CJC-1295?**
+
+It depends on your reconstitution ratio. With a 2 mg vial in 1 mL BAC water (2 mg/mL concentration), a 100 mcg dose = **5 units** on a U-100 insulin syringe. With 2 mL BAC water instead, the same dose = **10 units**. For higher weekly DAC doses (e.g., 1000 mcg), the units scale proportionally — use the calculator above for your specific setup.
+
+**What is the difference between CJC-1295 with DAC and without DAC?**
+
+The DAC (Drug Affinity Complex) form has a C-terminal linker that binds albumin, giving it a multi-day half-life so it is dosed weekly. The no-DAC form (**Modified GRF 1-29**) lacks that linker, has a ~30-minute half-life, and is dosed multiple times daily. They share the same GRF 1-29 backbone but are not interchangeable in dosing.
+
+**Can CJC-1295 be combined with Ipamorelin?**
+
+Yes — this is one of the most commonly studied secretagogue pairings. [CJC-1295](/peptides/cjc-1295) acts on the GHRH receptor while [Ipamorelin](/peptides/ipamorelin) acts on the ghrelin receptor, so the two pathways are complementary. Use the [multi-peptide mode](/peptide-calculator) to compute combined injection volumes.
+
+**Why does my CJC-1295 vial list a different molecular weight?**
+
+Because of the two forms. The DAC form is ~3647 g/mol (it includes the albumin-binding group), while the no-DAC Mod-GRF 1-29 is ~3368 g/mol. Check whether your product is labeled "DAC" or "no-DAC / Mod-GRF" — the reconstitution math is identical, but the dosing schedule is not.
+
+**How long does reconstituted CJC-1295 last in the refrigerator?**
+
+Reconstituted in bacteriostatic water and stored at 2–8 °C, CJC-1295 remains stable for up to 28 days. Always use a fresh alcohol swab on the vial septum before each draw. If the solution becomes cloudy or discolored, discard it.
+
+**Is CJC-1295 approved or legal to use?**
+
+No. CJC-1295 is not an approved drug; the only substantial human data come from a single early-phase pharmacokinetic study ([Teichman et al., 2006](https://pubmed.ncbi.nlm.nih.gov/16352683/)). It is sold as a research chemical, has appeared in illicitly manufactured products, and is prohibited in competitive sport.
+
+<Disclaimer type="brief" />
