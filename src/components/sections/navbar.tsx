@@ -15,14 +15,10 @@ import {
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "../elements/theme-toggle";
 
-const DROPDOWN_VALUE = "calculators";
-
 const Navbar = ({ currentPage }: { currentPage: string }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [desktopValue, setDesktopValue] = useState("");
   const [hasSaved, setHasSaved] = useState(false);
-  const hoverOpenRef = useRef(false);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = currentPage;
 
@@ -126,38 +122,13 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
           {/* Desktop Navigation */}
           <NavigationMenu
             className="hidden items-center gap-8 lg:flex"
-            value={desktopValue}
-            onValueChange={setDesktopValue}
-            delayDuration={0}
+            delayDuration={200}
           >
             <NavigationMenuList>
               {ITEMS.map((link) =>
                 link.dropdownItems ? (
-                  <NavigationMenuItem
-                    key={link.label}
-                    value={DROPDOWN_VALUE}
-                    className="group"
-                    onMouseEnter={() => {
-                      hoverOpenRef.current = true;
-                      setDesktopValue(DROPDOWN_VALUE);
-                    }}
-                    onMouseLeave={() => {
-                      hoverOpenRef.current = false;
-                      setDesktopValue("");
-                    }}
-                  >
-                    <NavigationMenuTrigger
-                      className="bg-transparent font-normal lg:text-base"
-                      onPointerDown={(e) => {
-                        if (hoverOpenRef.current) {
-                          e.preventDefault();
-                          return;
-                        }
-                        setDesktopValue(
-                          desktopValue === DROPDOWN_VALUE ? "" : DROPDOWN_VALUE,
-                        );
-                      }}
-                    >
+                  <NavigationMenuItem key={link.label}>
+                    <NavigationMenuTrigger className="bg-transparent font-normal lg:text-base">
                       {link.label}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="flex gap-6 p-6">
