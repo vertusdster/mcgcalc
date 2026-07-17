@@ -18,7 +18,7 @@ export function Disclaimer({ type = "strict" }: DisclaimerProps) {
   return (
     <div className="my-6 rounded-xl border-2 border-amber-400/60 bg-amber-50/80 px-5 py-4 dark:border-amber-500/40 dark:bg-amber-950/20">
       <div className="flex items-start gap-3">
-        <ShieldAlert className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-400" />
+        <ShieldAlert className="mt-0.5 size-5 shrink-0 translate-y-0.5 text-amber-600 dark:text-amber-400" />
         <div className="text-sm leading-relaxed text-amber-900 dark:text-amber-200">
           <p className="font-bold uppercase tracking-wide">
             RESEARCH CHEMICAL ONLY — FOR IN VITRO / LABORATORY USE
