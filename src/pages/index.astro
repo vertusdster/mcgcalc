@@ -66,7 +66,7 @@ const schema = {
       <div class="mt-8 flex items-center justify-center gap-3">
         <a
           href="/peptide-calculator"
-          class="rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white px-6 py-3 text-sm font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
+          class="rounded-xl btn-primary-gradient px-6 py-3 text-sm font-bold"
         >
           Open Calculator
         </a>
@@ -88,14 +88,14 @@ const schema = {
         {calculators.map((calc) => (
           <a
             href={calc.href}
-            class="group relative rounded-2xl border bg-card p-6 shadow-sm transition-all hover:border-[#3b82f6]/40 dark:hover:border-[#60a5fa]/30 hover:shadow-md"
+            class="group relative rounded-2xl border bg-card p-6 shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
           >
             {calc.badge && (
-              <span class="absolute top-4 right-4 rounded-full bg-[#1d4ed8]/10 text-[#1d4ed8] dark:text-[#60a5fa] px-2.5 py-0.5 text-xs font-semibold">
+              <span class="absolute top-4 right-4 rounded-full bg-primary/10 text-primary px-2.5 py-0.5 text-xs font-semibold">
                 {calc.badge}
               </span>
             )}
-            <h3 class="font-semibold text-lg group-hover:text-[#1d4ed8] dark:group-hover:text-[#60a5fa] transition-colors">
+            <h3 class="font-semibold text-lg group-hover:text-primary transition-colors">
               {calc.title}
             </h3>
             <p class="text-muted-foreground text-sm mt-2 leading-relaxed">
@@ -116,7 +116,7 @@ const schema = {
         {categories.map((cat) => (
           <a
             href={`/peptides?category=${encodeURIComponent(cat)}`}
-            class="rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:border-[#3b82f6]/40"
+            class="rounded-full border px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:border-primary/40"
           >
             {cat}
             <span class="text-muted-foreground ml-1.5">
@@ -126,7 +126,7 @@ const schema = {
         ))}
       </div>
       <div class="mt-8 text-center">
-        <a href="/peptides" class="text-sm font-semibold text-[#1d4ed8] dark:text-[#60a5fa] hover:underline">
+        <a href="/peptides" class="text-sm font-semibold text-primary hover:underline">
           View all peptides &rarr;
         </a>
       </div>

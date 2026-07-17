@@ -78,7 +78,7 @@ export default function Logos() {
         <div className="from-background bg-linear-to-l absolute right-0 z-20 h-full w-10 to-transparent" />
 
         {/* First marquee group */}
-        <div className="animate-marquee flex shrink-0 items-center gap-12">
+        <div className="animate-marquee motion-safe:animate-marquee flex shrink-0 items-center gap-12 motion-reduce:animate-none">
           {ITEMS.map((logo, index) => (
             <a href={logo.href} target="_blank" key={index} className="p-6">
               <img
@@ -92,7 +92,7 @@ export default function Logos() {
           ))}
         </div>
         {/* Second marquee group */}
-        <div className="animate-marquee flex shrink-0 items-center gap-12">
+        <div className="animate-marquee motion-safe:animate-marquee flex shrink-0 items-center gap-12 motion-reduce:animate-none">
           {ITEMS.map((logo, index) => (
             <a href={logo.href} target="_blank" key={index} className="p-6">
               <img

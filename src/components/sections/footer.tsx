@@ -33,13 +33,13 @@ const socialLinks = [
 
 export default function Footer() {
   return (
-    <footer className="pt-16 md:pt-28 lg:pt-32">
+    <footer className="border-border border-t pt-16 md:pt-28 lg:pt-32">
       <div className="container">
         {/* Navigation Section */}
-        <nav className="flex max-w-5xl flex-wrap justify-between gap-x-32 gap-y-20 border-b pb-14 lg:pb-20">
+        <nav className="border-border flex max-w-5xl flex-wrap justify-between gap-x-32 gap-y-20 border-b pb-14 lg:pb-20">
           {navigation.map((section) => (
             <div key={section.title}>
-              <h2 className="font-inter mb-6 font-medium lg:text-lg">
+              <h2 className="font-inter text-foreground mb-6 font-medium lg:text-lg">
                 {section.title}
               </h2>
               <ul className="space-y-6">
@@ -47,7 +47,7 @@ export default function Footer() {
                   <li key={link.name}>
                     <a
                       href={link.href}
-                      className="hover:text-muted-foreground lg:text-lg"
+                      className="text-foreground hover:text-muted-foreground transition-colors lg:text-lg"
                     >
                       {link.name}
                     </a>
@@ -62,8 +62,8 @@ export default function Footer() {
         <div className="max-w-5xl py-8">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-muted-foreground text-sm font-medium">
-              © {new Date().getFullYear()} mcgcalc.com — For research
-              purposes only.
+              © {new Date().getFullYear()} mcgcalc.com — For research purposes
+              only.
             </p>
             <div className="flex items-center gap-6">
               {socialLinks.map((link) => (

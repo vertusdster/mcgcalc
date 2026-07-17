@@ -31,7 +31,10 @@ type Unit = (typeof UNITS)[number];
 
 // Conversion factors to a common base (microgram-equivalent for mass, microliter for volume)
 // For water/solutions: 1 ml = 1000 mg = 1000 uL = 1,000,000 mcg
-function convertValue(value: number, from: Unit): { ml: number; mg: number; uL: number; mcg: number } {
+function convertValue(
+  value: number,
+  from: Unit,
+): { ml: number; mg: number; uL: number; mcg: number } {
   let baseMl: number;
 
   switch (from) {
@@ -87,12 +90,12 @@ export function UnitConverter() {
   };
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40">
+    <div className="selection:bg-primary/30 dark:selection:bg-primary/40 mx-auto w-full max-w-xl">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-6 p-6">
           {/* Input */}
           <div className="space-y-3">
-            <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
+            <div className="text-muted-foreground flex items-center gap-2">
               <ArrowRightLeft className="h-5 w-5" />
               <span className="text-sm font-bold">
                 Enter the value here to convert
@@ -100,10 +103,8 @@ export function UnitConverter() {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-white">
-                Value
-              </span>
-              <div className="flex w-3/5 gap-2">
+              <span className="text-foreground text-xl font-bold">Value</span>
+              <div className="flex min-w-0 flex-1 gap-2 sm:max-w-[60%]">
                 <div className="relative flex-1">
                   <input
                     type="text"
@@ -115,13 +116,13 @@ export function UnitConverter() {
                         setInputValue(v);
                       }
                     }}
-                    className="h-12 w-full rounded-l-xl border border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
+                    className="border-border bg-muted text-foreground selection:bg-primary/30 dark:selection:bg-primary/40 focus:border-primary focus:bg-background h-12 w-full rounded-l-xl border text-center text-lg font-bold outline-none"
                   />
                 </div>
                 <select
                   value={inputUnit}
                   onChange={(e) => setInputUnit(e.target.value as Unit)}
-                  className="h-12 w-24 rounded-r-xl border border-slate-200 dark:border-slate-800 bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white px-3 text-center text-base font-bold text-white dark:text-slate-900 outline-none"
+                  className="border-border btn-primary-gradient h-12 w-24 rounded-r-xl border px-3 text-center text-base font-bold outline-none"
                 >
                   {UNITS.map((u) => (
                     <option key={u} value={u}>
@@ -136,13 +137,13 @@ export function UnitConverter() {
             <div className="flex gap-3">
               <button
                 onClick={handleConvert}
-                className="h-10 rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white px-6 text-sm font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
+                className="btn-primary-gradient h-10 rounded-xl px-6 text-sm font-bold"
               >
                 Convert
               </button>
               <button
                 onClick={handleClear}
-                className="h-10 rounded-xl bg-slate-100 dark:bg-slate-800/80 px-6 text-sm font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-slate-200 dark:hover:bg-slate-700"
+                className="bg-muted text-muted-foreground hover:bg-border h-10 rounded-xl px-6 text-sm font-bold transition-colors"
               >
                 Clear
               </button>
@@ -155,14 +156,14 @@ export function UnitConverter() {
               <div className="space-y-4">
                 {/* Milligrams */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
+                  <span className="text-primary text-lg font-bold">
                     Milligrams(mg)
                   </span>
-                  <div className="flex w-3/5 items-center">
-                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-white">
+                  <div className="flex min-w-0 flex-1 items-center sm:max-w-[60%]">
+                    <div className="border-border bg-muted text-foreground flex-1 rounded-l-xl border border-r-0 px-4 py-3 text-center text-lg font-bold">
                       {formatNumber(results.mg)}
                     </div>
-                    <div className="rounded-r-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 px-4 py-3 text-sm font-bold text-slate-500 dark:text-slate-400">
+                    <div className="border-border bg-muted text-muted-foreground rounded-r-xl border px-4 py-3 text-sm font-bold">
                       mg
                     </div>
                   </div>
@@ -170,14 +171,14 @@ export function UnitConverter() {
 
                 {/* Microlitres */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
+                  <span className="text-primary text-lg font-bold">
                     Microlitres(uL)
                   </span>
-                  <div className="flex w-3/5 items-center">
-                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-white">
+                  <div className="flex min-w-0 flex-1 items-center sm:max-w-[60%]">
+                    <div className="border-border bg-muted text-foreground flex-1 rounded-l-xl border border-r-0 px-4 py-3 text-center text-lg font-bold">
                       {formatNumber(results.uL)}
                     </div>
-                    <div className="rounded-r-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 px-4 py-3 text-sm font-bold text-slate-500 dark:text-slate-400">
+                    <div className="border-border bg-muted text-muted-foreground rounded-r-xl border px-4 py-3 text-sm font-bold">
                       uL
                     </div>
                   </div>
@@ -185,23 +186,23 @@ export function UnitConverter() {
 
                 {/* Micrograms */}
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
+                  <span className="text-primary text-lg font-bold">
                     Micrograms(mcg)
                   </span>
-                  <div className="flex w-3/5 items-center">
-                    <div className="flex-1 rounded-l-xl border border-r-0 border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 py-3 text-center text-lg font-bold text-slate-800 dark:text-white">
+                  <div className="flex min-w-0 flex-1 items-center sm:max-w-[60%]">
+                    <div className="border-border bg-muted text-foreground flex-1 rounded-l-xl border border-r-0 px-4 py-3 text-center text-lg font-bold">
                       {formatNumber(results.mcg)}
                     </div>
-                    <div className="rounded-r-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-800/80 px-4 py-3 text-sm font-bold text-slate-500 dark:text-slate-400">
+                    <div className="border-border bg-muted text-muted-foreground rounded-r-xl border px-4 py-3 text-sm font-bold">
                       mcg
                     </div>
                   </div>
                 </div>
               </div>
             ) : (
-              <div className="rounded-2xl border border-slate-200 dark:border-slate-800/50 bg-gradient-to-br from-slate-50 dark:from-slate-900 to-slate-100 dark:to-slate-800 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700/50">
-                  <ArrowRightLeft className="h-8 w-8 text-slate-400 dark:text-slate-500" />
+              <div className="border-border from-muted to-muted/60 rounded-2xl border bg-gradient-to-br p-8 text-center">
+                <div className="bg-muted mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                  <ArrowRightLeft className="text-muted-foreground h-8 w-8" />
                 </div>
                 <p className="text-muted-foreground text-sm">
                   Enter a value to convert

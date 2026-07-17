@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef, useTransition } from "react";
-import { HelpCircle, Beaker, Droplets, SprayCan, FlaskConical } from "lucide-react";
+import { HelpCircle, Beaker, Droplets, FlaskConical } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -81,7 +81,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20 flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl text-xl font-bold transition-colors"
       >
         −
       </button>
@@ -103,10 +103,10 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
+          className="border-border bg-muted text-foreground selection:bg-primary/30 dark:selection:bg-primary/40 focus:border-primary focus:bg-background h-12 w-full border-y text-center text-lg font-bold outline-none"
         />
         {suffix && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500 dark:text-slate-400">
+          <span className="text-muted-foreground pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold">
             {suffix}
           </span>
         )}
@@ -115,7 +115,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20 flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl text-xl font-bold transition-colors"
       >
         +
       </button>
@@ -204,24 +204,24 @@ export function IntranasalCalculator() {
   }, [helperWaterMl]);
 
   return (
-    <div className="mx-auto w-full max-w-xl space-y-6 selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40">
+    <div className="selection:bg-primary/30 dark:selection:bg-primary/40 mx-auto w-full max-w-xl space-y-6">
       {/* === Vial Version === */}
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
-          <h2 className="text-2xl font-black text-slate-800 dark:text-white">
-            Vial Version
-          </h2>
+          <h2 className="text-foreground text-2xl font-black">Vial Version</h2>
 
           {/* Mass in Vial */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Mass in Vial{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(mg)</span>{" "}
+                <span className="text-muted-foreground text-sm font-normal">
+                  (mg)
+                </span>{" "}
                 <HelpTooltip content="Total mass of peptide in the vial in milligrams." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <NumberInput
                 value={massInVial}
                 stepMode="small"
@@ -236,13 +236,15 @@ export function IntranasalCalculator() {
           {/* Diluent Volume */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Diluent Volume{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>{" "}
+                <span className="text-muted-foreground text-sm font-normal">
+                  (ml)
+                </span>{" "}
                 <HelpTooltip content="Volume of bacteriostatic water or saline added to the vial." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <NumberInput
                 value={diluentVolume}
                 stepMode="small"
@@ -257,13 +259,15 @@ export function IntranasalCalculator() {
           {/* Volume/Spray */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Volume/Spray{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>{" "}
+                <span className="text-muted-foreground text-sm font-normal">
+                  (ml)
+                </span>{" "}
                 <HelpTooltip content="Volume per spray pump actuation. Standard nasal sprayers deliver ~0.1 ml per spray." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <NumberInput
                 value={volumePerSpray}
                 stepMode="small"
@@ -278,12 +282,12 @@ export function IntranasalCalculator() {
           {/* Desired Dose */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Desired Dose{" "}
                 <HelpTooltip content="The dose you want to administer per session." />
               </span>
             </div>
-            <div className="flex w-3/5 gap-2">
+            <div className="flex min-w-0 flex-1 gap-2 sm:max-w-[60%]">
               <NumberInput
                 value={desiredDose}
                 stepMode="small"
@@ -291,7 +295,11 @@ export function IntranasalCalculator() {
                 onChange={(val) => setDesiredDose(val)}
                 className="flex-1"
               />
-              <div className="flex shrink-0" role="group" aria-label="Dose unit">
+              <div
+                className="flex shrink-0"
+                role="group"
+                aria-label="Dose unit"
+              >
                 {(["mg", "mcg"] as const).map((unit) => (
                   <button
                     key={unit}
@@ -300,8 +308,8 @@ export function IntranasalCalculator() {
                     className={cn(
                       "h-12 px-4 text-sm font-bold transition-all duration-200 first:rounded-l-xl last:rounded-r-xl",
                       doseUnit === unit
-                        ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white text-white dark:text-slate-900 shadow-sm"
-                        : "bg-slate-100 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700",
+                        ? "btn-primary-gradient shadow-sm"
+                        : "bg-muted text-muted-foreground hover:bg-border",
                     )}
                   >
                     {unit}
@@ -315,48 +323,48 @@ export function IntranasalCalculator() {
           <div className="border-border/50 border-t pt-4">
             {vialResult ? (
               <div className="space-y-3">
-                <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4">
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+                <div className="bg-muted rounded-xl p-4">
+                  <p className="text-foreground2 text-sm font-bold">
                     Peptide per Spray:{" "}
-                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
-                      {vialResult.peptidePerSprayMg} mg ({vialResult.peptidePerSprayMcg} mcg)
+                    <strong className="text-primary">
+                      {vialResult.peptidePerSprayMg} mg (
+                      {vialResult.peptidePerSprayMcg} mcg)
                     </strong>
                   </p>
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+                  <p className="text-foreground2 text-sm font-bold">
                     Sprays Needed:{" "}
-                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
+                    <strong className="text-primary">
                       {vialResult.spraysNeededCeil}
                     </strong>{" "}
-                    <span className="text-slate-400 dark:text-slate-500">(≈ {vialResult.spraysNeeded})</span>
+                    <span className="text-muted-foreground">
+                      (≈ {vialResult.spraysNeeded})
+                    </span>
                   </p>
-                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+                  <p className="text-foreground2 text-sm font-bold">
                     Approx. Total Sprays Available:{" "}
-                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
+                    <strong className="text-primary">
                       {vialResult.totalSpraysAvailable}
                     </strong>
                   </p>
                 </div>
-                <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#3b82f6]/10 p-4">
-                  <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300 dark:text-slate-300">
-                    Given you have{" "}
-                    <strong>{vialResult.diluentStr}ml</strong> of deionized water
-                    with <strong>{vialResult.massStr}mg</strong> of your peptide,
-                    and one spray is typically{" "}
+                <div className="from-primary/10 to-secondary/10 rounded-xl bg-gradient-to-r p-4">
+                  <p className="text-foreground2 text-sm leading-relaxed">
+                    Given you have <strong>{vialResult.diluentStr}ml</strong> of
+                    deionized water with <strong>{vialResult.massStr}mg</strong>{" "}
+                    of your peptide, and one spray is typically{" "}
                     <strong>{vialResult.sprayVolStr}ml</strong>, each spray will
-                    contain{" "}
-                    <strong>{vialResult.peptidePerSprayMg}mg</strong> of your
-                    peptide. For your requested dose of{" "}
+                    contain <strong>{vialResult.peptidePerSprayMg}mg</strong> of
+                    your peptide. For your requested dose of{" "}
                     <strong>
                       {desiredDose} {doseUnit}
                     </strong>
-                    , take{" "}
-                    <strong>{vialResult.spraysNeededCeil} sprays</strong> to
-                    achieve this.
+                    , take <strong>{vialResult.spraysNeededCeil} sprays</strong>{" "}
+                    to achieve this.
                   </p>
                 </div>
               </div>
             ) : (
-              <p className="text-center text-sm text-slate-400 dark:text-slate-500">
+              <p className="text-muted-foreground text-center text-sm">
                 Enter valid values above to see results.
               </p>
             )}
@@ -367,19 +375,21 @@ export function IntranasalCalculator() {
       {/* === Powder Version === */}
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
-          <h2 className="text-2xl font-black text-slate-800 dark:text-white">
+          <h2 className="text-foreground text-2xl font-black">
             Powder Version
           </h2>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Desired Dose{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(mcg)</span>{" "}
+                <span className="text-muted-foreground text-sm font-normal">
+                  (mcg)
+                </span>{" "}
                 <HelpTooltip content="The desired dose per administration in micrograms." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <NumberInput
                 value={powderDose}
                 stepMode="large"
@@ -393,12 +403,12 @@ export function IntranasalCalculator() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Number of Doses{" "}
                 <HelpTooltip content="Total number of doses you want to prepare." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <NumberInput
                 value={numberOfDoses}
                 stepMode="large"
@@ -411,13 +421,15 @@ export function IntranasalCalculator() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Volume/Spray{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(ml)</span>{" "}
+                <span className="text-muted-foreground text-sm font-normal">
+                  (ml)
+                </span>{" "}
                 <HelpTooltip content="Volume of each spray pump actuation in ml." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <NumberInput
                 value={powderSprayVol}
                 stepMode="small"
@@ -431,12 +443,12 @@ export function IntranasalCalculator() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 Sprays per Dose{" "}
                 <HelpTooltip content="Number of sprays needed per single dose." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <NumberInput
                 value={spraysPerDose}
                 stepMode="small"
@@ -450,25 +462,25 @@ export function IntranasalCalculator() {
           {/* Powder Result */}
           <div className="border-border/50 border-t pt-4">
             {powderResult ? (
-              <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4">
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+              <div className="bg-muted rounded-xl p-4">
+                <p className="text-foreground2 text-sm font-bold">
                   Powder Required:{" "}
-                  <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
+                  <strong className="text-primary">
                     {powderResult.powderG} g
                   </strong>{" "}
-                  <span className="text-slate-400 dark:text-slate-500">
+                  <span className="text-muted-foreground">
                     ({powderResult.powderMg} mg)
                   </span>
                 </p>
-                <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+                <p className="text-foreground2 text-sm font-bold">
                   Volume Required:{" "}
-                  <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
+                  <strong className="text-primary">
                     {powderResult.volumeMl} ml
                   </strong>
                 </p>
               </div>
             ) : (
-              <p className="text-center text-sm text-slate-400 dark:text-slate-500">
+              <p className="text-muted-foreground text-center text-sm">
                 Enter valid values above to see results.
               </p>
             )}
@@ -479,22 +491,22 @@ export function IntranasalCalculator() {
       {/* === Spray Volume Helper === */}
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
-          <h2 className="text-2xl font-black text-slate-800 dark:text-white">
+          <h2 className="text-foreground text-2xl font-black">
             Spray Volume Helper
           </h2>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5">
-              <span className="text-lg font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-lg font-bold">
                 ML of Water{" "}
                 <HelpTooltip content="Total ml of water used in the spray bottle." />
               </span>
             </div>
-            <div className="w-3/5">
+            <div className="min-w-0 flex-1 sm:max-w-[60%]">
               <select
                 value={helperWaterMl}
                 onChange={(e) => setHelperWaterMl(Number(e.target.value))}
-                className="h-12 w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none focus:border-[#3b82f6] dark:text-white"
+                className="border-border bg-muted text-foreground focus:border-primary h-12 w-full rounded-xl border px-4 text-center text-lg font-bold outline-none"
               >
                 {SPRAY_VOLUME_OPTIONS.map((opt) => (
                   <option key={opt} value={opt}>
@@ -505,16 +517,14 @@ export function IntranasalCalculator() {
             </div>
           </div>
 
-          <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4">
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+          <div className="bg-muted rounded-xl p-4">
+            <p className="text-foreground2 text-sm font-bold">
               No. of Sprays:{" "}
-              <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
-                {helperResult.numSprays}
-              </strong>
+              <strong className="text-primary">{helperResult.numSprays}</strong>
             </p>
-            <p className="text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+            <p className="text-foreground2 text-sm font-bold">
               Spray Volume (ml):{" "}
-              <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
+              <strong className="text-primary">
                 {helperResult.sprayVolume}
               </strong>
             </p>

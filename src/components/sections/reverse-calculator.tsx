@@ -1,5 +1,18 @@
-import { useState, useCallback, useMemo, useEffect, useRef, useTransition } from "react";
-import { HelpCircle, Beaker, Droplets, Syringe, FlaskConical } from "lucide-react";
+import {
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+  useRef,
+  useTransition,
+} from "react";
+import {
+  HelpCircle,
+  Beaker,
+  Droplets,
+  Syringe,
+  FlaskConical,
+} from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -81,7 +94,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20 flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl text-xl font-bold transition-colors"
       >
         −
       </button>
@@ -103,10 +116,10 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
+          className="border-border bg-muted text-foreground selection:bg-primary/30 dark:selection:bg-primary/40 focus:border-primary focus:bg-background h-12 w-full border-y text-center text-lg font-bold outline-none"
         />
         {suffix && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500 dark:text-slate-400">
+          <span className="text-muted-foreground pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold">
             {suffix}
           </span>
         )}
@@ -115,7 +128,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20 flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl text-xl font-bold transition-colors"
       >
         +
       </button>
@@ -151,12 +164,12 @@ export function ReverseCalculator() {
   }, [peptideVial, dosage, desiredUnits]);
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40">
+    <div className="selection:bg-primary/30 dark:selection:bg-primary/40 mx-auto w-full max-w-xl">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-6 p-6">
           {/* Peptide Vial */}
           <div className="space-y-3">
-            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+            <div className="text-muted-foreground flex items-start gap-2">
               <Beaker className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
                 Enter Peptide Vial Contents (in mg){" "}
@@ -164,13 +177,13 @@ export function ReverseCalculator() {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-xl font-bold">
                 Peptide Vial{" "}
-                <span className="text-base font-normal text-slate-400 dark:text-slate-500">
+                <span className="text-muted-foreground text-base font-normal">
                   (mg)
                 </span>
               </span>
-              <div className="w-3/5">
+              <div className="min-w-0 flex-1 sm:max-w-[60%]">
                 <NumberInput
                   value={peptideVial}
                   stepMode="small"
@@ -185,7 +198,7 @@ export function ReverseCalculator() {
 
           {/* Dosage */}
           <div className="space-y-3">
-            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+            <div className="text-muted-foreground flex items-start gap-2">
               <Syringe className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
                 Enter Dosage (in micrograms, mcg){" "}
@@ -193,13 +206,13 @@ export function ReverseCalculator() {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-white">
+              <span className="text-foreground text-xl font-bold">
                 Dosage{" "}
-                <span className="text-base font-normal text-slate-400 dark:text-slate-500">
+                <span className="text-muted-foreground text-base font-normal">
                   (per dose)
                 </span>
               </span>
-              <div className="w-3/5">
+              <div className="min-w-0 flex-1 sm:max-w-[60%]">
                 <NumberInput
                   value={dosage}
                   stepMode="large"
@@ -214,7 +227,7 @@ export function ReverseCalculator() {
 
           {/* Desired Units */}
           <div className="space-y-3">
-            <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+            <div className="text-muted-foreground flex items-start gap-2">
               <FlaskConical className="mt-0.5 h-5 w-5 shrink-0" />
               <span className="text-sm font-bold">
                 Enter Desired Units to Draw{" "}
@@ -222,10 +235,8 @@ export function ReverseCalculator() {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-xl font-bold text-slate-800 dark:text-white">
-                Units
-              </span>
-              <div className="w-3/5">
+              <span className="text-foreground text-xl font-bold">Units</span>
+              <div className="min-w-0 flex-1 sm:max-w-[60%]">
                 <NumberInput
                   value={desiredUnits}
                   stepMode="large"
@@ -243,19 +254,19 @@ export function ReverseCalculator() {
             <div aria-live="polite" aria-atomic="true">
               {result ? (
                 <div className="space-y-4">
-                  <div className="rounded-2xl border border-[#3b82f6]/20 dark:border-[#60a5fa]/20 bg-[#1d4ed8]/[0.03] dark:bg-[#60a5fa]/[0.06] p-6">
-                    <h3 className="mb-4 text-lg font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
+                  <div className="border-primary/20 bg-primary/[0.03] dark:bg-primary/[0.06] rounded-2xl border p-6">
+                    <h3 className="text-primary mb-4 text-lg font-bold">
                       Required BAC Water For Peptide Reconstitution
                     </h3>
-                    <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#3b82f6]/10 p-5">
-                      <p className="text-base font-bold text-slate-800 dark:text-white">
+                    <div className="from-primary/10 to-secondary/10 rounded-xl bg-gradient-to-r p-5">
+                      <p className="text-foreground text-base font-bold">
                         Reconstitute your peptide vial using{" "}
-                        <span className="text-[#1d4ed8] dark:text-[#60a5fa]">
+                        <span className="text-primary">
                           {result.bacWaterMl.toFixed(2)} ml
                         </span>{" "}
                         of BAC water.
                       </p>
-                      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                      <p className="text-muted-foreground mt-1 text-sm">
                         Where {result.bacWaterMl.toFixed(2)} ml ={" "}
                         {result.bacWaterUnits.toFixed(0)} units of BAC water.
                       </p>
@@ -263,9 +274,9 @@ export function ReverseCalculator() {
                   </div>
                 </div>
               ) : (
-                <div className="rounded-2xl border border-slate-200 dark:border-slate-800/50 bg-gradient-to-br from-slate-50 dark:from-slate-900 to-slate-100 dark:to-slate-800 p-8 text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700/50">
-                    <Droplets className="h-8 w-8 text-slate-400 dark:text-slate-500" />
+                <div className="border-border from-muted to-muted/60 rounded-2xl border bg-gradient-to-br p-8 text-center">
+                  <div className="bg-muted mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                    <Droplets className="text-muted-foreground h-8 w-8" />
                   </div>
                   <p className="text-muted-foreground text-sm">
                     Enter valid values to see results

@@ -32,11 +32,14 @@ export function TeamSection() {
           {team.map((member) => (
             <div
               key={member.name}
-              className="rounded-2xl border bg-card p-8 shadow-sm"
+              className="bg-card rounded-2xl border p-8 shadow-sm"
             >
               <div className="mb-1 flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1d4ed8]/10 text-[#1d4ed8] dark:text-[#60a5fa] text-lg font-bold">
-                  {member.name.split(" ").map(n => n[0]).join("")}
+                <div className="bg-primary/10 text-primary flex h-12 w-12 items-center justify-center rounded-full text-lg font-bold">
+                  {member.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">{member.name}</h2>
@@ -48,7 +51,7 @@ export function TeamSection() {
                 {member.credentials.map((cred) => (
                   <span
                     key={cred}
-                    className="rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground"
+                    className="text-muted-foreground rounded-full border px-3 py-1 text-xs font-medium"
                   >
                     {cred}
                   </span>
@@ -65,11 +68,17 @@ export function TeamSection() {
             Editorial process
           </h2>
           <p className="text-lg">
-            All calculator formulas are validated against standard reconstitution references. Peptide profiles are reviewed for accuracy by our scientific advisor before publication. Content is updated regularly to reflect current research.
+            All calculator formulas are validated against standard
+            reconstitution references. Peptide profiles are reviewed for
+            accuracy by our scientific advisor before publication. Content is
+            updated regularly to reflect current research.
           </p>
           <p className="text-muted-foreground text-sm">
             Have a correction or suggestion? Reach us at{" "}
-            <a href="mailto:contact@mcgcalc.com" className="text-[#1d4ed8] dark:text-[#60a5fa] underline hover:opacity-80">
+            <a
+              href="mailto:contact@mcgcalc.com"
+              className="text-primary underline hover:opacity-80"
+            >
               contact@mcgcalc.com
             </a>
           </p>

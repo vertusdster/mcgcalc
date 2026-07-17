@@ -1,5 +1,11 @@
 import { useState, useMemo, useEffect, useRef, useTransition } from "react";
-import { HelpCircle, ShoppingCart, Calendar, Clock, FlaskConical } from "lucide-react";
+import {
+  HelpCircle,
+  ShoppingCart,
+  Calendar,
+  Clock,
+  FlaskConical,
+} from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -81,7 +87,7 @@ function NumberInput({
         type="button"
         aria-label="Decrease"
         onClick={() => step(-1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20 flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-l-xl text-xl font-bold transition-colors"
       >
         −
       </button>
@@ -103,10 +109,10 @@ function NumberInput({
             setDisplay(val);
             onChangeRef.current(val);
           }}
-          className="h-12 w-full border-y border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 text-center text-lg font-bold text-slate-800 dark:text-slate-200 outline-none selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40 focus:border-[#3b82f6] focus:bg-white dark:text-white"
+          className="border-border bg-muted text-foreground selection:bg-primary/30 dark:selection:bg-primary/40 focus:border-primary focus:bg-background h-12 w-full border-y text-center text-lg font-bold outline-none"
         />
         {suffix && (
-          <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-slate-500 dark:text-slate-400">
+          <span className="text-muted-foreground pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold">
             {suffix}
           </span>
         )}
@@ -115,7 +121,7 @@ function NumberInput({
         type="button"
         aria-label="Increase"
         onClick={() => step(1)}
-        className="flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl bg-slate-100 dark:bg-slate-800/80 text-xl font-bold text-slate-500 dark:text-slate-400 transition-colors hover:bg-[#1d4ed8]/10 hover:text-[#1d4ed8] dark:hover:bg-[#60a5fa]/10 dark:hover:text-[#60a5fa] active:bg-[#1d4ed8]/20 dark:active:bg-[#60a5fa]/20"
+        className="bg-muted text-muted-foreground hover:bg-primary/10 hover:text-primary active:bg-primary/20 flex h-12 w-12 shrink-0 select-none items-center justify-center rounded-r-xl text-xl font-bold transition-colors"
       >
         +
       </button>
@@ -155,7 +161,8 @@ export function OrderCalculator() {
     if (dose <= 0 || times <= 0 || weeks <= 0) return null;
 
     const totalDoses = frequency.daysPerWeek * times * weeks;
-    const totalMcg = doseUnit === "mcg" ? dose * totalDoses : dose * 1000 * totalDoses;
+    const totalMcg =
+      doseUnit === "mcg" ? dose * totalDoses : dose * 1000 * totalDoses;
     const totalMg = totalMcg / 1000;
 
     // Calculate vials needed for each standard size
@@ -177,24 +184,33 @@ export function OrderCalculator() {
       customVialSize: customSize,
       formulaStr: `${dose} ${doseUnit} × ${frequency.daysPerWeek} days/week × ${times} per day × ${weeks} weeks = ${totalMcg.toLocaleString()} mcg`,
     };
-  }, [doseAmount, doseUnit, timesPerDay, durationWeeks, frequency, customVialSize]);
+  }, [
+    doseAmount,
+    doseUnit,
+    timesPerDay,
+    durationWeeks,
+    frequency,
+    customVialSize,
+  ]);
 
   return (
-    <div className="mx-auto w-full max-w-xl selection:bg-[#3b82f6]/30 dark:selection:bg-[#3b82f6]/40">
+    <div className="selection:bg-primary/30 dark:selection:bg-primary/40 mx-auto w-full max-w-xl">
       <div className="bg-card border-border/50 overflow-hidden rounded-2xl border shadow-lg shadow-slate-200/50 dark:shadow-none">
         <div className="space-y-5 p-6">
           {/* Frequency */}
           <div className="space-y-2">
-            <label className="text-lg font-bold text-slate-800 dark:text-white">
+            <label className="text-foreground text-lg font-bold">
               Frequency
             </label>
             <select
               value={frequency.label}
               onChange={(e) => {
-                const f = FREQUENCY_OPTIONS.find((o) => o.label === e.target.value);
+                const f = FREQUENCY_OPTIONS.find(
+                  (o) => o.label === e.target.value,
+                );
                 if (f) setFrequency(f);
               }}
-              className="h-12 w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-4 text-base font-bold text-slate-800 dark:text-slate-200 outline-none focus:border-[#3b82f6] dark:text-white"
+              className="border-border bg-muted text-foreground focus:border-primary h-12 w-full rounded-xl border px-4 text-base font-bold outline-none"
             >
               {FREQUENCY_OPTIONS.map((opt) => (
                 <option key={opt.label} value={opt.label}>
@@ -206,7 +222,7 @@ export function OrderCalculator() {
 
           {/* Dose Amount */}
           <div className="space-y-2">
-            <label className="text-lg font-bold text-slate-800 dark:text-white">
+            <label className="text-foreground text-lg font-bold">
               Dose Amount
             </label>
             <div className="flex gap-2">
@@ -220,7 +236,7 @@ export function OrderCalculator() {
               <select
                 value={doseUnit}
                 onChange={(e) => setDoseUnit(e.target.value as "mcg" | "mg")}
-                className="h-12 w-24 rounded-xl border border-slate-200 dark:border-slate-800 bg-[#1e3a5f]/5 dark:bg-slate-900/50 px-3 text-center text-base font-bold text-slate-800 dark:text-slate-200 outline-none focus:border-[#3b82f6] dark:text-white"
+                className="border-border bg-muted text-foreground focus:border-primary h-12 w-24 rounded-xl border px-3 text-center text-base font-bold outline-none"
               >
                 {DOSE_UNITS.map((u) => (
                   <option key={u} value={u}>
@@ -234,7 +250,7 @@ export function OrderCalculator() {
           {/* Times Per Day & Duration */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-lg font-bold text-slate-800 dark:text-white">
+              <label className="text-foreground text-lg font-bold">
                 Times Per Day
               </label>
               <NumberInput
@@ -246,9 +262,11 @@ export function OrderCalculator() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-lg font-bold text-slate-800 dark:text-white">
+              <label className="text-foreground text-lg font-bold">
                 Duration{" "}
-                <span className="text-sm font-normal text-slate-400 dark:text-slate-500">(weeks)</span>
+                <span className="text-muted-foreground text-sm font-normal">
+                  (weeks)
+                </span>
               </label>
               <NumberInput
                 value={durationWeeks}
@@ -264,38 +282,36 @@ export function OrderCalculator() {
           <div className="border-border/50 border-t pt-4">
             {result ? (
               <div className="space-y-3">
-                <div className="rounded-xl bg-[#1e3a5f]/5 dark:bg-slate-900/50 p-4 space-y-2">
-                  <p className="text-sm font-bold text-slate-600 dark:text-slate-400">
+                <div className="bg-muted space-y-2 rounded-xl p-4">
+                  <p className="text-muted-foreground text-sm font-bold">
                     <Calendar className="mr-1 inline h-4 w-4" />
                     Dosing Schedule:{" "}
-                    <span className="text-slate-800 dark:text-white">
+                    <span className="text-foreground">
                       {frequency.label}, {timesPerDay} time(s) per day
                     </span>
                   </p>
-                  <p className="text-sm font-bold text-slate-600 dark:text-slate-400">
+                  <p className="text-muted-foreground text-sm font-bold">
                     Total Amount Needed:{" "}
-                    <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
+                    <strong className="text-primary">
                       {result.totalMcg.toLocaleString()} mcg
                     </strong>{" "}
-                    <span className="text-slate-400 dark:text-slate-500">
+                    <span className="text-muted-foreground/80">
                       ({result.totalMg} mg)
                     </span>
                   </p>
 
                   <div className="pt-2">
-                    <p className="mb-1 text-sm font-bold text-slate-700 dark:text-slate-300 dark:text-slate-300">
+                    <p className="text-foreground2 mb-1 text-sm font-bold">
                       Vials Needed:
                     </p>
                     <ul className="ml-4 list-disc space-y-0.5">
                       {result.vialBreakdown.map((v) => (
                         <li
                           key={v.size}
-                          className="text-sm text-slate-600 dark:text-slate-400"
+                          className="text-muted-foreground text-sm"
                         >
                           {v.size}mg vials:{" "}
-                          <strong className="text-slate-800 dark:text-white">
-                            {v.count}
-                          </strong>
+                          <strong className="text-foreground">{v.count}</strong>
                         </li>
                       ))}
                     </ul>
@@ -303,12 +319,12 @@ export function OrderCalculator() {
 
                   {/* Custom Vial Size */}
                   <div className="pt-2">
-                    <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                    <label className="text-muted-foreground flex items-center gap-2 text-sm">
                       <input
                         type="checkbox"
                         checked={useCustomVial}
                         onChange={(e) => setUseCustomVial(e.target.checked)}
-                        className="rounded accent-[#1d4ed8]"
+                        className="accent-primary rounded"
                       />
                       <span className="font-bold">Custom Vial Size</span>
                     </label>
@@ -322,9 +338,9 @@ export function OrderCalculator() {
                           onChange={(val) => setCustomVialSize(val)}
                           className="w-48"
                         />
-                        <span className="text-sm font-bold text-slate-600 dark:text-slate-400">
+                        <span className="text-muted-foreground text-sm font-bold">
                           →{" "}
-                          <strong className="text-[#1d4ed8] dark:text-[#60a5fa]">
+                          <strong className="text-primary">
                             {result.customVialCount}
                           </strong>{" "}
                           vials
@@ -334,16 +350,16 @@ export function OrderCalculator() {
                   </div>
                 </div>
 
-                <div className="rounded-xl bg-gradient-to-r from-[#1e3a5f]/10 to-[#3b82f6]/10 px-4 py-3">
-                  <p className="text-xs italic text-[#1d4ed8] dark:text-[#60a5fa]">
+                <div className="from-primary/10 to-secondary/10 rounded-xl bg-gradient-to-r px-4 py-3">
+                  <p className="text-primary text-xs italic">
                     Calculation: {result.formulaStr}
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="rounded-2xl border border-slate-200 dark:border-slate-800/50 bg-gradient-to-br from-slate-50 dark:from-slate-900 to-slate-100 dark:to-slate-800 p-8 text-center">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-700/50">
-                  <ShoppingCart className="h-8 w-8 text-slate-400 dark:text-slate-500" />
+              <div className="border-border from-muted to-muted/60 rounded-2xl border bg-gradient-to-br p-8 text-center">
+                <div className="bg-muted mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                  <ShoppingCart className="text-muted-foreground h-8 w-8" />
                 </div>
                 <p className="text-muted-foreground text-sm">
                   Enter valid values to see results

@@ -122,7 +122,7 @@ export default function FAQPage() {
             {FAQ_ITEMS.map((category) => (
               <Card key={category.category} className="border-hidden">
                 <CardHeader className="pb-0">
-                  <h3 className="text-accent-foreground border-b pb-4 font-mono text-sm font-medium uppercase tracking-widest">
+                  <h3 className="text-accent-foreground border-border border-b pb-4 font-mono text-sm font-medium uppercase tracking-widest">
                     {category.category}
                   </h3>
                 </CardHeader>
@@ -132,12 +132,12 @@ export default function FAQPage() {
                       <AccordionItem
                         key={i}
                         value={`${category.category}-${i}`}
-                        className="border-muted border-b last:border-0"
+                        className="border-border border-b last:border-0"
                       >
                         <AccordionTrigger className="text-base font-medium hover:no-underline">
                           {item.question}
                         </AccordionTrigger>
-                        <AccordionContent className="text-foreground/70 text-sm md:text-base font-medium leading-relaxed">
+                        <AccordionContent className="text-foreground2 text-sm font-medium leading-relaxed md:text-base">
                           {item.answer}
                         </AccordionContent>
                       </AccordionItem>

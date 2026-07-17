@@ -13,22 +13,26 @@ const STEPS = [
   {
     step: "02",
     title: "Input Peptide Quantity",
-    description: "Enter the total milligrams (mg) for up to five Peptide vials.",
+    description:
+      "Enter the total milligrams (mg) for up to five Peptide vials.",
   },
   {
     step: "03",
     title: "Enter Bac Water Volume",
-    description: "Specify the volume in milliliters (mL) or International Units (IU).",
+    description:
+      "Specify the volume in milliliters (mL) or International Units (IU).",
   },
   {
     step: "04",
     title: "Specify Peptide Dose",
-    description: "Input the required dosage in milligrams (mg) or micrograms (mcg).",
+    description:
+      "Input the required dosage in milligrams (mg) or micrograms (mcg).",
   },
   {
     step: "05",
     title: "View Calculation Results",
-    description: "The results of your inputs will be displayed for your review.",
+    description:
+      "The results of your inputs will be displayed for your review.",
   },
 ];
 
@@ -40,13 +44,11 @@ function StepCards() {
           key={item.step}
           className="bg-card border-border/50 relative overflow-hidden rounded-2xl border p-6"
         >
-          <span className="pointer-events-none absolute -left-1 top-1/2 -translate-y-1/2 text-[140px] font-black leading-none text-slate-200/60 dark:text-slate-700/40">
+          <span className="text-muted/60 dark:text-muted/30 pointer-events-none absolute -left-1 top-1/2 -translate-y-1/2 text-[140px] font-black leading-none">
             {item.step}
           </span>
           <div className="relative text-center">
-            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
-              {item.title}
-            </h3>
+            <h3 className="text-foreground text-lg font-bold">{item.title}</h3>
             <p className="text-muted-foreground mt-1 text-sm">
               {item.description}
             </p>
@@ -73,7 +75,7 @@ export function CalculatorGuide() {
   if (isDesktop) {
     return (
       <div className="w-full">
-        <h2 className="mb-4 text-sm font-semibold text-slate-700 dark:text-slate-300 dark:text-slate-200">
+        <h2 className="text-foreground2 mb-4 text-sm font-semibold">
           How to Use the Peptide Calculator
         </h2>
         <StepCards />
@@ -86,13 +88,13 @@ export function CalculatorGuide() {
     <div className="w-full">
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+        className="border-border bg-card text-foreground2 hover:bg-muted flex w-full items-center justify-between rounded-xl border px-4 py-3 text-sm font-semibold transition-colors"
       >
         <span>How to Use the Peptide Calculator</span>
         {open ? (
-          <ChevronUp className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+          <ChevronUp className="text-muted-foreground h-4 w-4" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+          <ChevronDown className="text-muted-foreground h-4 w-4" />
         )}
       </button>
 

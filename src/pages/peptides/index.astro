@@ -28,25 +28,25 @@ const description = "Browse our complete peptide database. Click any peptide to 
 
       {categories.map(category => (
         <div class="mb-12">
-          <h2 class="mb-4 text-xl font-semibold tracking-tight border-b pb-2">{category}</h2>
+          <h2 class="mb-4 text-xl font-semibold tracking-tight border-b border-border pb-2">{category}</h2>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {byCategory[category].map(peptide => (
               <a
                 href={`/peptides/${peptide.id}`}
-                class="group rounded-xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:border-[#3b82f6] hover:shadow-md"
+                class="group rounded-xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:border-primary hover:shadow-md"
               >
                 <div class="flex items-start justify-between gap-2">
-                  <h3 class="font-bold text-slate-800 dark:text-white group-hover:text-[#1d4ed8] transition-colors">
+                  <h3 class="font-bold text-foreground group-hover:text-primary transition-colors">
                     {peptide.data.name}
                   </h3>
-                  <span class="shrink-0 rounded-full bg-[#1d4ed8]/10 px-2 py-0.5 text-xs font-medium text-[#1d4ed8]">
+                  <span class="shrink-0 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
                     {peptide.data.category}
                   </span>
                 </div>
                 <p class="text-muted-foreground mt-2 text-sm line-clamp-2">
                   {peptide.data.description}
                 </p>
-                <div class="mt-3 flex gap-3 text-xs text-slate-400">
+                <div class="mt-3 flex gap-3 text-xs text-muted-foreground/80">
                   <span>Default dose: {peptide.data.defaultDose}mcg</span>
                   <span>·</span>
                   <span>Vial: {peptide.data.defaultVialSize}mg</span>

@@ -51,7 +51,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
                 className={`flex flex-col justify-center p-6 lg:p-8 ${featuredPost.data.image ? "lg:w-3/5" : "w-full"}`}
               >
                 <div className="mb-3 flex items-center gap-2">
-                  <Badge className="border-0 bg-[#1d4ed8]/10 text-[#1d4ed8] hover:bg-[#1d4ed8]/20">
+                  <Badge className="bg-primary/10 text-primary hover:bg-primary/20 border-0">
                     Featured
                   </Badge>
                   {featuredPost.data.category && (
@@ -60,7 +60,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
                     </Badge>
                   )}
                 </div>
-                <h2 className="mb-3 text-2xl font-bold transition-colors group-hover:text-[#1d4ed8] md:text-3xl">
+                <h2 className="group-hover:text-primary mb-3 text-2xl font-bold transition-colors md:text-3xl">
                   {featuredPost.data.title}
                 </h2>
                 <p className="text-muted-foreground mb-5 line-clamp-2 text-base">
@@ -103,7 +103,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
                     </span>
                   </div>
                 </div>
-                <div className="mt-5 flex items-center gap-1 text-sm font-semibold text-[#1d4ed8]">
+                <div className="text-primary mt-5 flex items-center gap-1 text-sm font-semibold">
                   Read article{" "}
                   <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                 </div>
@@ -123,7 +123,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
                 <a
                   key={post.id}
                   href={`/blog/${post.id}/`}
-                  className="bg-card group flex flex-col rounded-xl border shadow-sm transition-all hover:border-[#3b82f6]/40 dark:hover:border-[#60a5fa]/30 hover:shadow-md"
+                  className="bg-card hover:border-primary/40 group flex flex-col rounded-xl border shadow-sm transition-all hover:shadow-md"
                 >
                   {post.data.image && (
                     <div className="overflow-hidden rounded-t-xl">
@@ -136,11 +136,11 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
                   )}
                   <div className="flex flex-1 flex-col p-5">
                     {post.data.category && (
-                      <span className="mb-2 text-xs font-semibold uppercase tracking-wide text-[#1d4ed8]">
+                      <span className="text-primary mb-2 text-xs font-semibold uppercase tracking-wide">
                         {post.data.category}
                       </span>
                     )}
-                    <h3 className="mb-2 font-semibold leading-snug transition-colors group-hover:text-[#1d4ed8]">
+                    <h3 className="group-hover:text-primary mb-2 font-semibold leading-snug transition-colors">
                       {post.data.title}
                     </h3>
                     <p className="text-muted-foreground line-clamp-2 flex-1 text-sm">
@@ -178,9 +178,9 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
       {/* Calculator CTA */}
       <section className="mt-16">
         <div className="container max-w-5xl">
-          <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#3b82f6]/20 dark:border-[#60a5fa]/20 bg-[#1d4ed8]/5 dark:bg-[#60a5fa]/[0.06] px-8 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div className="border-primary/20 bg-primary/[0.03] flex flex-col items-center gap-4 rounded-2xl border px-8 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
             <div>
-              <p className="font-semibold text-slate-800 dark:text-white">
+              <p className="text-foreground font-semibold">
                 Ready to calculate your dose?
               </p>
               <p className="text-muted-foreground mt-1 text-sm">
@@ -190,7 +190,7 @@ const BlogPosts = ({ posts }: { posts: any[] }) => {
             </div>
             <a
               href="/peptide-calculator"
-              className="shrink-0 rounded-xl bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-none dark:bg-white px-6 py-3 text-sm font-bold text-white dark:text-slate-900 transition-opacity hover:opacity-90"
+              className="btn-primary-gradient shrink-0 rounded-xl px-6 py-3 text-sm font-bold"
             >
               Open Calculator →
             </a>

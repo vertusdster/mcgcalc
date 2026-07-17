@@ -3,7 +3,6 @@ import BaseHead from '@/components/BaseHead.astro';
 import { Font } from 'astro:assets';
 import Footer from '@/components/sections/footer';
 import Navbar from '@/components/sections/navbar';
-import Banner from '@/components/sections/banner';
 
 const { title, description, schema, noindex } = Astro.props;
 ---
@@ -18,8 +17,14 @@ const { title, description, schema, noindex } = Astro.props;
     </head>
     <body class={`h-screen antialiased flex flex-col`}
     >
-<Navbar currentPage={Astro.url.pathname} client:load />
-        <main class="flex-1"><slot /></main>
+        <a
+            href="#main-content"
+            class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:text-foreground focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background"
+        >
+            Skip to content
+        </a>
+        <Navbar currentPage={Astro.url.pathname} client:load />
+        <main id="main-content" tabindex="-1" class="flex-1"><slot /></main>
         <Footer />
     </body>
 </html>

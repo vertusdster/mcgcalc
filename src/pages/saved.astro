@@ -7,15 +7,17 @@ const description = "View and manage your saved peptide dosage calculations.";
 ---
 
 <DefaultLayout title={title} description={description} noindex={true}>
-  <section class="py-4 md:py-16 px-4">
+  <section class="py-4 md:py-16">
     <div class="max-w-2xl mx-auto text-center mb-10 hidden md:block">
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+      <h1 class="text-3xl font-bold text-foreground mb-3">
         Saved Calculations
       </h1>
-      <p class="text-slate-500 dark:text-slate-400">
+      <p class="text-muted-foreground">
         Your saved peptide dosage calculations, stored locally in your browser.
       </p>
     </div>
-    <SavedCalculations client:load />
+    <div class="container">
+      <SavedCalculations client:load />
+    </div>
   </section>
 </DefaultLayout>

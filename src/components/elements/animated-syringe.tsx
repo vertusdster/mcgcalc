@@ -28,14 +28,14 @@ export function AnimatedSyringe({
     >
       <div className="px-2">
         <div className="relative mx-auto w-full max-w-md">
-          <div className="relative h-12 max-[389px]:h-10 overflow-hidden rounded-none border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-900/50">
+          <div className="border-border bg-muted relative h-12 overflow-hidden rounded-none border max-[389px]:h-10">
             <div
               className={cn(
                 "absolute bottom-0 left-0 top-0 z-10 transition-all duration-200 ease-out",
                 clampedFill > 0 ? "rounded-none" : "",
                 isValid
-                  ? "bg-gradient-to-r from-[#1d4ed8] to-[#3b82f6] dark:bg-[#1e40af]"
-                  : "bg-slate-300 dark:bg-slate-800",
+                  ? "from-primary-gradient to-secondary-gradient dark:from-primary-900 dark:to-primary bg-gradient-to-r"
+                  : "bg-muted-foreground/30 dark:bg-muted-foreground/20",
               )}
               style={{
                 width: `${clampedFill}%`,
@@ -61,7 +61,7 @@ export function AnimatedSyringe({
                         ? isValid
                           ? "text-white"
                           : "text-amber-800"
-                        : "text-slate-500 dark:text-slate-400",
+                        : "text-muted-foreground",
                     )}
                     style={{
                       left: `${markPosition}%`,
@@ -88,7 +88,7 @@ export function AnimatedSyringe({
                         ? isValid
                           ? "bg-white"
                           : "bg-amber-800"
-                        : "bg-slate-400 dark:bg-slate-600",
+                        : "bg-muted-foreground/80",
                     )}
                     style={{
                       left: `${markPosition}%`,
@@ -115,7 +115,7 @@ export function AnimatedSyringe({
                         ? isValid
                           ? "bg-white"
                           : "bg-amber-700"
-                        : "bg-slate-300 dark:bg-slate-700",
+                        : "bg-border",
                     )}
                     style={{
                       left: `${markPosition}%`,
@@ -140,7 +140,7 @@ export function AnimatedSyringe({
                         ? isValid
                           ? "bg-white"
                           : "bg-amber-800"
-                        : "bg-slate-400 dark:bg-slate-600",
+                        : "bg-muted-foreground/80",
                     )}
                     style={{
                       left: `${markPosition}%`,
@@ -167,7 +167,7 @@ export function AnimatedSyringe({
                         ? isValid
                           ? "bg-white"
                           : "bg-amber-700"
-                        : "bg-slate-300 dark:bg-slate-700",
+                        : "bg-border",
                     )}
                     style={{
                       left: `${markPosition}%`,

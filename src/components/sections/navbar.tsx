@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { ChevronRight, BookmarkCheck } from "lucide-react";
 
@@ -19,6 +19,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [hasSaved, setHasSaved] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
   const pathname = currentPage;
 
   useEffect(() => {
@@ -44,10 +45,28 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
     };
   }, [isMenuOpen]);
 
+  // Measure navbar height for mobile menu offset
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const height =
+          entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
+        document.documentElement.style.setProperty(
+          "--navbar-height",
+          `${height}px`,
+        );
+      }
+    });
+
+    observer.observe(header);
+    return () => observer.disconnect();
+  }, []);
+
   const ITEMS = [
-    ...(hasSaved
-      ? [{ label: "My Calculations", href: "/saved" }]
-      : []),
+    ...(hasSaved ? [{ label: "My Calculations", href: "/saved" }] : []),
     { label: "Home", href: "/" },
     {
       label: "Calculators",
@@ -60,7 +79,8 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
         },
         {
           title: "Reverse Calculator",
-          description: "Find the right BAC water volume for a target draw amount.",
+          description:
+            "Find the right BAC water volume for a target draw amount.",
           href: "/reverse-calculator",
         },
         {
@@ -85,7 +105,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
   ];
 
   return (
-    <header className={"relative z-50"}>
+    <header ref={headerRef} className="relative z-50">
       <div className="container max-w-5xl lg:pt-10">
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
@@ -100,7 +120,10 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
           </a>
 
           {/* Desktop Navigation */}
-          <NavigationMenu className="hidden items-center gap-8 lg:flex" delayDuration={200}>
+          <NavigationMenu
+            className="hidden items-center gap-8 lg:flex"
+            delayDuration={200}
+          >
             <NavigationMenuList>
               {ITEMS.map((link) =>
                 link.dropdownItems ? (
@@ -138,8 +161,10 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
                     <a
                       href={link.href}
                       className={cn(
-                        "hover:text-accent-foreground dark:hover:text-white p-2 lg:text-base",
-                        (pathname === link.href || pathname === link.href + "/") && "font-bold",
+                        "hover:text-foreground p-2 transition-colors lg:text-base",
+                        (pathname === link.href ||
+                          pathname === link.href + "/") &&
+                          "font-bold",
                       )}
                     >
                       {link.label}
@@ -156,24 +181,21 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
               href="/peptide-calculator"
               className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
             >
-              <Button
-                variant="outline"
-                className="dark:bg-white dark:text-slate-900"
-              >
-                Peptide Calculator
-              </Button>
+              <Button variant="outline">Peptide Calculator</Button>
             </a>
 
             <div
               className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
             >
-              <ThemeToggle className="dark:bg-white dark:text-slate-900" />
+              <ThemeToggle />
             </div>
 
             {/* Hamburger Menu Button (Mobile Only) */}
             <button
               className="relative flex size-8 lg:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMenuOpen}
             >
               <span className="sr-only">Open main menu</span>
               <div className="absolute left-1/2 top-1/2 block w-[18px] -translate-x-1/2 -translate-y-1/2">
@@ -198,7 +220,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
       {/* Mobile Menu Overlay */}
       <div
         className={cn(
-          "bg-background container absolute inset-0 top-full flex h-[calc(100vh-64px)] flex-col transition-all duration-300 ease-in-out lg:hidden",
+          "bg-background container absolute inset-x-0 top-full flex h-[calc(100dvh-var(--navbar-height))] flex-col transition-all duration-300 ease-in-out lg:hidden",
           isMenuOpen
             ? "visible translate-x-0 opacity-100"
             : "invisible translate-x-full opacity-0",
@@ -273,7 +295,8 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
                 href={link.href}
                 className={cn(
                   "text-lg tracking-[-0.36px]",
-                  (pathname === link.href || pathname === link.href + "/") && "text-muted-foreground",
+                  (pathname === link.href || pathname === link.href + "/") &&
+                    "font-bold",
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >
@@ -285,7 +308,7 @@ const Navbar = ({ currentPage }: { currentPage: string }) => {
             href="/about"
             className={cn(
               "text-lg tracking-[-0.36px]",
-              (pathname === "/about" || pathname === "/about/") && "text-muted-foreground",
+              (pathname === "/about" || pathname === "/about/") && "font-bold",
             )}
             onClick={() => setIsMenuOpen(false)}
           >
@@ -304,7 +327,7 @@ const NavDropdownImage = () => {
     <div className="from-primary-900 via-primary to-primary/90 bg-linear-to-r flex flex-col gap-2 rounded-xl text-white">
       <div className="space-y-1 p-5 font-medium">
         <h3>Peptide Calculators</h3>
-        <p className="text-white/80 text-sm">
+        <p className="text-sm text-white/80">
           Dosing, reconstitution & unit conversion — all in one place
         </p>
       </div>

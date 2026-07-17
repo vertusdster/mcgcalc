@@ -8,14 +8,14 @@ const ICON_MAP = {
 
 export default function Hero() {
   return (
-    <section className="bg-background relative overflow-hidden pt-16 pb-20 md:pt-28 md:pb-28">
+    <section className="bg-background relative overflow-hidden pb-20 pt-16 md:pb-28 md:pt-28">
       <div className="relative z-10">
-        <div className="container max-w-5xl text-center hidden md:block">
+        <div className="container hidden max-w-5xl text-center md:block">
           <h1 className="text-4xl font-semibold tracking-tighter md:text-5xl lg:text-6xl">
             mcgcalc
           </h1>
           <p className="text-muted-foreground font-mona mt-4 text-balance text-xl md:text-2xl">
-            Peptide &amp; Dosage Calculators
+            Peptide & Dosage Calculators
           </p>
         </div>
 
@@ -29,7 +29,7 @@ export default function Hero() {
                   href={calc.href}
                   className={cn(
                     "bg-card border-border/50 group flex items-start gap-4 rounded-2xl border p-5 shadow-sm",
-                    "transition-all duration-200 hover:border-[#3b82f6]/40 dark:hover:border-[#60a5fa]/30 hover:shadow-md",
+                    "hover:border-primary/40 transition-all duration-200 hover:shadow-md",
                   )}
                 >
                   <div className="bg-primary/10 flex size-11 shrink-0 items-center justify-center rounded-xl">
@@ -37,11 +37,11 @@ export default function Hero() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <h2 className="text-base font-bold text-slate-800 dark:text-white">
+                      <h2 className="text-foreground text-base font-bold">
                         {calc.title}
                       </h2>
                       {"badge" in calc && calc.badge && (
-                        <span className="rounded-full bg-[#1d4ed8]/10 dark:bg-[#60a5fa]/15 px-2 py-0.5 text-xs font-bold text-[#1d4ed8] dark:text-[#60a5fa]">
+                        <span className="bg-primary/10 text-primary rounded-full px-2 py-0.5 text-xs font-bold">
                           {calc.badge}
                         </span>
                       )}
@@ -50,7 +50,7 @@ export default function Hero() {
                       {calc.description}
                     </p>
                   </div>
-                  <ChevronRight className="mt-1 size-5 shrink-0 text-slate-300 dark:text-slate-500 transition-colors group-hover:text-[#1d4ed8] dark:group-hover:text-[#60a5fa]" />
+                  <ChevronRight className="text-border group-hover:text-primary mt-1 size-5 shrink-0 transition-colors" />
                 </a>
               );
             })}

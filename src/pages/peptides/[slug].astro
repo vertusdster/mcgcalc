@@ -52,7 +52,7 @@ const schema = {
   <div class="py-12 md:py-20">
     <div class="container max-w-5xl">
       <div class="mb-4">
-        <a href="/peptides" class="text-sm text-muted-foreground hover:text-[#1d4ed8] transition-colors">
+        <a href="/peptides" class="text-sm text-muted-foreground hover:text-primary transition-colors">
           ← All Peptides
         </a>
       </div>
@@ -61,11 +61,11 @@ const schema = {
         {/* Article content */}
         <div class="order-2 lg:order-1">
           <div class="mb-2 flex items-center gap-2">
-            <span class="rounded-full bg-[#1d4ed8]/10 px-3 py-1 text-xs font-semibold text-[#1d4ed8]">
+            <span class="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
               {data.category}
             </span>
             {data.casNumber && (
-              <span class="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-mono text-slate-500 dark:text-slate-400">
+              <span class="rounded-full bg-muted px-3 py-1 text-xs font-mono text-muted-foreground">
                 CAS {data.casNumber}
               </span>
             )}
@@ -76,17 +76,17 @@ const schema = {
           {data.reviewedBy && (
             <p class="mt-2 text-sm text-muted-foreground">
               Researched & reviewed by {data.reviewedBy.includes("Team")
-                ? <a href="/about/team" class="font-semibold text-[#1d4ed8] hover:underline">{data.reviewedBy}</a>
+                ? <a href="/about/team" class="font-semibold text-primary hover:underline">{data.reviewedBy}</a>
                 : <strong>{data.reviewedBy}</strong>}
             </p>
           )}
 
           {/* Chemical Identification Table — boosts E-E-A-T & science-crawler signals */}
           {(data.molecularFormula || data.molecularWeight || data.casNumber || data.pubchemCid || data.sequence) && (
-            <div class="mt-6 overflow-hidden rounded-xl border bg-card">
+            <div class="mt-6 overflow-hidden rounded-xl border border-border bg-card">
               <table class="w-full text-sm">
                 <thead>
-                  <tr class="border-b bg-muted/40">
+                  <tr class="border-b border-border bg-muted/40">
                     <th colspan="2" class="px-4 py-2 text-left text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                       Chemical Identification
                     </th>
@@ -94,38 +94,38 @@ const schema = {
                 </thead>
                 <tbody>
                   {data.sequence && (
-                    <tr class="border-b">
-                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400 w-40">Sequence</td>
+                    <tr class="border-b border-border">
+                      <td class="w-40 px-4 py-2 font-medium text-muted-foreground">Sequence</td>
                       <td class="px-4 py-2 font-mono text-xs break-all">{data.sequence}</td>
                     </tr>
                   )}
                   {data.molecularFormula && (
-                    <tr class="border-b">
-                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">Mol. Formula</td>
+                    <tr class="border-b border-border">
+                      <td class="px-4 py-2 font-medium text-muted-foreground">Mol. Formula</td>
                       <td class="px-4 py-2 font-mono">{data.molecularFormula}</td>
                     </tr>
                   )}
                   {data.molecularWeight && (
-                    <tr class="border-b">
-                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">Mol. Weight</td>
+                    <tr class="border-b border-border">
+                      <td class="px-4 py-2 font-medium text-muted-foreground">Mol. Weight</td>
                       <td class="px-4 py-2">{data.molecularWeight}</td>
                     </tr>
                   )}
                   {data.casNumber && (
-                    <tr class="border-b">
-                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">CAS Number</td>
+                    <tr class="border-b border-border">
+                      <td class="px-4 py-2 font-medium text-muted-foreground">CAS Number</td>
                       <td class="px-4 py-2 font-mono">{data.casNumber}</td>
                     </tr>
                   )}
                   {data.pubchemCid && (
                     <tr>
-                      <td class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400">PubChem CID</td>
+                      <td class="px-4 py-2 font-medium text-muted-foreground">PubChem CID</td>
                       <td class="px-4 py-2">
                         <a
                           href={`https://pubchem.ncbi.nlm.nih.gov/compound/${data.pubchemCid}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          class="text-[#1d4ed8] hover:underline font-mono"
+                          class="font-mono text-primary hover:underline"
                         >
                           {data.pubchemCid}
                         </a>
@@ -139,10 +139,10 @@ const schema = {
 
           <article class="prose prose-slate dark:prose-invert mt-8 max-w-none
             prose-headings:font-semibold
-            prose-a:text-[#1d4ed8] prose-a:no-underline hover:prose-a:underline
-            prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:rounded prose-code:px-1
-            prose-pre:bg-slate-100 prose-pre:text-slate-800 dark:prose-pre:bg-slate-800/60 dark:prose-pre:text-slate-200
-            prose-pre:border prose-pre:border-slate-200 dark:prose-pre:border-slate-700
+            prose-a:text-primary prose-a:no-underline hover:prose-a:underline
+            prose-code:bg-muted prose-code:rounded prose-code:px-1
+            prose-pre:bg-muted prose-pre:text-foreground dark:prose-pre:bg-muted/60
+            prose-pre:border prose-pre:border-border
             [&_table]:block [&_table]:overflow-x-auto [&_table]:whitespace-nowrap">
             <Content />
           </article>
@@ -151,7 +151,7 @@ const schema = {
         {/* Calculator column */}
         <div class="order-1 lg:order-2">
           <div class="sticky top-8">
-            <p class="mb-3 text-sm font-semibold text-slate-500 uppercase tracking-wide">
+            <p class="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
               {data.name} Reconstitution Calculator
             </p>
             <PeptideCalculator client:load defaultDose={data.defaultDose} defaultVialSize={data.defaultVialSize} />

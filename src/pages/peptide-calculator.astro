@@ -29,16 +29,16 @@ const schema = {
 ---
 
 <DefaultLayout title={title} description={description} schema={schema}>
-  <section class="py-4 md:py-16 px-4 max-[389px]:px-2">
+  <section class="py-4 md:py-16">
     <div class="max-w-2xl mx-auto text-center mb-10 hidden md:block">
-      <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-3">
+      <h1 class="text-3xl font-bold text-foreground mb-3">
         Peptide Dosage Calculator
       </h1>
-      <p class="text-slate-500 dark:text-slate-400">
+      <p class="text-muted-foreground">
         Enter your peptide quantity, bacteriostatic water volume, and desired dose to instantly calculate the exact syringe units to draw.
       </p>
     </div>
-    <div class="mx-auto max-w-5xl flex flex-col lg:flex-row lg:items-start lg:gap-4">
+    <div class="container mx-auto max-w-5xl flex flex-col lg:flex-row lg:items-start lg:gap-4">
       <div class="flex-1">
         <PeptideCalculator client:load />
       </div>

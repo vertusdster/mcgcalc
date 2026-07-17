@@ -130,6 +130,22 @@
     scroll-behavior: smooth;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    html,
+    body {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   body {
     @apply font-inter relative;
   }
@@ -141,6 +157,13 @@
 
   .mini-title {
     @apply text-accent-foreground font-mono text-sm font-semibold tracking-widest;
+  }
+
+  .btn-primary-gradient {
+    @apply from-primary-gradient to-secondary-gradient bg-gradient-to-r text-white;
+    @apply dark:from-primary-900 dark:to-primary dark:text-primary-foreground;
+    @apply transition-opacity hover:opacity-90;
+    @apply focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
   }
 }
 
